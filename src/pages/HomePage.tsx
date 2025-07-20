@@ -1911,11 +1911,15 @@ function HomePage() {
                     </ProjectTech>
                     <ProjectActions>
                       <ProjectButton
-                        onClick={() => window.open('https://blu30cean.github.io/netflix-clone', '_blank')}
+                        onClick={() => {
+                          // 보안 경고로 인해 임시 비활성화
+                          alert('보안 경고로 인해 임시로 비활성화되었습니다. 곧 다시 활성화될 예정입니다.');
+                        }}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
+                        style={{ opacity: 0.5, cursor: 'not-allowed' }}
                       >
-                        🎬 보러가기
+                        🚫 임시 비활성화
                       </ProjectButton>
                       <ProjectButton
                         onClick={() => window.open('https://github.com/yourusername/netflix-clone', '_blank')}

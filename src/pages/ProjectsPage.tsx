@@ -398,7 +398,8 @@ function ProjectsPage() {
         "사용자 친화적 인터페이스",
       ],
       githubUrl: "https://github.com/BLU30CEAN/netflix-clone",
-      liveUrl: "https://blu30cean.github.io/netflix-clone",
+      // liveUrl: "https://blu30cean.github.io/netflix-clone", // 보안 경고로 인해 임시 주석처리
+      liveUrl: "#", // 보안 경고로 인해 임시 비활성화
       port: 3001,
     },
     {
