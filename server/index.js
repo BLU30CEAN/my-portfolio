@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
+const crypto = require("crypto");
 require("dotenv").config();
 
 const app = express();
@@ -63,6 +64,77 @@ app.post("/api/contact", (req, res) => {
   } catch (error) {
     console.error("Contact submission error:", error);
     res.status(500).json({
+      success: false,
+      message: "서버 오류가 발생했습니다.",
+    });
+  }
+});
+
+// 방명록 API (Google Apps Script 연동)
+app.post("/api/guestbook", async (req, res) => {
+  try {
+    const { name, message } = req.body || {};
+    const safeName = String(name || "익명").trim().slice(0, 30);
+    const safeMessage = String(message || "")
+      .trim()
+      .slice(0, 500);
+
+    if (!safeMessage) {
+      return res.status(400).json({
+        success: false,
+        message: "메시지는 필수입니다.",
+      });
+    }
+
+    const webhookUrl = process.env.GOOGLE_SCRIPT_WEBHOOK_URL;
+    if (!webhookUrl) {
+      return res.status(500).json({
+        success: false,
+        message: "GOOGLE_SCRIPT_WEBHOOK_URL 환경변수가 없습니다.",
+      });
+    }
+
+    const forwardedFor = req.headers["x-forwarded-for"];
+    const clientIp = Array.isArray(forwardedFor)
+      ? forwardedFor[0]
+      : forwardedFor?.toString().split(",")[0].trim() ||
+        req.socket.remoteAddress ||
+        "";
+    const sourceIpHash = crypto
+      .createHash("sha256")
+      .update(clientIp)
+      .digest("hex");
+
+    const response = await fetch(webhookUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: safeName,
+        message: safeMessage,
+        sourceIpHash,
+        userAgent: req.headers["user-agent"] || "",
+      }),
+    });
+
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok || !result.ok) {
+      return res.status(502).json({
+        success: false,
+        message: "Google Sheet 저장 실패",
+        data: result,
+      });
+    }
+
+    return res.json({
+      success: true,
+      id: result.id || null,
+    });
+  } catch (error) {
+    console.error("Guestbook submission error:", error);
+    return res.status(500).json({
       success: false,
       message: "서버 오류가 발생했습니다.",
     });

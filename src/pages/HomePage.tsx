@@ -953,6 +953,7 @@ function HomePage() {
   const [guestbookName, setGuestbookName] = useState('');
   const [guestbookMessage, setGuestbookMessage] = useState('');
   const [showGuestbookToast, setShowGuestbookToast] = useState(false);
+  const guestbookWebhookUrl = process.env.REACT_APP_GOOGLE_SCRIPT_WEBHOOK_URL || "";
 
   const KWB_ROUTE = "/kwb";
   const KWB_REPO_URL = "https://github.com/BLU30CEAN/korean-baseball";
@@ -1083,58 +1084,38 @@ function HomePage() {
   ];
 
   const handleGuestbookSubmit = async () => {
-    if (!guestbookMessage.trim()) return;
+    const trimmedMessage = guestbookMessage.trim();
+    if (!trimmedMessage) return;
+
+    const payload = {
+      name: (guestbookName || "익명").trim().slice(0, 30),
+      message: trimmedMessage.slice(0, 500),
+      timestamp: new Date().toISOString(),
+      source: "static-web",
+    };
+
+    const saveToLocal = () => {
+      const existingData = JSON.parse(localStorage.getItem("guestbook") || "[]");
+      existingData.push(payload);
+      localStorage.setItem("guestbook", JSON.stringify(existingData));
+    };
 
     try {
-      const response = await fetch('/api/guestbook', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: guestbookName || '익명',
-          message: guestbookMessage,
-          timestamp: new Date().toISOString(),
-        }),
-      });
-
-      if (response.ok) {
-        setShowGuestbookToast(true);
-        setGuestbookName('');
-        setGuestbookMessage('');
-        setTimeout(() => setShowGuestbookToast(false), 3000);
+      if (guestbookWebhookUrl) {
+        await fetch(guestbookWebhookUrl, {
+          method: "POST",
+          body: JSON.stringify(payload),
+          mode: "no-cors",
+        });
       } else {
-        // 서버 실패 시 로컬 스토리지에 저장
-        const guestbookData = {
-          name: guestbookName || '익명',
-          message: guestbookMessage,
-          timestamp: new Date().toISOString(),
-        };
-        
-        const existingData = JSON.parse(localStorage.getItem('guestbook') || '[]');
-        existingData.push(guestbookData);
-        localStorage.setItem('guestbook', JSON.stringify(existingData));
-        
-        setShowGuestbookToast(true);
-        setGuestbookName('');
-        setGuestbookMessage('');
-        setTimeout(() => setShowGuestbookToast(false), 3000);
+        saveToLocal();
       }
     } catch (error) {
-      // 네트워크 오류 시 로컬 스토리지에 저장
-      const guestbookData = {
-        name: guestbookName || '익명',
-        message: guestbookMessage,
-        timestamp: new Date().toISOString(),
-      };
-      
-      const existingData = JSON.parse(localStorage.getItem('guestbook') || '[]');
-      existingData.push(guestbookData);
-      localStorage.setItem('guestbook', JSON.stringify(existingData));
-      
+      saveToLocal();
+    } finally {
       setShowGuestbookToast(true);
-      setGuestbookName('');
-      setGuestbookMessage('');
+      setGuestbookName("");
+      setGuestbookMessage("");
       setTimeout(() => setShowGuestbookToast(false), 3000);
     }
   };
