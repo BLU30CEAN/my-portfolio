@@ -244,10 +244,10 @@ const TimelineDescription = styled.div`
 
 function AboutPage() {
   const achievements = [
-    { icon: Users, title: "사용자 만족도", value: "4.5/5.0" },
-    { icon: TrendingUp, title: "인터뷰 완료율", value: "90%" },
-    { icon: Zap, title: "성능 향상", value: "40%" },
-    { icon: Award, title: "앱 스토어 평점", value: "4.8점" },
+    { icon: Users, title: "주요 프로젝트", value: "5개" },
+    { icon: TrendingUp, title: "실시간 지연시간", value: "500ms 이하" },
+    { icon: Zap, title: "상태 관리", value: "Zustand · Jotai" },
+    { icon: Award, title: "배포/문서화", value: "Docker · Swagger" },
   ];
 
   const skills = [
@@ -256,56 +256,73 @@ function AboutPage() {
       icon: Code,
       skills: [
         "React & TypeScript",
+        "React Native",
         "JavaScript (ES6+)",
-        "HTML5 & CSS3",
-        "Styled Components",
-        "Responsive Design",
+        "Tailwind CSS",
+        "Shadcn UI",
+        "Zustand / Jotai",
       ],
     },
     {
-      category: "Backend & API",
+      category: "Backend & AI",
       icon: Brain,
       skills: [
-        "Java & JSP",
-        "REST API 개발",
-        "Spring Framework",
-        "서버 사이드 렌더링",
-        "API 설계 및 구현",
+        "Java & Spring Boot",
+        "Python & FastAPI",
+        "REST API",
+        "Swagger 문서화",
+        "OpenAI / Claude / ElevenLabs",
+      ],
+    },
+    {
+      category: "Mobile & Realtime",
+      icon: Smartphone,
+      skills: [
+        "Android Native",
+        "WebView Bridge",
+        "WebRTC / WebSocket",
+        "오디오 스트리밍",
+        "상태 동기화",
       ],
     },
     {
       category: "Database & Cloud",
-      icon: Smartphone,
+      icon: Zap,
       skills: [
-        "MySQL, PostgreSQL, Oracle",
-        "AWS EC2 서버 구축",
-        "AWS S3 스토리지",
-        "데이터베이스 설계",
-        "클라우드 인프라 관리",
+        "PostgreSQL / MySQL / Redis",
+        "AWS EC2 / S3",
+        "Docker",
+        "Jenkins",
+        "Git / Linux",
       ],
     },
   ];
 
   const timeline = [
     {
-      date: "2024.01 - 2024.12",
-      title: "AI 인터뷰 플랫폼 고도화",
-      description: "LLM 기반 지능형 인터뷰 시스템 구축 및 성능 최적화",
+      date: "2025.04 - 2026.04",
+      title: "유탑소프트 · Convergence Lab",
+      description: "AI 기반 LLM 서비스의 Android Native 앱 기능 구현, React(TypeScript) WebView 개발, 실시간 스트리밍과 전역 상태 관리를 담당",
     },
     {
-      date: "2023.01 - 2023.12",
-      title: "AI 인터뷰 플랫폼 개발",
-      description: "실시간 음성 인터뷰 시스템 및 크로스 플랫폼 솔루션 구현",
+      date: "2024.04 - 2025.04",
+      title: "앱인앱 주문채널 신규 구축",
+      description: "React(TypeScript) 프론트엔드, Spring Boot·PostgreSQL API, AWS EC2·Jenkins 배포 자동화, JWT 인증, PG/OKPOS 연동",
     },
     {
-      date: "2022.01 - 2022.12",
-      title: "웹 애플리케이션 개발",
-      description: "React 기반 대규모 웹 애플리케이션 개발 및 유지보수",
+      date: "2023.01 - 2024.03",
+      title: "홈페이지 및 모바일 앱 운영",
+      description: "고객/임직원/협력사 3종 앱 유지보수, 기능 추가, JIRA·Confluence 요청 대응, 365일 운영 대응",
     },
     {
-      date: "2021.01 - 2021.12",
-      title: "프론트엔드 개발 시작",
-      description: "React 생태계 학습 및 첫 프로젝트 참여",
+      date: "2022.08 - 2022.12",
+      title: "SAP U4A ERP QA 모듈 구축",
+      description: "ABAP, SAP HANA Cloud 기반 ERP QA 모듈 개발과 보안 규율이 엄격한 환경에서의 협업 경험",
+    },
+    {
+      date: "2021.05 - 2022.04",
+      title: "결제 앱 솔루션 개발",
+      description: "Java, JSP, Android 네이티브 앱과 NICE PG/VAN 결제 연동 구현",
     },
   ];
 
@@ -328,10 +345,9 @@ function AboutPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            4년간의 프론트엔드 개발 경험을 바탕으로 AI 기술과의 융합을 통해
-            혁신적인 사용자 경험을 창출하는 개발자입니다. 특히 AI 인터뷰 플랫폼
-            개발을 통해 LLM 기반 실시간 음성 인터랙션 시스템을 구축한 경험이
-            있습니다.
+            5년간의 실무 경험을 바탕으로 AI 서비스, 모바일 브리지, 결제/주문 시스템까지
+            폭넓게 다뤄온 개발자입니다. 현재는 유탑소프트에서 AI 기반 LLM 서비스의
+            Android Native 앱 기능 구현과 React(TypeScript) WebView 개발을 주도하고 있습니다.
           </SectionSubtitle>
         </Section>
 
@@ -356,25 +372,24 @@ function AboutPage() {
                 <Brain size={28} />
               </ProjectIcon>
               <ProjectInfo>
-                <ProjectTitle>AI 인터뷰 플랫폼 개발</ProjectTitle>
-                <ProjectPeriod>2023.01 - 2024.12</ProjectPeriod>
+                <ProjectTitle>AI 인터랙티브 아바타 플랫폼</ProjectTitle>
+                <ProjectPeriod>2025.04 - 2026.04</ProjectPeriod>
               </ProjectInfo>
             </ProjectHeader>
 
             <ProjectDescription>
-              React와 TypeScript를 활용한 대규모 웹 애플리케이션을 개발했습니다.
-              사용자 친화적인 인터페이스와 고성능을 제공하며, 반응형 디자인과
-              모던 JavaScript를 활용하여 최적화된 사용자 경험을 구현했습니다.
+              OpenAI Whisper(STT) → GPT-4o-mini/Claude 3.5 → ElevenLabs TTS → LiveAvatar 립싱크로
+              이어지는 엔드투엔드 AI 파이프라인을 설계·구현했습니다. WebRTC 기반 실시간 스트리밍과
+              WebSocket 오디오 전송, 예외 처리와 재시도 전략까지 포함해 운영 안정성을 높였습니다.
             </ProjectDescription>
 
             <TechStack>
-              <TechTag>React</TechTag>
-              <TechTag>TypeScript</TechTag>
-              <TechTag>JavaScript(ES6+)</TechTag>
-              <TechTag>HTML5</TechTag>
-              <TechTag>CSS3</TechTag>
-              <TechTag>Styled Components</TechTag>
-              <TechTag>Responsive Design</TechTag>
+              <TechTag>OpenAI</TechTag>
+              <TechTag>ElevenLabs</TechTag>
+              <TechTag>LiveKit</TechTag>
+              <TechTag>WebRTC</TechTag>
+              <TechTag>WebSocket</TechTag>
+              <TechTag>React Native</TechTag>
             </TechStack>
 
             <AchievementsGrid>

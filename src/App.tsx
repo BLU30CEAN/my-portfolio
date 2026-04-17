@@ -3,20 +3,15 @@ import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Home,
-  User,
-  Briefcase,
-  MessageSquare,
   ChevronUp,
   Menu,
   X,
-  Heart,
-  Code,
 } from "lucide-react";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import ContactPage from "./pages/ContactPage";
+import WordBaseballPage from "./pages/WordBaseballPage";
 import ThemeToggle from "./components/ThemeToggle";
 import { ThemeProvider as CustomThemeProvider } from "./contexts/ThemeContext";
 
@@ -380,21 +375,6 @@ function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-        const navItems = [
-        { name: "Home", id: "home", icon: Home },
-        { name: "About", id: "about", icon: User },
-        { name: "Projects", id: "projects", icon: Briefcase },
-      
-        { name: "Contact", id: "contact", icon: MessageSquare },
-      ];
-
   return (
     <CustomThemeProvider>
       <GlobalStyle />
@@ -414,7 +394,7 @@ function App() {
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     } else {
                       // 다른 페이지에 있으면 홈으로 이동
-                      window.location.href = '/';
+                      window.location.hash = '#/';
                     }
                   }}
                 >
@@ -555,6 +535,8 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/projects" element={<ProjectsPage />} />
+                <Route path="/kwb" element={<WordBaseballPage />} />
+                <Route path="/word-baseball" element={<WordBaseballPage />} />
                 <Route path="/contact" element={<ContactPage />} />
               </Routes>
             </MainContent>

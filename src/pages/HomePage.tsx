@@ -1,21 +1,14 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
-  Code,
-  Smartphone,
-  Brain,
   Zap,
   TrendingUp,
   Users,
   Award,
   Github,
-  Linkedin,
   Mail,
-  Database,
-  Cloud,
-  Server,
 } from "lucide-react";
 
 const HomeContainer = styled.div`
@@ -597,142 +590,6 @@ const TechName = styled.div`
   }
 `;
 
-const ExperienceTimeline = styled.div`
-  position: relative;
-  margin-top: 4rem;
-
-  &::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: ${(props) => props.theme.colors.primary};
-    transform: translateX(-50%);
-
-    @media (max-width: 768px) {
-      left: 20px;
-    }
-  }
-`;
-
-const ExperienceItem = styled(motion.div)`
-  position: relative;
-  margin-bottom: 3rem;
-  display: flex;
-  align-items: center;
-
-  &:nth-child(odd) {
-    flex-direction: row;
-
-    @media (max-width: 768px) {
-      flex-direction: column;
-      align-items: flex-start;
-      margin-left: 40px;
-    }
-  }
-
-  &:nth-child(even) {
-    flex-direction: row-reverse;
-
-    @media (max-width: 768px) {
-      flex-direction: column;
-      align-items: flex-start;
-      margin-left: 40px;
-    }
-  }
-`;
-
-const ExperienceContent = styled.div`
-  flex: 1;
-  background: ${(props) => props.theme.colors.surface};
-  border: 1px solid ${(props) => props.theme.colors.border};
-  border-radius: 20px;
-  padding: 2rem;
-  position: relative;
-  max-width: 500px;
-
-  &:nth-child(odd) {
-    margin-right: 3rem;
-
-    @media (max-width: 768px) {
-      margin-right: 0;
-      margin-top: 1rem;
-    }
-  }
-
-  &:nth-child(even) {
-    margin-left: 3rem;
-
-    @media (max-width: 768px) {
-      margin-left: 0;
-      margin-top: 1rem;
-    }
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 20px;
-    height: 20px;
-    background: ${(props) => props.theme.colors.primary};
-    border-radius: 50%;
-    transform: translateY(-50%);
-  }
-
-  &:nth-child(odd)::before {
-    right: -40px;
-
-    @media (max-width: 768px) {
-      left: -40px;
-      right: auto;
-    }
-  }
-
-  &:nth-child(even)::before {
-    left: -40px;
-
-    @media (max-width: 768px) {
-      left: -40px;
-    }
-  }
-`;
-
-const ExperiencePeriod = styled.div`
-  font-size: 0.9rem;
-  color: ${(props) => props.theme.colors.primary};
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-`;
-
-const ExperienceCompany = styled.div`
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: ${(props) => props.theme.colors.text};
-  margin-bottom: 0.5rem;
-`;
-
-const ExperiencePosition = styled.div`
-  font-size: 1rem;
-  color: ${(props) => props.theme.colors.textSecondary};
-  margin-bottom: 1rem;
-`;
-
-const ExperienceDescription = styled.div`
-  font-size: 0.95rem;
-  color: ${(props) => props.theme.colors.textSecondary};
-  line-height: 1.6;
-`;
-
-const ExperienceTech = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1rem;
-`;
-
 const TechTag = styled.span`
   background: ${(props) => props.theme.colors.primary}20;
   color: ${(props) => props.theme.colors.primary};
@@ -1089,40 +946,6 @@ const GuestbookButton = styled(motion.button)`
 
 
 
-const ScrollIndicator = styled(motion.div)`
-  position: absolute;
-  bottom: calc(3rem + 5vh);
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  color: ${(props) => props.theme.colors.textSecondary};
-  cursor: pointer;
-  z-index: 10;
-
-  @media (max-width: 768px) {
-    bottom: calc(2rem + 5vh);
-  }
-`;
-
-const ScrollText = styled.span`
-  font-size: 0.9rem;
-  font-weight: 500;
-`;
-
-const ScrollIcon = styled(motion.div)`
-  width: 30px;
-  height: 30px;
-  border: 2px solid ${(props) => props.theme.colors.primary};
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${(props) => props.theme.colors.primary};
-`;
-
 function HomePage() {
   const containerRef = useRef(null);
   const [activeTab, setActiveTab] = useState('professional');
@@ -1130,16 +953,25 @@ function HomePage() {
   const [guestbookName, setGuestbookName] = useState('');
   const [guestbookMessage, setGuestbookMessage] = useState('');
   const [showGuestbookToast, setShowGuestbookToast] = useState(false);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
+
+  const KWB_ROUTE = "/kwb";
+  const KWB_REPO_URL = "https://github.com/BLU30CEAN/korean-baseball";
+
+  const openWordBaseballGame = () => {
+    const url = new URL(window.location.href);
+    url.hash = KWB_ROUTE;
+    window.open(url.toString(), "_blank", "noopener,noreferrer");
+  };
+
+  const openWordBaseballRepo = () => {
+    window.open(KWB_REPO_URL, "_blank", "noopener,noreferrer");
+  };
 
   const stats = [
-    { number: "4년", label: "개발 경험", icon: Award },
+    { number: "5년", label: "개발 경험", icon: Award },
     { number: "5개", label: "대기업 프로젝트", icon: Users },
-    { number: "15+", label: "기술 스택", icon: TrendingUp },
-    { number: "AI", label: "최신 기술", icon: Zap },
+    { number: "20+", label: "기술 스택", icon: TrendingUp },
+    { number: "AI", label: "서비스 역량", icon: Zap },
   ];
 
   const techStackCategories = [
@@ -1248,44 +1080,6 @@ function HomePage() {
         },
       ]
     },
-  ];
-
-  const experience = [
-    {
-      period: "2025.04 ~ 현재",
-      company: "AI 기술 스타트업",
-      position: "풀스택 개발자",
-      description: "AI 음성인식 기반 네이티브 앱 내 웹뷰 개발. React, TypeScript를 활용한 AI 자서전 프로젝트 진행 중. LLM을 통한 음성인식 및 프롬프트 엔지니어링 기술 적용.",
-      tech: ["React", "TypeScript", "LLM", "음성인식", "프롬프트 엔지니어링"]
-    },
-    {
-      period: "2024.04 ~ 2025.02",
-      company: "IT 솔루션 기업",
-      position: "풀스택 개발자",
-      description: "대형 유통업체 앱인앱 주문채널 오픈 구축. AWS EC2 서버 환경 구축 및 CI/CD 파이프라인 구축. JWT 토큰 기반 보안 시스템 구현. PG사 연동 및 결제 시스템 개발.",
-      tech: ["React", "TypeScript", "Spring Boot", "PostgreSQL", "AWS", "Jenkins", "JWT"]
-    },
-    {
-      period: "2023.01 ~ 2024.03",
-      company: "IT 솔루션 기업",
-      position: "웹/앱 개발자",
-      description: "대형 유통업체 홈페이지 및 모바일 앱 운영. 고객/임직원/협력사 3개 인하우스 앱 운영. JIRA, Confluence를 통한 요청 대응 및 연중무휴 운영.",
-      tech: ["Java", "Android", "iOS", "JavaScript", "PostgreSQL", "JIRA"]
-    },
-    {
-      period: "2022.08 ~ 2022.12",
-      company: "IT 솔루션 기업",
-      position: "SI 개발자",
-      description: "대형 제조업체 SAP U4A ERP 구축. Back-Office QA모듈 ERP 제작. ABAP, SAP HANA Cloud 활용한 엔터프라이즈 솔루션 개발.",
-      tech: ["ABAP", "SAP HANA", "ERP", "U4A 프레임워크"]
-    },
-    {
-      period: "2021.05 ~ 2022.04",
-      company: "결제 솔루션 기업",
-      position: "웹/앱 개발자 (수행)",
-      description: "결제 앱 솔루션 및 안드로이드 네이티브 앱 개발. Java, JSP를 활용한 관리자 페이지 구축. NICE PG결제, VAN결제 연동 시스템 개발 및 구현.",
-      tech: ["Java", "JSP", "Android", "PG결제", "VAN결제", "JavaScript"]
-    }
   ];
 
   const handleGuestbookSubmit = async () => {
@@ -1418,7 +1212,7 @@ function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-              프론트엔드 개발자
+              풀스택 개발자 · AI 서비스 개발자
           </Title>
 
           <Description
@@ -1426,13 +1220,12 @@ function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-              4년간의 풀스택 개발 경험을 바탕으로<br />
-              React, TypeScript, Spring Boot를 활용한<br />
-              확장 가능한 웹 애플리케이션을 개발합니다.
+              5년간의 풀스택 개발 경험을 바탕으로<br />
+              React, TypeScript, React Native, Spring Boot, FastAPI를 활용해<br />
+              웹·모바일·AI 서비스를 연결하는 제품을 개발합니다.
               <br /><br />
-              결제 시스템부터 AI 서비스까지,<br />
-              다양한 도메인에서의 경험을 바탕으로<br />
-              사용자 중심의 솔루션을 개발합니다.
+              앱-웹 브릿지, 실시간 스트리밍, 전역 상태 관리, DevOps 자동화까지<br />
+              한 흐름으로 설계하고 구현합니다.
           </Description>
 
           <CTAButton
@@ -1462,7 +1255,7 @@ function HomePage() {
               <Github size={20} />
             </SocialLink>
             <SocialLink 
-              href={`mailto:${process.env.REACT_APP_PERSONAL_EMAIL || "bigeunjun@naver.com"}`}
+              href={`mailto:${process.env.REACT_APP_PERSONAL_EMAIL || "ej.an.company@gmail.com"}`}
             >
               <Mail size={20} />
             </SocialLink>
@@ -1478,7 +1271,7 @@ function HomePage() {
             >
               <Image 
                 src="/profile.jpg"
-                alt={`${process.env.REACT_APP_PERSONAL_NAME || "EJ"} - Frontend Developer`}
+                alt={`${process.env.REACT_APP_PERSONAL_NAME || "EJ"} - Full-Stack Developer`}
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
@@ -1564,11 +1357,15 @@ function HomePage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              4년간의 다양한 개발 경험을 통해 프론트엔드부터 백엔드, 인프라까지
+              5년간의 다양한 개발 경험을 통해 프론트엔드부터 백엔드, 모바일, AI 서비스까지
               <br />
               전체 개발 생태계를 다루는 풀스택 개발자로 성장했습니다.
               <br /><br />
-              결제 시스템부터 AI 서비스까지, 다양한 도메인에서의 경험을 바탕으로
+              유탑소프트에서는 AI 기반 LLM 서비스의 Android Native 앱 기능 구현과
+              <br />
+              React(TypeScript) 기반 WebView 페이지 개발을 주도하고 있습니다.
+              <br /><br />
+              결제 시스템, WebView 연동, 실시간 스트리밍까지 다양한 도메인에서의 경험을 바탕으로
               <br />
               사용자 중심의 솔루션을 개발합니다.
               <br /><br />
@@ -1742,15 +1539,15 @@ function HomePage() {
                 viewport={{ once: true }}
                 whileHover={{ scale: 1.02 }}
               >
-                    <ProjectTitle>AI 자서전</ProjectTitle>
+                    <ProjectTitle>AI 인터랙티브 아바타 플랫폼</ProjectTitle>
                     <ProjectDescription>
-                      AI 음성인식 기반 네이티브 앱 내 웹뷰 개발. React, TypeScript를 활용한 LLM 기반 음성인식 및 프롬프트 엔지니어링 기술 적용.
+                      OpenAI Whisper(STT) → GPT-4o-mini/Claude 3.5 → ElevenLabs TTS → LiveAvatar 립싱크로 이어지는 엔드투엔드 AI 파이프라인을 설계·구현했습니다. WebRTC 기반 실시간 스트리밍과 WebSocket 오디오 전송으로 지연시간을 낮추고, 에러 처리와 재시도 전략을 적용했습니다.
                     </ProjectDescription>
                     <ProjectTech>
-                      <TechTag>React</TechTag>
-                      <TechTag>TypeScript</TechTag>
-                      <TechTag>LLM</TechTag>
-                      <TechTag>음성인식</TechTag>
+                      <TechTag>OpenAI</TechTag>
+                      <TechTag>ElevenLabs</TechTag>
+                      <TechTag>LiveKit</TechTag>
+                      <TechTag>WebRTC</TechTag>
                     </ProjectTech>
                   </ProjectCard>
 
@@ -1763,7 +1560,7 @@ function HomePage() {
                   >
                     <ProjectTitle>앱인앱 주문채널</ProjectTitle>
                     <ProjectDescription>
-                      대형 유통업체 앱인앱 주문채널 오픈 구축. AWS EC2 서버 환경 구축 및 CI/CD 파이프라인 구축. JWT 토큰 기반 보안 시스템 구현. DataDog, GTM, GA를 활용한 모니터링 및 분석 시스템 구축.
+                      React(TypeScript) 기반 앱인앱 주문채널 프론트엔드 구축과 Android Native 앱 WebView 연동을 주도했습니다. Spring Boot·PostgreSQL 주문 API, AWS EC2/Jenkins 배포 자동화, JWT 인증, NICE Payments/OKPOS 연동, Datadog·GA·GTM 분석까지 함께 구현했습니다.
                     </ProjectDescription>
                     <ProjectTech>
                       <TechTag>React</TechTag>
@@ -1783,15 +1580,15 @@ function HomePage() {
                     viewport={{ once: true }}
                     whileHover={{ scale: 1.02 }}
                   >
-                    <ProjectTitle>Java Spring Boot API</ProjectTitle>
+                    <ProjectTitle>LLM 오케스트레이션 API</ProjectTitle>
                     <ProjectDescription>
-                      RESTful API 서버 구축 및 마이크로서비스 아키텍처 구현. JPA, Hibernate를 활용한 데이터베이스 설계 및 Spring Security를 통한 인증/인가 시스템 구축.
+                      Spring Boot 메인 API와 Python FastAPI 기반 ML 서비스를 분리한 마이크로서비스 구조를 설계했습니다. Swagger 문서화, 비동기 통신, Docker 배포를 통해 확장 가능한 백엔드 통합 환경을 구축했습니다.
                     </ProjectDescription>
                     <ProjectTech>
                       <TechTag>Java</TechTag>
                       <TechTag>Spring Boot</TechTag>
-                      <TechTag>JPA</TechTag>
-                      <TechTag>MySQL</TechTag>
+                      <TechTag>Python</TechTag>
+                      <TechTag>FastAPI</TechTag>
                     </ProjectTech>
                   </ProjectCard>
 
@@ -1802,15 +1599,15 @@ function HomePage() {
                     viewport={{ once: true }}
                     whileHover={{ scale: 1.02 }}
                   >
-                    <ProjectTitle>Android 네이티브 앱</ProjectTitle>
+                    <ProjectTitle>AI 기반 LLM 서비스 Android Native 앱</ProjectTitle>
                     <ProjectDescription>
-                      Java/Kotlin을 활용한 안드로이드 네이티브 앱 개발. MVVM 패턴 적용 및 Room 데이터베이스, Retrofit 네트워킹 라이브러리 활용.
+                      AI 기반 LLM 서비스의 Android Native 앱 기능 구현과 React(TypeScript) WebView 페이지 개발을 담당했습니다. 앱-웹 브릿지, 네이티브 기능 연동, Zustand/Jotai 상태 관리, Tailwind CSS·Shadcn UI 기반 UI 구현으로 일관된 사용자 경험을 맞췄습니다.
                     </ProjectDescription>
                     <ProjectTech>
-                      <TechTag>Java</TechTag>
-                      <TechTag>Kotlin</TechTag>
                       <TechTag>Android</TechTag>
-                      <TechTag>MVVM</TechTag>
+                      <TechTag>React</TechTag>
+                      <TechTag>TypeScript</TechTag>
+                      <TechTag>WebView</TechTag>
                     </ProjectTech>
                   </ProjectCard>
 
@@ -1821,15 +1618,15 @@ function HomePage() {
                     viewport={{ once: true }}
                     whileHover={{ scale: 1.02 }}
                   >
-                    <ProjectTitle>결제 솔루션</ProjectTitle>
+                    <ProjectTitle>결제 시스템 연동</ProjectTitle>
                     <ProjectDescription>
-                      결제 앱 솔루션 및 안드로이드 네이티브 앱 개발. Java, JSP를 활용한 관리자 페이지 구축. NICE PG결제, VAN결제 연동 시스템 개발.
+                      NICE Payments와 OKPOS 연동을 통해 주문-결제 흐름을 구현했습니다. 로그인 시 DB 조회를 최소화하고 JWT Access/Refresh Token 인증을 적용해 보안성과 응답 속도를 함께 개선했습니다.
                     </ProjectDescription>
                     <ProjectTech>
                       <TechTag>Java</TechTag>
-                      <TechTag>JSP</TechTag>
-                      <TechTag>Android</TechTag>
-                      <TechTag>PG결제</TechTag>
+                      <TechTag>Spring Boot</TechTag>
+                      <TechTag>JWT</TechTag>
+                      <TechTag>Payments</TechTag>
                     </ProjectTech>
                   </ProjectCard>
 
@@ -1840,16 +1637,16 @@ function HomePage() {
                     viewport={{ once: true }}
                     whileHover={{ scale: 1.02 }}
                   >
-                    <ProjectTitle>AI 상담 어시스턴트</ProjectTitle>
+                    <ProjectTitle>실시간 AI 상담 어시스턴트</ProjectTitle>
                     <ProjectDescription>
-                      LLM 기반 AI 상담 어시스턴트 개발. 실시간 소켓 통신을 통한 대화형 AI 시스템 구축. 프롬프트 엔지니어링을 활용한 자연스러운 대화 구현.
+                      LLM 기반 실시간 상담 흐름을 설계하고, WebSocket 기반 대화 스트리밍과 프롬프트 히스토리 관리로 자연스러운 응답 품질을 개선했습니다.
                     </ProjectDescription>
                     <ProjectTech>
                       <TechTag>React</TechTag>
                       <TechTag>TypeScript</TechTag>
                       <TechTag>LLM</TechTag>
-                      <TechTag>소켓통신</TechTag>
-                      <TechTag>프롬프트엔지니어링</TechTag>
+                      <TechTag>WebSocket</TechTag>
+                      <TechTag>Prompt</TechTag>
                     </ProjectTech>
                   </ProjectCard>
                 </ProjectsGrid>
@@ -1883,7 +1680,7 @@ function HomePage() {
                         🎮 게임하기
                       </ProjectButton>
                       <ProjectButton
-                        onClick={() => window.open('https://github.com/yourusername/find-carrot', '_blank')}
+                        onClick={() => window.open('https://github.com/BLU30CEAN/find-carrot', '_blank')}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
@@ -1922,7 +1719,7 @@ function HomePage() {
                         🚫 임시 비활성화
                       </ProjectButton>
                       <ProjectButton
-                        onClick={() => window.open('https://github.com/yourusername/netflix-clone', '_blank')}
+                        onClick={() => window.open('https://github.com/BLU30CEAN/netflix-clone', '_blank')}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
@@ -1957,7 +1754,43 @@ function HomePage() {
                         🎮 게임하기
                       </ProjectButton>
                       <ProjectButton
-                        onClick={() => window.open('https://github.com/yourusername/tetris', '_blank')}
+                        onClick={() => window.open('https://github.com/BLU30CEAN/rabris', '_blank')}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        📁 코드보기
+                      </ProjectButton>
+                    </ProjectActions>
+                  </ProjectCard>
+
+                  <ProjectCard
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.35 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.02 }}
+                  >
+                    <ProjectTitle>KWB</ProjectTitle>
+                    <ProjectDescription>
+                      KWB(Korean Word Baseball)를 포트폴리오에서 바로 실행할 수 있도록 붙인 한글 워드 야구 게임이다.
+                      GitHub raw 공개 단어 데이터를 불러와 자모 입력, strike/ball/out 판정, 로컬 통계 저장, 새 게임 시작을 지원한다.
+                    </ProjectDescription>
+                    <ProjectTech>
+                      <TechTag>React</TechTag>
+                      <TechTag>TypeScript</TechTag>
+                      <TechTag>Hangul Decomposition</TechTag>
+                      <TechTag>Keyboard Input</TechTag>
+                    </ProjectTech>
+                    <ProjectActions>
+                      <ProjectButton
+                        onClick={openWordBaseballGame}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        🎮 게임하기
+                      </ProjectButton>
+                      <ProjectButton
+                        onClick={openWordBaseballRepo}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
@@ -2086,8 +1919,8 @@ function HomePage() {
               >
                 <ContactItemTitle>🚀 기술 스택</ContactItemTitle>
                 <ContactItemText>
-                  React, TypeScript, Spring Boot<br />
-                  AWS, Docker, PostgreSQL
+                  React, TypeScript, React Native, Spring Boot<br />
+                  Python, FastAPI, AWS, Docker, PostgreSQL
                 </ContactItemText>
               </ContactItem>
 

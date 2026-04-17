@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { ThemeProvider as StyledThemeProvider, DefaultTheme } from "styled-components";
+import { ThemeProvider as StyledThemeProvider } from "styled-components";
 
 // 테마 타입 확장
 declare module "styled-components" {
@@ -109,14 +109,16 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const currentTheme = getEffectiveTheme() === "dark" ? darkTheme : lightTheme;
 
   useEffect(() => {
+    const effectiveTheme = theme === "device" ? getSystemTheme() : theme;
     localStorage.setItem("theme", theme);
-    setIsDark(getEffectiveTheme() === "dark");
+    setIsDark(effectiveTheme === "dark");
 
     // 시스템 테마 변경 감지
     if (theme === "device") {
       const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
       const handleChange = () => {
-        setIsDark(getEffectiveTheme() === "dark");
+        const nextEffectiveTheme = theme === "device" ? getSystemTheme() : theme;
+        setIsDark(nextEffectiveTheme === "dark");
       };
       
       mediaQuery.addEventListener("change", handleChange);

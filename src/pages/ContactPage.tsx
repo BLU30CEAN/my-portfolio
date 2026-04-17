@@ -416,22 +416,22 @@ function ContactPage() {
       icon: Code,
       title: "Frontend Development",
       description:
-        "React, TypeScript, JavaScript(ES6+), HTML5, CSS3 등 프론트엔드 기술",
+        "React, TypeScript, React Native, JavaScript(ES6+), Tailwind CSS, Shadcn UI",
     },
     {
       icon: Brain,
-      title: "Backend & API",
-      description: "Java, JSP, REST API 개발, Spring Framework 활용",
+      title: "Backend & AI",
+      description: "Java, Spring Boot, Python, FastAPI, REST API, Swagger",
     },
     {
       icon: Smartphone,
       title: "Database & Cloud",
-      description: "MySQL, PostgreSQL, Oracle, AWS EC2/S3, 클라우드 인프라",
+      description: "PostgreSQL, MySQL, Redis, AWS EC2/S3, Docker",
     },
     {
       icon: Zap,
       title: "DevOps & Tools",
-      description: "Jenkins, Git, GitHub/GitLab, Linux, GTM, Datadog",
+      description: "Jenkins, Git, Linux, GTM, Datadog, CI/CD",
     },
   ];
 
@@ -466,7 +466,11 @@ function ContactPage() {
           <ThankYouText>
             제 포트폴리오를 방문해주셔서 정말 감사합니다. 
             <br />
-            4년간의 개발 경험을 바탕으로 사용자 중심의 솔루션을 개발하고 있습니다.
+            5년간의 개발 경험을 바탕으로 사용자 중심의 솔루션을 개발하고 있습니다.
+            <br />
+            현재는 유탑소프트에서 AI 기반 LLM 서비스의 Android Native 앱과
+            <br />
+            React(TypeScript) WebView 개발을 담당하고 있습니다.
             <br />
             새로운 기술 학습과 문제 해결에 대한 열정을 가지고 있으며,
             <br />
@@ -489,8 +493,8 @@ function ContactPage() {
                 이메일
               </ContactCardTitle>
               <ContactCardContent>
-                <ContactLink href="mailto:contact@ej.dev">
-                  contact@ej.dev
+                <ContactLink href="mailto:ej.an.company@gmail.com">
+                  ej.an.company@gmail.com
                 </ContactLink>
                 <br />
                 업무 시간: 평일 9:00 - 18:00
@@ -511,7 +515,7 @@ function ContactPage() {
                 프로젝트와 업데이트를 확인하세요
                 <SocialLinks>
                   <SocialLink
-                    href="https://github.com"
+                    href="https://github.com/BLU30CEAN"
                     target="_blank"
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.1 }}
@@ -520,7 +524,7 @@ function ContactPage() {
                     <Github size={20} />
                   </SocialLink>
                   <SocialLink
-                    href="https://linkedin.com"
+                    href="https://linkedin.com/in/eunchan"
                     target="_blank"
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.1 }}
