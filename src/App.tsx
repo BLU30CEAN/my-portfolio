@@ -355,7 +355,7 @@ function App() {
       setIsScrolled(window.scrollY > 50);
       
       // 스크롤 위치에 따른 활성 섹션 감지
-      const sections = ['home', 'about', 'projects', 'contact'];
+      const sections = ["home", "about", "references", "projects", "contact"];
       const scrollPosition = window.scrollY + window.innerHeight / 2;
       
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -432,6 +432,21 @@ function App() {
                     About
                   </NavLink>
                   <NavLink
+                    $isActive={activeSection === 'references'}
+                    onClick={() => {
+                      document
+                        .getElementById("references")
+                        ?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.25 }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    References
+                  </NavLink>
+                  <NavLink
                     $isActive={activeSection === 'projects'}
                     onClick={() => {
                       const projectsSection = document.getElementById('projects');
@@ -500,6 +515,19 @@ function App() {
                       whileTap={{ scale: 0.95 }}
                     >
                       About
+                    </MobileNavLink>
+                    <MobileNavLink
+                      $isActive={activeSection === 'references'}
+                      onClick={() => {
+                        document
+                          .getElementById('references')
+                          ?.scrollIntoView({ behavior: 'smooth' });
+                        setIsMobileMenuOpen(false);
+                      }}
+                      whileHover={{ x: 10 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      References
                     </MobileNavLink>
                     <MobileNavLink
                       $isActive={activeSection === 'projects'}

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -9,7 +9,143 @@ import {
   Award,
   Github,
   Mail,
+  ExternalLink,
 } from "lucide-react";
+
+/** 렌더마다 바뀌는 Math.random 패턴 방지용 — 레이아웃·리사이즈 시 안정적 */
+function makeBackdropDots(count: number, salt: number) {
+  return Array.from({ length: count }, (_, i) => ({
+    left: `${((i * 17 + salt * 3) % 86) + 6}%`,
+    top: `${((i * 23 + salt * 7) % 80) + 8}%`,
+    duration: 3.2 + (i % 4) * 0.35,
+    delay: ((i * 41) % 12) * 0.14,
+  }));
+}
+
+type DevReferenceEntry = {
+  title: string;
+  href: string;
+  note: string;
+  tag: string;
+};
+
+const DEV_REFERENCE_ENTRIES: readonly DevReferenceEntry[] = [
+  {
+    tag: "UI",
+    title: "React (공식 문서)",
+    href: "https://react.dev/",
+    note: "컴포넌트·훅·동시성 렌더링 기준점.",
+  },
+  {
+    tag: "Types",
+    title: "TypeScript Handbook",
+    href: "https://www.typescriptlang.org/docs/handbook/intro.html",
+    note: "프론트·백 타입 안전 레이어링.",
+  },
+  {
+    tag: "State",
+    title: "Zustand 문서",
+    href: "https://docs.pmnd.rs/zustand/getting-started/introduction",
+    note: "경량 클라 전역 상태(모바일·웹 브리지 포함).",
+  },
+  {
+    tag: "API",
+    title: "OpenAPI Specification (Swagger)",
+    href: "https://swagger.io/specification/",
+    note: "REST 계약과 문서 생성의 표준 레퍼런스.",
+  },
+  {
+    tag: "Backend",
+    title: "Spring Boot Reference",
+    href: "https://docs.spring.io/spring-boot/reference/index.html",
+    note: "엔터프라이즈 백엔드·설정 관례.",
+  },
+  {
+    tag: "ML API",
+    title: "FastAPI",
+    href: "https://fastapi.tiangolo.com/",
+    note: "Python 서비스·OpenAPI 노출 패턴.",
+  },
+  {
+    tag: "DB",
+    title: "PostgreSQL Documentation",
+    href: "https://www.postgresql.org/docs/current/",
+    note: "쿼리·인덱스·트랜잭션 설계 근거.",
+  },
+  {
+    tag: "UI",
+    title: "TanStack Query (React)",
+    href: "https://tanstack.com/query/latest/docs/framework/react/overview",
+    note: "서버 상태·캐시·재요청 정책 레퍼런스(프로젝트 의존성 기준).",
+  },
+  {
+    tag: "Runtime",
+    title: "MDN — WebSocket API",
+    href: "https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API",
+    note: "실시간 이벤트 채널 구현 레퍼런스.",
+  },
+  {
+    tag: "Media",
+    title: "MDN — WebRTC API",
+    href: "https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API",
+    note: "P2S/미디어 스트림 계약 확인.",
+  },
+  {
+    tag: "Real-time",
+    title: "LiveKit Docs",
+    href: "https://docs.livekit.io/",
+    note: "WebRTC 미디어 인프라·클라이언트 SDK.",
+  },
+  {
+    tag: "AI",
+    title: "OpenAI Platform — Speech to text",
+    href: "https://platform.openai.com/docs/guides/speech-to-text",
+    note: "STT 호출 규격·제한 확인.",
+  },
+  {
+    tag: "AI",
+    title: "OpenAI Platform — Text to speech",
+    href: "https://platform.openai.com/docs/guides/text-to-speech",
+    note: "TTS 출력 포맷·스트리밍 옵션.",
+  },
+  {
+    tag: "AI",
+    title: "OpenAI API Reference",
+    href: "https://platform.openai.com/docs/api-reference",
+    note: "챗·추론 요청 표준 레퍼런스.",
+  },
+  {
+    tag: "AI",
+    title: "Anthropic Claude API — Overview",
+    href: "https://docs.anthropic.com/en/api/getting-started",
+    note: "Claude 메시지 API·인증·레이트리밋 레퍼런스 허브.",
+  },
+  {
+    tag: "Voice",
+    title: "ElevenLabs Documentation",
+    href: "https://elevenlabs.io/docs",
+    note: "TTS 엔진·실시간 API 문서 허브.",
+  },
+  {
+    tag: "Ops",
+    title: "Docker Documentation",
+    href: "https://docs.docker.com/",
+    note: "배포 이식성·이미지·컴포즈 패턴.",
+  },
+  {
+    tag: "Cloud",
+    title: "AWS Documentation",
+    href: "https://docs.aws.amazon.com/",
+    note: "EC2 등 인프라·보안 레퍼런스 허브.",
+  },
+];
+
+const BD_HOME = makeBackdropDots(20, 1);
+const BD_ABOUT = makeBackdropDots(15, 2);
+const BD_TECH = makeBackdropDots(10, 3);
+const BD_PROJECTS = makeBackdropDots(10, 4);
+const BD_REFS = makeBackdropDots(8, 5);
+const BD_CONTACT = makeBackdropDots(8, 6);
 
 const HomeContainer = styled.div`
   min-height: 100vh;
@@ -77,6 +213,144 @@ const TechStackSection = styled(Section)`
 `;
 
 const ProjectsSection = styled(Section)``;
+const ReferencesSection = styled(Section)`
+  padding: clamp(4rem, 10vw, 6rem) 1.5rem;
+  scroll-snap-align: start;
+
+  &::before {
+    opacity: 0.55;
+  }
+`;
+
+const ReferencesInner = styled.div`
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  z-index: 1;
+`;
+
+const ReferencesLead = styled.p`
+  text-align: center;
+  color: ${(props) => props.theme.colors.textSecondary};
+  font-size: 0.92rem;
+  line-height: 1.65;
+  max-width: 52ch;
+  margin: -2rem auto 2.75rem;
+
+  a {
+    color: ${(props) => props.theme.colors.primary};
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 768px) {
+    margin: -1.25rem auto 2rem;
+    font-size: 0.88rem;
+    padding: 0 0.25rem;
+  }
+`;
+
+const ReferencesGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+  gap: 1rem;
+`;
+
+const ReferenceCard = styled(motion.article)`
+  height: 100%;
+  padding: 1.15rem 1.35rem;
+  background: ${(props) => props.theme.colors.surface};
+  border-radius: 14px;
+  border: 1px solid ${(props) => props.theme.colors.border};
+  box-shadow: ${(props) => props.theme.shadows.card};
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    border-color: ${(props) => props.theme.colors.primary};
+    box-shadow:
+      ${(props) => props.theme.shadows.card},
+      0 0 0 1px ${(props) => props.theme.colors.primary}18;
+  }
+`;
+
+const ReferenceTop = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.65rem;
+`;
+
+const ReferenceName = styled.h3`
+  font-size: 0.97rem;
+  font-weight: 600;
+  color: ${(props) => props.theme.colors.text};
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+`;
+
+const ReferenceTag = styled.span`
+  flex-shrink: 0;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  background: ${(props) => props.theme.colors.primary}14;
+  color: ${(props) => props.theme.colors.primary};
+`;
+
+const ReferenceAnchor = styled.a`
+  font-size: 0.82rem;
+  color: ${(props) => props.theme.colors.primary};
+  word-break: break-all;
+  line-height: 1.35;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  svg {
+    flex-shrink: 0;
+    opacity: 0.75;
+    width: 14px;
+    height: 14px;
+  }
+
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+`;
+
+const ReferenceNote = styled.p`
+  margin: 0;
+  font-size: 0.815rem;
+  color: ${(props) => props.theme.colors.textSecondary};
+  line-height: 1.55;
+`;
+
+const ProfileInitialsFallback = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  font-size: clamp(2.75rem, 8vw, 3.75rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  background: ${(props) => props.theme.colors.gradient};
+`;
+
 const ContactSection = styled(Section)``;
 
 
@@ -166,28 +440,12 @@ const ProfileImage = styled(motion.div)`
   height: 300px;
   border-radius: 50%;
   overflow: hidden;
-  border: 4px solid rgba(0, 212, 255, 0.3);
-  box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+  border: 1px solid ${(props) => props.theme.colors.border};
+  box-shadow: ${(props) => props.theme.shadows.card};
   position: relative;
   background: ${(props) => props.theme.colors.surface};
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(135deg, #00d4ff, #4ecdc4, #45b7d1);
-    border-radius: 50%;
-    z-index: -1;
-    animation: rotate 3s linear infinite;
-  }
-
-  @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
+  outline: 3px solid ${(props) => props.theme.colors.primary}22;
+  outline-offset: 5px;
 
   @media (max-width: 1024px) {
     width: 280px;
@@ -953,7 +1211,16 @@ function HomePage() {
   const [guestbookName, setGuestbookName] = useState('');
   const [guestbookMessage, setGuestbookMessage] = useState('');
   const [showGuestbookToast, setShowGuestbookToast] = useState(false);
+  const [profileLoadFailed, setProfileLoadFailed] = useState(false);
   const guestbookWebhookUrl = process.env.REACT_APP_GOOGLE_SCRIPT_WEBHOOK_URL || "";
+
+  const displayName = process.env.REACT_APP_PERSONAL_NAME || "EJ";
+  const profileInitials = useMemo(() => {
+    const parts = displayName.trim().split(/\s+/);
+    const a = parts[0]?.charAt(0) ?? "?";
+    const b = parts[1]?.charAt(0) ?? "";
+    return (a + b).toUpperCase() || "EJ";
+  }, [displayName]);
 
   const KWB_ROUTE = "/kwb";
   const KWB_REPO_URL = "https://github.com/BLU30CEAN/korean-baseball";
@@ -969,10 +1236,10 @@ function HomePage() {
   };
 
   const stats = [
-    { number: "5년", label: "개발 경험", icon: Award },
-    { number: "5개", label: "대기업 프로젝트", icon: Users },
-    { number: "20+", label: "기술 스택", icon: TrendingUp },
-    { number: "AI", label: "서비스 역량", icon: Zap },
+    { number: "5년", label: "풀스택 경력", icon: Award },
+    { number: "B2B · AI", label: "실무 도메인", icon: Users },
+    { number: "20+", label: "운용 스택", icon: TrendingUp },
+    { number: "E2E", label: "파이프라인 설계", icon: Zap },
   ];
 
   const techStackCategories = [
@@ -1150,21 +1417,18 @@ function HomePage() {
       {/* Home Section */}
       <HomeSection id="home">
         <FloatingElements>
-          {[...Array(20)].map((_, i) => (
+          {BD_HOME.map((d, i) => (
             <FloatingElement
               key={i}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
+              style={{ left: d.left, top: d.top }}
               animate={{
-                y: [0, -20, 0],
-                opacity: [0.6, 1, 0.6],
+                y: [0, -14, 0],
+                opacity: [0.45, 0.85, 0.45],
               }}
               transition={{
-                duration: 3 + Math.random() * 2,
+                duration: d.duration,
                 repeat: Infinity,
-                delay: Math.random() * 2,
+                delay: d.delay,
               }}
             />
           ))}
@@ -1185,7 +1449,7 @@ function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            {process.env.REACT_APP_PERSONAL_NAME || "EJ"}
+            {displayName}
           </Name>
 
           <Title
@@ -1248,31 +1512,17 @@ function HomePage() {
               initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               transition={{ duration: 1, delay: 0.5 }}
-              whileHover={{ scale: 1.05, rotate: 5 }}
+              whileHover={{ scale: 1.02 }}
             >
-              <Image 
-                src="/profile.jpg"
-                alt={`${process.env.REACT_APP_PERSONAL_NAME || "EJ"} - Full-Stack Developer`}
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  target.parentElement!.style.background = 'linear-gradient(135deg, #00d4ff, #4ecdc4)';
-                  target.parentElement!.innerHTML = `
-                    <div style="
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-                      width: 100%;
-                      height: 100%;
-                      color: white;
-                      font-size: 3rem;
-                      font-weight: bold;
-                    ">
-                      ${process.env.REACT_APP_PERSONAL_NAME || "EJ"}
-                    </div>
-                  `;
-                }}
-              />
+              {!profileLoadFailed ? (
+                <Image
+                  src="/profile.jpg"
+                  alt={`${displayName} 프로필`}
+                  onError={() => setProfileLoadFailed(true)}
+                />
+              ) : (
+                <ProfileInitialsFallback>{profileInitials}</ProfileInitialsFallback>
+              )}
             </ProfileImage>
           </ImageContent>
         </Content>
@@ -1301,21 +1551,18 @@ function HomePage() {
       {/* About Section */}
       <AboutSection id="about">
         <FloatingElements>
-          {[...Array(15)].map((_, i) => (
+          {BD_ABOUT.map((d, i) => (
             <FloatingElement
               key={i}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
+              style={{ left: d.left, top: d.top }}
               animate={{
-                y: [0, -20, 0],
-                opacity: [0.6, 1, 0.6],
+                y: [0, -14, 0],
+                opacity: [0.45, 0.85, 0.45],
               }}
               transition={{
-                duration: 3 + Math.random() * 2,
+                duration: d.duration,
                 repeat: Infinity,
-                delay: Math.random() * 2,
+                delay: d.delay,
               }}
             />
           ))}
@@ -1382,21 +1629,18 @@ function HomePage() {
       {/* 기술 스택 섹션 */}
       <TechStackSection>
         <FloatingElements>
-          {[...Array(10)].map((_, i) => (
+          {BD_TECH.map((d, i) => (
             <FloatingElement
               key={i}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
+              style={{ left: d.left, top: d.top }}
               animate={{
-                y: [0, -20, 0],
-                opacity: [0.6, 1, 0.6],
+                y: [0, -14, 0],
+                opacity: [0.45, 0.85, 0.45],
               }}
               transition={{
-                duration: 3 + Math.random() * 2,
+                duration: d.duration,
                 repeat: Infinity,
-                delay: Math.random() * 2,
+                delay: d.delay,
               }}
             />
           ))}
@@ -1444,26 +1688,115 @@ function HomePage() {
         </TechStackContainer>
       </TechStackSection>
 
+      <ReferencesSection id="references">
+        <FloatingElements>
+          {BD_REFS.map((d, i) => (
+            <FloatingElement
+              key={i}
+              style={{ left: d.left, top: d.top }}
+              animate={{
+                y: [0, -14, 0],
+                opacity: [0.45, 0.85, 0.45],
+              }}
+              transition={{
+                duration: d.duration,
+                repeat: Infinity,
+                delay: d.delay,
+              }}
+            />
+          ))}
+        </FloatingElements>
+
+        <ReferencesInner>
+          <SectionTitle
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            참고 문서
+          </SectionTitle>
+          <SectionSubtitle
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.12 }}
+            viewport={{ once: true }}
+          >
+            공식 레퍼런스 중심
+          </SectionSubtitle>
+
+          <ReferencesLead>
+            각 링크는 원문 스펙·가이드를 유지하고 있는 배포처만 포함했습니다.
+            업계에서 자주 회자되는 “블로그 요약본”보다 변경 이력이 명확한 문서를
+            우선해 구현 근거를 남길 때 참고했습니다.
+          </ReferencesLead>
+
+          <ReferencesGrid>
+            {DEV_REFERENCE_ENTRIES.map((ref, ri) => (
+              <ReferenceCard
+                key={ref.href}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: Math.min(ri * 0.03, 0.36) }}
+              >
+                <ReferenceTop>
+                  <ReferenceName>{ref.title}</ReferenceName>
+                  <ReferenceTag>{ref.tag}</ReferenceTag>
+                </ReferenceTop>
+                <ReferenceAnchor
+                  href={ref.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${ref.title}, 새 탭에서 열기`}
+                >
+                  {new URL(ref.href).hostname.replace(/^www\./, "")}{" "}
+                  <ExternalLink size={14} strokeWidth={2} aria-hidden />
+                </ReferenceAnchor>
+                <ReferenceNote>{ref.note}</ReferenceNote>
+              </ReferenceCard>
+            ))}
+          </ReferencesGrid>
+
+          <ReferencesLead style={{ marginTop: "2.25rem", marginBottom: 0 }}>
+            이 포트폴리오 페이지 자체의 구현 레퍼런스:&nbsp; Framer&nbsp;Motion&nbsp;계열(
+            <a
+              href="https://motion.dev/docs/react-motion-component"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Motion for React
+            </a>
+            ), styled-components&nbsp;(
+            <a
+              href="https://styled-components.com/docs"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Documentation
+            </a>
+            ).
+          </ReferencesLead>
+        </ReferencesInner>
+      </ReferencesSection>
+
 
 
       {/* Projects Section */}
       <ProjectsSection id="projects">
         <FloatingElements>
-          {[...Array(10)].map((_, i) => (
+          {BD_PROJECTS.map((d, i) => (
             <FloatingElement
               key={i}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
+              style={{ left: d.left, top: d.top }}
               animate={{
-                y: [0, -20, 0],
-                opacity: [0.6, 1, 0.6],
+                y: [0, -14, 0],
+                opacity: [0.45, 0.85, 0.45],
               }}
               transition={{
-                duration: 3 + Math.random() * 2,
+                duration: d.duration,
                 repeat: Infinity,
-                delay: Math.random() * 2,
+                delay: d.delay,
               }}
             />
           ))}
@@ -1812,21 +2145,18 @@ function HomePage() {
       {/* Contact Section */}
       <ContactSection id="contact">
         <FloatingElements>
-          {[...Array(8)].map((_, i) => (
+          {BD_CONTACT.map((d, i) => (
             <FloatingElement
               key={i}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
+              style={{ left: d.left, top: d.top }}
               animate={{
-                y: [0, -20, 0],
-                opacity: [0.6, 1, 0.6],
+                y: [0, -14, 0],
+                opacity: [0.45, 0.85, 0.45],
               }}
               transition={{
-                duration: 3 + Math.random() * 2,
+                duration: d.duration,
                 repeat: Infinity,
-                delay: Math.random() * 2,
+                delay: d.delay,
               }}
             />
           ))}
