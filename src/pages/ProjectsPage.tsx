@@ -478,13 +478,15 @@ function ProjectsPage() {
     },
     {
       id: 4,
-      title: "AI 인터랙티브 아바타 플랫폼",
+      title: "AI 인터랙티브 메타휴먼 아바타 플랫폼",
       description:
-        "OpenAI Whisper(STT) → GPT-4o-mini/Claude 3.5 → ElevenLabs TTS → LiveAvatar 립싱크로 이어지는 엔드투엔드 AI 파이프라인을 설계·구현했습니다.",
+        "HeyGen·LiveAvatar 등 메타휴먼 실시간 API 연동, STT → LLM(GPT-4o-mini/Claude 등) → ElevenLabs TTS·립싱크 오케스트레이션. 채팅·음성·화상통화(WebRTC)·WebSocket 패턴 통합.",
       category: "web",
       icon: Brain,
       bgColor: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
       tech: [
+        "HeyGen",
+        "LiveAvatar",
         "OpenAI",
         "ElevenLabs",
         "LiveKit",
@@ -497,6 +499,7 @@ function ProjectsPage() {
         { icon: TrendingUp, label: "모델 라우팅", value: "GPT-4o-mini / Claude 3.5" },
       ],
       features: [
+        "HeyGen · LiveAvatar 계열 메타휴먼 연동",
         "STT → LLM → TTS → LipSync 파이프라인",
         "WebRTC 실시간 스트리밍",
         "WebSocket 오디오 전송",

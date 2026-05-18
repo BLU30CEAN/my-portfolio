@@ -127,6 +127,18 @@ const DEV_REFERENCE_ENTRIES: readonly DevReferenceEntry[] = [
     note: "TTS 엔진·실시간 API 문서 허브.",
   },
   {
+    tag: "Avatar",
+    title: "HeyGen Developers",
+    href: "https://developers.heygen.com/",
+    note: "메타휴먼·비디오 생성·API(v3 등) 연동 기준.",
+  },
+  {
+    tag: "Avatar",
+    title: "LiveAvatar Documentation",
+    href: "https://docs.liveavatar.com/",
+    note: "실시간 세션·아바타 스트림 API(문서 허브).",
+  },
+  {
     tag: "Ops",
     title: "Docker Documentation",
     href: "https://docs.docker.com/",
@@ -1589,11 +1601,11 @@ function HomePage() {
               <br />
               전체 개발 생태계를 다루는 풀스택 개발자로 성장했습니다.
               <br /><br />
-              유탑소프트에서는 AI 기반 LLM 서비스의 Android Native 앱 기능 구현과
+              유탑소프트에서는 AI 기반 LLM·메타휴먼(HeyGen·LiveAvatar 등) 서비스 연동,
               <br />
-              React(TypeScript) 기반 WebView 페이지 개발을 주도하고 있습니다.
+              Android Native 앱 기능과 React(TypeScript) WebView 페이지 개발을 주도하고 있습니다.
               <br /><br />
-              결제 시스템, WebView 연동, 실시간 스트리밍까지 다양한 도메인에서의 경험을 바탕으로
+              결제 시스템, WebView 연동, 채팅·음성·화상(WebRTC) 계열 실시간 스트리밍까지 다양한 도메인 경험을 바탕으로
               <br />
               사용자 중심의 솔루션을 개발합니다.
               <br /><br />
@@ -1853,11 +1865,13 @@ function HomePage() {
                 viewport={{ once: true }}
                 whileHover={{ scale: 1.02 }}
               >
-                    <ProjectTitle>AI 인터랙티브 아바타 플랫폼</ProjectTitle>
+                    <ProjectTitle>AI 인터랙티브 메타휴먼 아바타 플랫폼</ProjectTitle>
                     <ProjectDescription>
-                      OpenAI Whisper(STT) → GPT-4o-mini/Claude 3.5 → ElevenLabs TTS → LiveAvatar 립싱크로 이어지는 엔드투엔드 AI 파이프라인을 설계·구현했습니다. WebRTC 기반 실시간 스트리밍과 WebSocket 오디오 전송으로 지연시간을 낮추고, 에러 처리와 재시도 전략을 적용했습니다.
+                      HeyGen·LiveAvatar 등 실시간 AI 아바타 API와 연동해 STT → LLM(GPT-4o-mini/Claude 등) → TTS(ElevenLabs)·립싱크까지 오케스트레이션했습니다. UX 패턴은 채팅·음성과 동일 계열의 이벤트 처리에, 미디어는 화상통화와 맞닿은 WebRTC(WebSocket 오디오 포함) 흐름으로 구성했습니다.
                     </ProjectDescription>
                     <ProjectTech>
+                      <TechTag>HeyGen</TechTag>
+                      <TechTag>LiveAvatar</TechTag>
                       <TechTag>OpenAI</TechTag>
                       <TechTag>ElevenLabs</TechTag>
                       <TechTag>LiveKit</TechTag>
