@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -12,6 +12,7 @@ import AboutPage from "./pages/AboutPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import ContactPage from "./pages/ContactPage";
 import WordBaseballPage from "./pages/WordBaseballPage";
+import GrowthJournalPage from "./pages/GrowthJournalPage";
 import ThemeToggle from "./components/ThemeToggle";
 import { ThemeProvider as CustomThemeProvider } from "./contexts/ThemeContext";
 
@@ -343,21 +344,51 @@ const MainContent = styled.main`
   }
 `;
 
-function App() {
+function AppShell() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [isScrolled, setIsScrolled] = useState(false);
 
+  const goHomeSection = (sectionId: string) => {
+    setIsMobileMenuOpen(false);
+    navigate("/");
+    window.setTimeout(() => {
+      document.getElementById(sectionId)?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }, 96);
+  };
+
   useEffect(() => {
+    if (location.pathname === "/journal") {
+      setActiveSection("journal");
+    } else if (location.pathname !== "/") {
+      setActiveSection("");
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (location.pathname !== "/") {
+      window.scrollTo({ top: 0, behavior: "auto" });
+      setShowScrollToTop(false);
+      setIsScrolled(false);
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (location.pathname !== "/") return undefined;
+
     const handleScroll = () => {
       setShowScrollToTop(window.scrollY > 300);
       setIsScrolled(window.scrollY > 50);
-      
-      // 스크롤 위치에 따른 활성 섹션 감지
+
       const sections = ["home", "about", "references", "projects", "contact"];
       const scrollPosition = window.scrollY + window.innerHeight / 2;
-      
+
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = document.getElementById(sections[i]);
         if (section && section.offsetTop <= scrollPosition) {
@@ -368,18 +399,16 @@ function App() {
     };
 
     window.addEventListener("scroll", handleScroll);
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <CustomThemeProvider>
-      <GlobalStyle />
-      <Router>
-        <AppContainer>
+    <AppContainer>
             <Navigation $isScrolled={isScrolled} $activeSection={activeSection}>
               <NavContainer>
                 <Logo
@@ -389,13 +418,10 @@ function App() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => {
-                    if (window.location.hash === '' || window.location.hash === '#/') {
-                      // 이미 홈페이지에 있으면 맨 위로 스크롤
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    } else {
-                      // 다른 페이지에 있으면 홈으로 이동
-                      window.location.hash = '#/';
-                    }
+                    navigate("/");
+                    window.setTimeout(() => {
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }, 40);
                   }}
                 >
                   <LogoIcon>EJ</LogoIcon>
@@ -404,11 +430,8 @@ function App() {
 
                 <NavLinks>
                   <NavLink
-                    $isActive={activeSection === 'home'}
-                    onClick={() => {
-                      const homeSection = document.getElementById('home');
-                      homeSection?.scrollIntoView({ behavior: 'smooth' });
-                    }}
+                    $isActive={activeSection === "home" && location.pathname === "/"}
+                    onClick={() => goHomeSection("home")}
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.1 }}
@@ -418,11 +441,8 @@ function App() {
                     Home
                   </NavLink>
                   <NavLink
-                    $isActive={activeSection === 'about'}
-                    onClick={() => {
-                      const aboutSection = document.getElementById('about');
-                      aboutSection?.scrollIntoView({ behavior: 'smooth' });
-                    }}
+                    $isActive={activeSection === "about" && location.pathname === "/"}
+                    onClick={() => goHomeSection("about")}
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
@@ -432,12 +452,10 @@ function App() {
                     About
                   </NavLink>
                   <NavLink
-                    $isActive={activeSection === 'references'}
-                    onClick={() => {
-                      document
-                        .getElementById("references")
-                        ?.scrollIntoView({ behavior: "smooth" });
-                    }}
+                    $isActive={
+                      activeSection === "references" && location.pathname === "/"
+                    }
+                    onClick={() => goHomeSection("references")}
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.25 }}
@@ -447,11 +465,10 @@ function App() {
                     References
                   </NavLink>
                   <NavLink
-                    $isActive={activeSection === 'projects'}
-                    onClick={() => {
-                      const projectsSection = document.getElementById('projects');
-                      projectsSection?.scrollIntoView({ behavior: 'smooth' });
-                    }}
+                    $isActive={
+                      activeSection === "projects" && location.pathname === "/"
+                    }
+                    onClick={() => goHomeSection("projects")}
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
@@ -461,14 +478,27 @@ function App() {
                     Projects
                   </NavLink>
                   <NavLink
-                    $isActive={activeSection === 'contact'}
+                    $isActive={location.pathname === "/journal"}
                     onClick={() => {
-                      const contactSection = document.getElementById('contact');
-                      contactSection?.scrollIntoView({ behavior: 'smooth' });
+                      setIsMobileMenuOpen(false);
+                      navigate("/journal");
                     }}
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
+                    transition={{ duration: 0.5, delay: 0.35 }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    연구 노트
+                  </NavLink>
+                  <NavLink
+                    $isActive={
+                      activeSection === "contact" && location.pathname === "/"
+                    }
+                    onClick={() => goHomeSection("contact")}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.42 }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -493,61 +523,58 @@ function App() {
                     transition={{ duration: 0.3 }}
                   >
                     <MobileNavLink
-                      $isActive={activeSection === 'home'}
-                      onClick={() => {
-                        const homeSection = document.getElementById('home');
-                        homeSection?.scrollIntoView({ behavior: 'smooth' });
-                        setIsMobileMenuOpen(false);
-                      }}
+                      $isActive={activeSection === "home" && location.pathname === "/"}
+                      onClick={() => goHomeSection("home")}
                       whileHover={{ x: 10 }}
                       whileTap={{ scale: 0.95 }}
                     >
                       Home
                     </MobileNavLink>
                     <MobileNavLink
-                      $isActive={activeSection === 'about'}
-                      onClick={() => {
-                        const aboutSection = document.getElementById('about');
-                        aboutSection?.scrollIntoView({ behavior: 'smooth' });
-                        setIsMobileMenuOpen(false);
-                      }}
+                      $isActive={activeSection === "about" && location.pathname === "/"}
+                      onClick={() => goHomeSection("about")}
                       whileHover={{ x: 10 }}
                       whileTap={{ scale: 0.95 }}
                     >
                       About
                     </MobileNavLink>
                     <MobileNavLink
-                      $isActive={activeSection === 'references'}
-                      onClick={() => {
-                        document
-                          .getElementById('references')
-                          ?.scrollIntoView({ behavior: 'smooth' });
-                        setIsMobileMenuOpen(false);
-                      }}
+                      $isActive={
+                        activeSection === "references" &&
+                        location.pathname === "/"
+                      }
+                      onClick={() => goHomeSection("references")}
                       whileHover={{ x: 10 }}
                       whileTap={{ scale: 0.95 }}
                     >
                       References
                     </MobileNavLink>
                     <MobileNavLink
-                      $isActive={activeSection === 'projects'}
-                      onClick={() => {
-                        const projectsSection = document.getElementById('projects');
-                        projectsSection?.scrollIntoView({ behavior: 'smooth' });
-                        setIsMobileMenuOpen(false);
-                      }}
+                      $isActive={
+                        activeSection === "projects" && location.pathname === "/"
+                      }
+                      onClick={() => goHomeSection("projects")}
                       whileHover={{ x: 10 }}
                       whileTap={{ scale: 0.95 }}
                     >
                       Projects
                     </MobileNavLink>
                     <MobileNavLink
-                      $isActive={activeSection === 'contact'}
+                      $isActive={location.pathname === "/journal"}
                       onClick={() => {
-                        const contactSection = document.getElementById('contact');
-                        contactSection?.scrollIntoView({ behavior: 'smooth' });
                         setIsMobileMenuOpen(false);
+                        navigate("/journal");
                       }}
+                      whileHover={{ x: 10 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      연구 노트
+                    </MobileNavLink>
+                    <MobileNavLink
+                      $isActive={
+                        activeSection === "contact" && location.pathname === "/"
+                      }
+                      onClick={() => goHomeSection("contact")}
                       whileHover={{ x: 10 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -563,6 +590,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/projects" element={<ProjectsPage />} />
+                <Route path="/journal" element={<GrowthJournalPage />} />
                 <Route path="/kwb" element={<WordBaseballPage />} />
                 <Route path="/word-baseball" element={<WordBaseballPage />} />
                 <Route path="/contact" element={<ContactPage />} />
@@ -584,7 +612,16 @@ function App() {
               )}
             </AnimatePresence>
           </AppContainer>
-        </Router>
+  );
+}
+
+function App() {
+  return (
+    <CustomThemeProvider>
+      <GlobalStyle />
+      <Router>
+        <AppShell />
+      </Router>
     </CustomThemeProvider>
   );
 }

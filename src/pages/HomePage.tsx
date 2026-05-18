@@ -1,6 +1,7 @@
 import React, { useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   Zap,
@@ -10,6 +11,7 @@ import {
   Github,
   Mail,
   ExternalLink,
+  BookOpen,
 } from "lucide-react";
 
 /** 렌더마다 바뀌는 Math.random 패턴 방지용 — 레이아웃·리사이즈 시 안정적 */
@@ -61,6 +63,24 @@ const DEV_REFERENCE_ENTRIES: readonly DevReferenceEntry[] = [
     note: "엔터프라이즈 백엔드·설정 관례.",
   },
   {
+    tag: "Portal",
+    title: "Spring Security Reference",
+    href: "https://docs.spring.io/spring-security/reference/index.html",
+    note: "포털·REST 보안 필터·인증 모델 근거.",
+  },
+  {
+    tag: "Data",
+    title: "MyBatis 3 Reference",
+    href: "https://mybatis.org/mybatis-3/index.html",
+    note: "Spring 연동 프로젝트의 Mapper·XML 스펙.",
+  },
+  {
+    tag: "DB",
+    title: "MySQL Documentation",
+    href: "https://dev.mysql.com/doc/",
+    note: "커넥터·SQL·튜닝 레퍼런스 허브.",
+  },
+  {
     tag: "ML API",
     title: "FastAPI",
     href: "https://fastapi.tiangolo.com/",
@@ -77,6 +97,18 @@ const DEV_REFERENCE_ENTRIES: readonly DevReferenceEntry[] = [
     title: "TanStack Query (React)",
     href: "https://tanstack.com/query/latest/docs/framework/react/overview",
     note: "서버 상태·캐시·재요청 정책 레퍼런스(프로젝트 의존성 기준).",
+  },
+  {
+    tag: "UI",
+    title: "Next.js Documentation",
+    href: "https://nextjs.org/docs",
+    note: "App Router·Route Handlers 레퍼런스(word-baseball 등).",
+  },
+  {
+    tag: "Mobile",
+    title: "React Native Documentation",
+    href: "https://reactnative.dev/docs/getting-started",
+    note: "네이티브 모듈·Metro 근거.",
   },
   {
     tag: "Runtime",
@@ -127,6 +159,18 @@ const DEV_REFERENCE_ENTRIES: readonly DevReferenceEntry[] = [
     note: "TTS 엔진·실시간 API 문서 허브.",
   },
   {
+    tag: "ML",
+    title: "pandas documentation",
+    href: "https://pandas.pydata.org/docs/",
+    note: "DataFrame·변환·집계 기준 레퍼런스.",
+  },
+  {
+    tag: "ML",
+    title: "scikit-learn User Guide",
+    href: "https://scikit-learn.org/stable/user_guide.html",
+    note: "전처리·파이프라인·평가 지표 레퍼런스.",
+  },
+  {
     tag: "Avatar",
     title: "HeyGen Developers",
     href: "https://developers.heygen.com/",
@@ -158,6 +202,7 @@ const BD_TECH = makeBackdropDots(10, 3);
 const BD_PROJECTS = makeBackdropDots(10, 4);
 const BD_REFS = makeBackdropDots(8, 5);
 const BD_CONTACT = makeBackdropDots(8, 6);
+const BD_LEARNING = makeBackdropDots(8, 7);
 
 const HomeContainer = styled.div`
   min-height: 100vh;
@@ -361,6 +406,87 @@ const ProfileInitialsFallback = styled.div`
   font-weight: 700;
   letter-spacing: -0.04em;
   background: ${(props) => props.theme.colors.gradient};
+`;
+
+const LearningBannerSection = styled(Section)`
+  min-height: auto;
+  padding: clamp(3rem, 8vw, 5rem) 1.5rem;
+  scroll-snap-align: start;
+
+  &::before {
+    opacity: 0.42;
+  }
+`;
+
+const LearningBannerCard = styled(motion.div)`
+  max-width: 720px;
+  margin: 0 auto;
+  border-radius: 18px;
+  padding: 2rem 2.25rem;
+  background: ${(props) => props.theme.colors.surface};
+  border: 1px solid ${(props) => props.theme.colors.border};
+  box-shadow: ${(props) => props.theme.shadows.card};
+  z-index: 1;
+  position: relative;
+
+  @media (max-width: 768px) {
+    padding: 1.55rem 1.35rem;
+  }
+`;
+
+const LearningBannerHead = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-bottom: 0.85rem;
+
+  svg {
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    color: ${(props) => props.theme.colors.primary};
+    opacity: 0.92;
+  }
+`;
+
+const LearningBannerTitle = styled.h2`
+  font-size: clamp(1.35rem, 3.2vw, 1.75rem);
+  font-weight: 700;
+  margin: 0;
+  color: ${(props) => props.theme.colors.text};
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+`;
+
+const LearningBannerText = styled.p`
+  color: ${(props) => props.theme.colors.textSecondary};
+  font-size: 0.95rem;
+  line-height: 1.72;
+  margin: 0 0 1.4rem;
+
+  strong {
+    color: ${(props) => props.theme.colors.text};
+    font-weight: 600;
+  }
+`;
+
+const LearningJournalButton = styled(motion.button)`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.82rem 1.55rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: ${(props) => props.theme.colors.gradient};
+  box-shadow: ${(props) => props.theme.shadows.button};
+
+  &:hover {
+    filter: brightness(1.06);
+  }
 `;
 
 const ContactSection = styled(Section)``;
@@ -1217,6 +1343,7 @@ const GuestbookButton = styled(motion.button)`
 
 
 function HomePage() {
+  const navigate = useNavigate();
   const containerRef = useRef(null);
   const [activeTab, setActiveTab] = useState('professional');
   const [showToast, setShowToast] = useState(false);
@@ -1250,115 +1377,214 @@ function HomePage() {
   const stats = [
     { number: "5년", label: "풀스택 경력", icon: Award },
     { number: "B2B · AI", label: "실무 도메인", icon: Users },
-    { number: "20+", label: "운용 스택", icon: TrendingUp },
+    { number: "35+", label: "운용 스택", icon: TrendingUp },
     { number: "E2E", label: "파이프라인 설계", icon: Zap },
   ];
 
   const techStackCategories = [
     {
-      category: "프론트엔드",
+      category: "웹 클라이언트",
       technologies: [
-        { 
-          name: "React", 
-          image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+        {
+          name: "React",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
         },
-        { 
-          name: "TypeScript", 
-          image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+        {
+          name: "TypeScript",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
         },
-        { 
-          name: "JavaScript", 
-          image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+        {
+          name: "Next.js",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
         },
-        { 
-          name: "Node.js", 
-          image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+        {
+          name: "Tailwind CSS",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
         },
-      ]
+      ],
     },
     {
-      category: "백엔드",
+      category: "모바일 (React Native · kchao)",
       technologies: [
-        { 
-          name: "Java", 
-          image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+        {
+          name: "React Native",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
         },
-        { 
-          name: "Spring Boot", 
-          image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+        {
+          name: "Android",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg",
         },
-        { 
-          name: "Kotlin", 
-          image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg"
+        {
+          name: "LiveKit",
+          image: "https://cdn.simpleicons.org/livekit/00D4FF",
         },
-        { 
-          name: "Android", 
-          image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg"
+        {
+          name: "WebView",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg",
         },
-      ]
+        {
+          name: "Firebase",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
+        },
+      ],
     },
     {
-      category: "서버/인프라",
+      category: "클라이언트 유틸",
       technologies: [
-        { 
-          name: "AWS", 
-          image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
+        {
+          name: "TanStack Query",
+          image: "https://cdn.simpleicons.org/tanstack/FF4154",
         },
-        { 
-          name: "CI/CD", 
-          image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg"
+        {
+          name: "Zustand",
+          image: "https://cdn.simpleicons.org/zustand/443C36",
         },
-        { 
-          name: "Docker", 
-          image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+        {
+          name: "Axios",
+          image: "https://cdn.simpleicons.org/axios/5A29E4",
         },
-        { 
-          name: "Linux", 
-          image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg"
+        {
+          name: "i18next",
+          image: "https://cdn.simpleicons.org/i18next/26A69A",
         },
-        { 
-          name: "FTP", 
-          image: "https://img.icons8.com/color/96/ftp.png"
-        },
-      ]
+      ],
     },
     {
-      category: "데이터베이스/모니터링",
+      category: "백엔드 · API",
       technologies: [
-        { 
-          name: "PostgreSQL", 
-          image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+        {
+          name: "Java 21",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
         },
-        { 
-          name: "DataDog", 
-          image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiByeD0iOCIgZmlsbD0iIzYzMkNBQyIvPgo8cGF0aCBkPSJNMTYgMjBIMzJWMjhIMTZWMjBaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTggMjJIMzBWMjZIMThWMjJaIiBmaWxsPSIjNjMyQ0FDIi8+Cjwvc3ZnPgo="
+        {
+          name: "Spring Boot",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg",
         },
-        { 
-          name: "GTM", 
-          image: "https://img.icons8.com/color/96/google-tag-manager.png"
+        {
+          name: "Maven",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/maven/maven-original.svg",
         },
-        { 
-          name: "GA", 
-          image: "https://img.icons8.com/color/96/google-analytics.png"
+        {
+          name: "FastAPI",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
         },
-      ]
+        {
+          name: "Python",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        },
+      ],
+    },
+    {
+      category: "데이터베이스 · 관측",
+      technologies: [
+        {
+          name: "MySQL",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+        },
+        {
+          name: "PostgreSQL",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
+        },
+        {
+          name: "DataDog",
+          image:
+            "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiByeD0iOCIgZmlsbD0iIzYzMkNBQyIvPgo8cGF0aCBkPSJNMTYgMjBIMzJWMjhIMTZWMjBaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTggMjJIMzBWMjZIMThWMjJaIiBmaWxsPSIjNjMyQ0FDIi8+Cjwvc3ZnPgo=",
+        },
+        {
+          name: "GTM",
+          image: "https://img.icons8.com/color/96/google-tag-manager.png",
+        },
+        {
+          name: "GA",
+          image: "https://img.icons8.com/color/96/google-analytics.png",
+        },
+      ],
+    },
+    {
+      category: "AI · 실시간 미디어",
+      technologies: [
+        {
+          name: "OpenAI API",
+          image: "https://cdn.simpleicons.org/openai/412991",
+        },
+        {
+          name: "ElevenLabs",
+          image: "https://cdn.simpleicons.org/elevenlabs/000000",
+        },
+        {
+          name: "LiveAvatar",
+          image: "https://cdn.simpleicons.org/heygen/6B5BFF",
+        },
+        {
+          name: "WebRTC",
+          image: "https://cdn.simpleicons.org/webrtc/333333",
+        },
+      ],
+    },
+    {
+      category: "배포 · 인프라",
+      technologies: [
+        {
+          name: "AWS",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
+        },
+        {
+          name: "Docker",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+        },
+        {
+          name: "Jenkins",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg",
+        },
+        {
+          name: "Linux",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg",
+        },
+        {
+          name: "EAS",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/expo/expo-original.svg",
+        },
+      ],
     },
     {
       category: "버전 관리",
       technologies: [
-        { 
-          name: "Git", 
-          image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+        {
+          name: "Git",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
         },
-        { 
-          name: "GitHub", 
-          image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+        {
+          name: "GitHub",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
         },
-        { 
-          name: "GitLab", 
-          image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg"
+        {
+          name: "GitLab",
+          image:
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg",
         },
-      ]
+      ],
     },
   ];
 
@@ -2153,6 +2379,55 @@ function HomePage() {
           </ScrollIcon>
         </ScrollIndicator> */}
       </ProjectsSection>
+
+
+
+      <LearningBannerSection id="learning-banner">
+        <FloatingElements>
+          {BD_LEARNING.map((d, i) => (
+            <FloatingElement
+              key={i}
+              style={{ left: d.left, top: d.top }}
+              animate={{
+                y: [0, -14, 0],
+                opacity: [0.45, 0.85, 0.45],
+              }}
+              transition={{
+                duration: d.duration,
+                repeat: Infinity,
+                delay: d.delay,
+              }}
+            />
+          ))}
+        </FloatingElements>
+        <LearningBannerCard
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55 }}
+        >
+          <LearningBannerHead>
+            <BookOpen size={26} strokeWidth={2} aria-hidden />
+            <LearningBannerTitle>연구 노트 · ML 자기 학습</LearningBannerTitle>
+          </LearningBannerHead>
+          <LearningBannerText>
+            <strong>pandas·scikit-learn</strong> 중심의 노트북 실습 이력, 막혔던 지점과 풀어간
+            과정은 별도 <strong>블로그형 페이지</strong>에 두었습니다. 플롯·노트 캡처는{" "}
+            <code style={{ fontSize: "0.84em", fontFamily: "inherit" }}>
+              public/learning/*.png
+            </code>
+            로 넣어 카드 헤더 이미지로 연결하면 됩니다.
+          </LearningBannerText>
+          <LearningJournalButton
+            type="button"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => navigate("/journal")}
+          >
+            연구 노트 페이지 열기 <ArrowRight size={18} />
+          </LearningJournalButton>
+        </LearningBannerCard>
+      </LearningBannerSection>
 
 
 

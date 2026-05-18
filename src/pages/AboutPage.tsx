@@ -246,7 +246,7 @@ function AboutPage() {
   const achievements = [
     { icon: Users, title: "주요 프로젝트", value: "5개" },
     { icon: TrendingUp, title: "실시간 지연시간", value: "500ms 이하" },
-    { icon: Zap, title: "상태 관리", value: "Zustand · Jotai" },
+    { icon: Zap, title: "상태·서버캐시", value: "TanStack Query · Zustand" },
     { icon: Award, title: "배포/문서화", value: "Docker · Swagger" },
   ];
 
@@ -256,34 +256,38 @@ function AboutPage() {
       icon: Code,
       skills: [
         "React & TypeScript",
-        "React Native",
-        "JavaScript (ES6+)",
-        "Tailwind CSS",
-        "Shadcn UI",
-        "Zustand / Jotai",
+        "Next.js (App Router 예: word-baseball)",
+        "React Native · Expo EAS",
+        "Tailwind CSS · Radix(shadcn 패턴)",
+        "Zustand",
+        "TanStack Query",
+        "i18next",
       ],
     },
     {
       category: "Backend & AI",
       icon: Brain,
       skills: [
-        "Java & Spring Boot",
-        "Python & FastAPI",
-        "REST API",
-        "Swagger 문서화",
-        "OpenAI / Claude / ElevenLabs",
-        "HeyGen / LiveAvatar · 메타휴먼 연동",
+        "Java 21 · Spring Boot 4 · Maven",
+        "MyBatis (XML Mapper) · MySQL",
+        "Spring Security · Batch · Quartz",
+        "Thymeleaf · Log4j2 · Actuator",
+        "Python · FastAPI · Uvicorn",
+        "OpenAI / ElevenLabs / LiveAvatar / LiveKit",
+        "pydub · multipart · JWT (백엔드 템플릿 패턴)",
       ],
     },
     {
       category: "Mobile & Realtime",
       icon: Smartphone,
       skills: [
-        "Android Native",
-        "WebView Bridge",
-        "WebRTC / WebSocket",
-        "오디오 스트리밍",
-        "상태 동기화",
+        "React Native 0.83 / React 19",
+        "LiveKit (Room · Track)",
+        "WebSocket Custom Mode",
+        "RN WebView",
+        "Firebase (FCM) · Notifee",
+        "오디오 녹음 · 스트리밍 패턴",
+        "SSE/REST와 TanStack 동기화",
       ],
     },
     {
@@ -303,7 +307,8 @@ function AboutPage() {
     {
       date: "2025.04 - 2026.04",
       title: "유탑소프트 · Convergence Lab",
-      description: "AI 기반 LLM·메타휴먼(HeyGen·LiveAvatar 등) 서비스 연동, Android Native·React(TS) WebView, 실시간(WebRTC·WS) 스트림과 전역 상태 관리 담당",
+      description:
+        "RN 앱: TanStack Query·Zustand·LiveKit(react-native)·LiveAvatar 세션/WS·Firebase(FCM)·WebView 및 오디오 파이프라인. 포털: Spring Boot 4(Java 21)·MyBatis·Batch/Quartz/Thymeleaf. FastAPI 보조 레인으로 multipart STT·pydub PCM 등 (근거 레포 패키지·문서 레벨로 정렬).",
     },
     {
       date: "2024.04 - 2025.04",
