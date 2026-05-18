@@ -13,6 +13,7 @@ import {
   ExternalLink,
   BookOpen,
 } from "lucide-react";
+import techStackCategoriesData from "../data/techStackCategories.json";
 
 /** 렌더마다 바뀌는 Math.random 패턴 방지용 — 레이아웃·리사이즈 시 안정적 */
 function makeBackdropDots(count: number, salt: number) {
@@ -23,6 +24,15 @@ function makeBackdropDots(count: number, salt: number) {
     delay: ((i * 41) % 12) * 0.14,
   }));
 }
+
+type TechStackEntry = { name: string; image: string };
+type TechStackCategoryRow = {
+  category: string;
+  technologies: readonly TechStackEntry[];
+};
+
+const techStackCategories: readonly TechStackCategoryRow[] =
+  techStackCategoriesData as readonly TechStackCategoryRow[];
 
 type DevReferenceEntry = {
   title: string;
@@ -1342,6 +1352,44 @@ const GuestbookButton = styled(motion.button)`
 
 
 
+function TechStackIconImg({ src, name }: { src: string; name: string }) {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    return (
+      <span
+        role="img"
+        aria-label={name}
+        title={name}
+        style={{
+          fontSize: "0.55rem",
+          fontWeight: 800,
+          letterSpacing: "-0.06em",
+          lineHeight: 1.1,
+          textAlign: "center",
+          color: "#632ca4",
+          maxWidth: "100%",
+          padding: "0 2px",
+          wordBreak: "break-word",
+        }}
+      >
+        {name.slice(0, 4)}
+      </span>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt=""
+      loading="lazy"
+      decoding="async"
+      referrerPolicy="no-referrer"
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
 function HomePage() {
   const navigate = useNavigate();
   const containerRef = useRef(null);
@@ -1379,213 +1427,6 @@ function HomePage() {
     { number: "B2B · AI", label: "실무 도메인", icon: Users },
     { number: "35+", label: "운용 스택", icon: TrendingUp },
     { number: "E2E", label: "파이프라인 설계", icon: Zap },
-  ];
-
-  const techStackCategories = [
-    {
-      category: "웹 클라이언트",
-      technologies: [
-        {
-          name: "React",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-        },
-        {
-          name: "TypeScript",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
-        },
-        {
-          name: "Next.js",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
-        },
-        {
-          name: "Tailwind CSS",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
-        },
-      ],
-    },
-    {
-      category: "모바일 (React Native · kchao)",
-      technologies: [
-        {
-          name: "React Native",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-        },
-        {
-          name: "Android",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg",
-        },
-        {
-          name: "LiveKit",
-          image: "https://cdn.simpleicons.org/livekit/00D4FF",
-        },
-        {
-          name: "WebView",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg",
-        },
-        {
-          name: "Firebase",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
-        },
-      ],
-    },
-    {
-      category: "클라이언트 유틸",
-      technologies: [
-        {
-          name: "TanStack Query",
-          image: "https://cdn.simpleicons.org/tanstack/FF4154",
-        },
-        {
-          name: "Zustand",
-          image: "https://cdn.simpleicons.org/zustand/443C36",
-        },
-        {
-          name: "Axios",
-          image: "https://cdn.simpleicons.org/axios/5A29E4",
-        },
-        {
-          name: "i18next",
-          image: "https://cdn.simpleicons.org/i18next/26A69A",
-        },
-      ],
-    },
-    {
-      category: "백엔드 · API",
-      technologies: [
-        {
-          name: "Java 21",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
-        },
-        {
-          name: "Spring Boot",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg",
-        },
-        {
-          name: "Maven",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/maven/maven-original.svg",
-        },
-        {
-          name: "FastAPI",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
-        },
-        {
-          name: "Python",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-        },
-      ],
-    },
-    {
-      category: "데이터베이스 · 관측",
-      technologies: [
-        {
-          name: "MySQL",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
-        },
-        {
-          name: "PostgreSQL",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
-        },
-        {
-          name: "DataDog",
-          image:
-            "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiByeD0iOCIgZmlsbD0iIzYzMkNBQyIvPgo8cGF0aCBkPSJNMTYgMjBIMzJWMjhIMTZWMjBaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTggMjJIMzBWMjZIMThWMjJaIiBmaWxsPSIjNjMyQ0FDIi8+Cjwvc3ZnPgo=",
-        },
-        {
-          name: "GTM",
-          image: "https://img.icons8.com/color/96/google-tag-manager.png",
-        },
-        {
-          name: "GA",
-          image: "https://img.icons8.com/color/96/google-analytics.png",
-        },
-      ],
-    },
-    {
-      category: "AI · 실시간 미디어",
-      technologies: [
-        {
-          name: "OpenAI API",
-          image: "https://cdn.simpleicons.org/openai/412991",
-        },
-        {
-          name: "ElevenLabs",
-          image: "https://cdn.simpleicons.org/elevenlabs/000000",
-        },
-        {
-          name: "LiveAvatar",
-          image: "https://cdn.simpleicons.org/heygen/6B5BFF",
-        },
-        {
-          name: "WebRTC",
-          image: "https://cdn.simpleicons.org/webrtc/333333",
-        },
-      ],
-    },
-    {
-      category: "배포 · 인프라",
-      technologies: [
-        {
-          name: "AWS",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
-        },
-        {
-          name: "Docker",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
-        },
-        {
-          name: "Jenkins",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg",
-        },
-        {
-          name: "Linux",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg",
-        },
-        {
-          name: "EAS",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/expo/expo-original.svg",
-        },
-      ],
-    },
-    {
-      category: "버전 관리",
-      technologies: [
-        {
-          name: "Git",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
-        },
-        {
-          name: "GitHub",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
-        },
-        {
-          name: "GitLab",
-          image:
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg",
-        },
-      ],
-    },
   ];
 
   const handleGuestbookSubmit = async () => {
@@ -1915,7 +1756,7 @@ function HomePage() {
                     whileHover={{ scale: 1.05 }}
                   >
                     <TechIcon>
-                      <img src={tech.image} alt={tech.name} />
+                      <TechStackIconImg src={tech.image} name={tech.name} />
                     </TechIcon>
                     <TechName>{tech.name}</TechName>
                   </TechItem>

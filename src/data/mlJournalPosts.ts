@@ -1,7 +1,9 @@
 /**
  * 연구 노트(자기 학습 트랙) 카드 데이터.
- * 이미지: public/learning/ 아래에 png/webp 등을 두고 heroImage 에 경로를 넣으면 표시된다.
+ * 히어로: `ML_JOURNAL_HERO_MEDIA_ENABLED` 가 true 일 때만 렌더.
+ * 파일은 public/learning/ 에 두고 아래 각 post 의 heroImage 주석 해제 후 경로 지정.
  */
+export const ML_JOURNAL_HERO_MEDIA_ENABLED = false;
 
 export interface MlJournalSection {
   heading: string;
@@ -25,9 +27,9 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
     title: "Pandas로 데이터 카드 형태까지 익히기",
     period: "자기 학습 노트 · 템플릿",
     tags: ["pandas", "EDA", "Jupyter"],
-    heroImage: "/learning/pandas-sample.png",
-    heroCaption:
-      "`public/learning/pandas-sample.png` 등 실제 플롯·노트 캡처로 교체하세요.",
+    // heroImage: "/learning/pandas-sample.png",
+    // heroCaption:
+    //   "`public/learning/pandas-sample.png` 등 실제 플롯·노트 캡처로 교체하세요.",
     sections: [
       {
         heading: "연구·실습 이력",
@@ -51,9 +53,9 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
     title: "scikit-learn 학습 파이프라인과 평가",
     period: "자기 학습 노트 · 템플릿",
     tags: ["scikit-learn", "ML", "metrics"],
-    heroImage: "/learning/sklearn-sample.png",
-    heroCaption:
-      "학습 곡선·혼동행렬 등은 `matplotlib` 플롯을 캡처해 같은 경로 이름으로 교체하면 됩니다.",
+    // heroImage: "/learning/sklearn-sample.png",
+    // heroCaption:
+    //   "학습 곡선·혼동행렬 등은 `matplotlib` 플롯을 캡처해 같은 경로 이름으로 교체하면 됩니다.",
     sections: [
       {
         heading: "연구·실습 이력",

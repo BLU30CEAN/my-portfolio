@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, BookOpen, ImageOff } from "lucide-react";
 import {
+  ML_JOURNAL_HERO_MEDIA_ENABLED,
   ML_JOURNAL_POSTS,
   type MlJournalPost,
 } from "../data/mlJournalPosts";
@@ -178,6 +179,10 @@ const SectionBody = styled.p`
 
 function HeroMedia({ post }: { post: MlJournalPost }) {
   const [ok, setOk] = useState(true);
+
+  if (!ML_JOURNAL_HERO_MEDIA_ENABLED) {
+    return null;
+  }
 
   if (!post.heroImage || !ok) {
     return (
