@@ -1342,7 +1342,7 @@ function HomePage() {
               <br />
               전체 개발 생태계를 다루는 풀스택 개발자로 성장했습니다.
               <br /><br />
-              유탑소프트에서는 AI 기반 LLM 서비스의 Android Native 앱 기능 구현과
+              AI 기반 LLM 서비스의 Android Native 앱 기능 구현과
               <br />
               React(TypeScript) 기반 WebView 페이지 개발을 주도하고 있습니다.
               <br /><br />
