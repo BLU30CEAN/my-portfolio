@@ -324,7 +324,7 @@ function ContactPage() {
   } | null>(null);
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormData({
       ...formData,
@@ -462,21 +462,27 @@ function ContactPage() {
           transition={{ duration: 0.8, delay: 0.3 }}
           viewport={{ once: true }}
         >
-          <ThankYouTitle>🙏 감사합니다!</ThankYouTitle>
+          <ThankYouTitle>🙏 감사합니다</ThankYouTitle>
           <ThankYouText>
-            제 포트폴리오를 방문해주셔서 정말 감사합니다. 
+            포트폴리오를 끝까지 살펴봐 주셔서 감사합니다.
             <br />
-            5년간의 개발 경험을 바탕으로 사용자 중심의 솔루션을 개발하고 있습니다.
+            웹·모바일·AI를 한 흐름으로 다루는 5년 차 풀스택 개발자로,
             <br />
-            현재는 유탑소프트에서 AI 기반 LLM 서비스의 Android Native 앱과
+            LLM·실시간 메타휴먼·결제·앱–웹 브릿지처럼 운영 부담이 큰 도메인에서
             <br />
-            React(TypeScript) WebView 개발을 담당하고 있습니다.
+            설계 → 구현 → 모니터링까지 한 사람의 책임 범위 안에서 정렬해 왔습니다.
             <br />
-            새로운 기술 학습과 문제 해결에 대한 열정을 가지고 있으며,
             <br />
-            팀과 함께 성장하는 것을 중요하게 생각합니다.
-            <br /><br />
-            프로젝트 협업이나 기술 문의가 있으시면 언제든 연락주세요!
+            새 기술을 평가할 때는 공식 문서와 변경 이력에서 출발하고,
+            <br />
+            모르는 영역은 추정 대신 재현 가능한 작은 실험을 먼저 둡니다.
+            <br />
+            화려한 기능보다, 운영자가 안심할 수 있는 시스템을 만드는 데
+            <br />
+            시간을 쓰고 싶습니다.
+            <br />
+            <br />
+            협업이나 기술 문의가 있으시면 편하게 연락 주세요.
           </ThankYouText>
         </ThankYouSection>
 

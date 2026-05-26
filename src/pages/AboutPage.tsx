@@ -313,22 +313,26 @@ function AboutPage() {
     {
       date: "2024.04 - 2025.04",
       title: "앱인앱 주문채널 신규 구축",
-      description: "React(TypeScript) 프론트엔드, Spring Boot·PostgreSQL API, AWS EC2·Jenkins 배포 자동화, JWT 인증, PG/OKPOS 연동",
+      description:
+        "React(TypeScript) 프론트엔드, Spring Boot·PostgreSQL API, AWS EC2·Jenkins 배포 자동화, JWT 인증, PG/OKPOS 연동",
     },
     {
       date: "2023.01 - 2024.03",
       title: "홈페이지 및 모바일 앱 운영",
-      description: "고객/임직원/협력사 3종 앱 유지보수, 기능 추가, JIRA·Confluence 요청 대응, 365일 운영 대응",
+      description:
+        "고객/임직원/협력사 3종 앱 유지보수, 기능 추가, JIRA·Confluence 요청 대응, 무중단 운영 대응",
     },
     {
       date: "2022.08 - 2022.12",
       title: "SAP U4A ERP QA 모듈 구축",
-      description: "ABAP, SAP HANA Cloud 기반 ERP QA 모듈 개발과 보안 규율이 엄격한 환경에서의 협업 경험",
+      description:
+        "ABAP, SAP HANA Cloud 기반 ERP QA 모듈 개발과 보안 규율이 엄격한 환경에서의 협업 경험",
     },
     {
       date: "2021.05 - 2022.04",
       title: "결제 앱 솔루션 개발",
-      description: "Java, JSP, Android 네이티브 앱과 NICE PG/VAN 결제 연동 구현",
+      description:
+        "Java, JSP, Android 네이티브 앱과 NICE PG/VAN 결제 연동 구현",
     },
   ];
 
@@ -351,9 +355,11 @@ function AboutPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            5년간의 실무 경험을 바탕으로 AI 서비스, 모바일 브리지, 결제/주문 시스템까지
-            폭넓게 다뤄온 개발자입니다. 현재는 유탑소프트에서 메타휴먼(HeyGen·LiveAvatar)·LLM 연동,
-            Android Native·React(TypeScript) WebView 개발을 주도하고 있습니다.
+            5년 동안 AI 서비스·모바일 브리지·결제/주문 시스템을 한 사람의 책임
+            범위 안에서 다뤄 온 풀스택 개발자입니다. 최근에는
+            메타휴먼(HeyGen·LiveAvatar)·LLM 실시간 연동과 Android Native ·
+            React(TypeScript) WebView 통합을 맡으며, 요구 정의 → 설계 → 운영
+            모니터링까지 한 흐름으로 정렬해 왔습니다.
           </SectionSubtitle>
         </Section>
 
@@ -378,15 +384,19 @@ function AboutPage() {
                 <Brain size={28} />
               </ProjectIcon>
               <ProjectInfo>
-                <ProjectTitle>AI 인터랙티브 메타휴먼 아바타 플랫폼</ProjectTitle>
+                <ProjectTitle>
+                  AI 인터랙티브 메타휴먼 아바타 플랫폼
+                </ProjectTitle>
                 <ProjectPeriod>2025.04 - 2026.04</ProjectPeriod>
               </ProjectInfo>
             </ProjectHeader>
 
             <ProjectDescription>
-              HeyGen·LiveAvatar 등 실시간 AI 아바타 API와 연동해 STT → LLM(GPT-4o-mini/Claude 등) → ElevenLabs TTS·립싱크까지
-              오케스트레이션했습니다. 채팅·음성과 유사한 상태 흐름에, 미디어는 화상통화와 맞닿은 WebRTC·WebSocket 오디오 패턴을 적용했으며
-              예외 처리·재시도로 운영 안정성을 높였습니다.
+              HeyGen·LiveAvatar 등 실시간 AI 아바타 API와 연동해 STT →
+              LLM(GPT-4o-mini/Claude 등) → ElevenLabs TTS·립싱크까지
+              오케스트레이션했습니다. 채팅·음성과 유사한 상태 흐름에, 미디어는
+              화상통화와 맞닿은 WebRTC·WebSocket 오디오 패턴을 적용했으며 예외
+              처리·재시도로 운영 안정성을 높였습니다.
             </ProjectDescription>
 
             <TechStack>

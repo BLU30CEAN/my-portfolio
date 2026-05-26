@@ -1544,12 +1544,13 @@ function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-              5년간의 풀스택 개발 경험을 바탕으로<br />
-              React, TypeScript, React Native, Spring Boot, FastAPI를 활용해<br />
-              웹·모바일·AI 서비스를 연결하는 제품을 개발합니다.
+              5년 동안 웹·모바일·AI를 한 제품 안에 엮어 온 풀스택 개발자입니다.<br />
+              React·TypeScript·React Native·Spring Boot·FastAPI를 도구로 두고,<br />
+              앱–웹 브릿지·실시간 스트리밍·상태 관리·배포 자동화를<br />
+              하나의 흐름으로 설계해 운영 단계까지 책임집니다.
               <br /><br />
-              앱-웹 브릿지, 실시간 스트리밍, 전역 상태 관리, DevOps 자동화까지<br />
-              한 흐름으로 설계하고 구현합니다.
+              새 기능보다 실패 경로를 먼저 그리고,<br />
+              모를 때는 추정 대신 공식 문서·재현 가능한 작은 실험에서 출발합니다.
           </Description>
 
           <CTAButton
@@ -1664,21 +1665,31 @@ function HomePage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              5년간의 다양한 개발 경험을 통해 프론트엔드부터 백엔드, 모바일, AI 서비스까지
+              개발을 시작하게 된 계기는 단순했습니다.
               <br />
-              전체 개발 생태계를 다루는 풀스택 개발자로 성장했습니다.
+              내가 만든 코드 한 줄이 누군가의 화면 앞에서 바로 결과로 돌아오는 감각,
+              <br />
+              그 즉시성을 가장 정직한 일이라 느꼈습니다.
               <br /><br />
-              유탑소프트에서는 AI 기반 LLM·메타휴먼(HeyGen·LiveAvatar 등) 서비스 연동,
+              지난 5년은 그 감각을 운영까지 책임지는 흐름으로 넓혀 온 시간이었습니다.
               <br />
-              Android Native 앱 기능과 React(TypeScript) WebView 페이지 개발을 주도하고 있습니다.
+              프론트엔드·백엔드·모바일·AI 인프라를 한 제품 안에서 다루며
+              <br />
+              결제, 앱–웹 브릿지, LLM·메타휴먼(HeyGen·LiveAvatar) 실시간 연동,
+              <br />
+              WebRTC·WebSocket 기반 음성·화상 스트리밍까지
+              <br />
+              운영 부담이 큰 도메인에서 한 가지 원칙을 다듬어 왔습니다 ─
+              <br />
+              <strong>새 기능을 붙이기 전에 실패 경로부터 설계한다.</strong>
               <br /><br />
-              결제 시스템, WebView 연동, 채팅·음성·화상(WebRTC) 계열 실시간 스트리밍까지 다양한 도메인 경험을 바탕으로
+              모르는 영역을 만나면 추정 대신 공식 문서와 변경 이력에서 출발하고,
               <br />
-              사용자 중심의 솔루션을 개발합니다.
-              <br /><br />
-              새로운 기술 학습과 문제 해결에 대한 열정을 가지고 있으며,
+              재현 가능한 작은 실험으로 가설을 좁힙니다.
               <br />
-              팀과 함께 성장하는 것을 중요하게 생각합니다.
+              앞으로도 화려한 기술이 아니라
+              <br />
+              운영자가 안심하고 잠들 수 있는 시스템을 만드는 데 시간을 쓰고 싶습니다.
             </Description>
           </TextContent>
 

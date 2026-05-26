@@ -250,7 +250,7 @@ function GrowthJournalPage() {
               }}
               aria-hidden
             />
-            pandas·scikit-learn 등 ML 입문 레인은 <strong>회사 과제 외 노트북·문서로
+            pandas·scikit-learn 등 ML 입문 레인은 <strong>실무 과제 외에 자기 학습 노트로
             근거를 남기는 영역</strong>으로 두었습니다. 아래 카드 구조에 맞춰 본문·캡처만
             갈아 끼우면 블로그와 같은 위치에서 이력이 됩니다.
           </PageLead>
