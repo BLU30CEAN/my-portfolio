@@ -171,6 +171,24 @@ const ProfileImage = styled(motion.div)`
   position: relative;
   background: ${(props) => props.theme.colors.surface};
 
+  /* fallback when the profile image fails to load — never touches React tree */
+  &::after {
+    content: '${(props) => process.env.REACT_APP_PERSONAL_NAME || "EJ"}';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #00d4ff, #4ecdc4);
+    opacity: 0;
+    transition: opacity .25s ease;
+    pointer-events: none;
+  }
+  &:has(img[data-failed='true'])::after { opacity: 1; }
+
   &::before {
     content: '';
     position: absolute;
@@ -1150,7 +1168,7 @@ function HomePage() {
       {/* Home Section */}
       <HomeSection id="home">
         <FloatingElements>
-          {[...Array(20)].map((_, i) => (
+          {[...Array(8)].map((_, i) => (
             <FloatingElement
               key={i}
               style={{
@@ -1254,23 +1272,9 @@ function HomePage() {
                 src="/profile.jpg"
                 alt={`${process.env.REACT_APP_PERSONAL_NAME || "EJ"} - Full-Stack Developer`}
                 onError={(e) => {
-                  const target = e.target as HTMLImageElement;
+                  const target = e.currentTarget as HTMLImageElement;
+                  target.dataset.failed = 'true';
                   target.style.display = 'none';
-                  target.parentElement!.style.background = 'linear-gradient(135deg, #00d4ff, #4ecdc4)';
-                  target.parentElement!.innerHTML = `
-                    <div style="
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-                      width: 100%;
-                      height: 100%;
-                      color: white;
-                      font-size: 3rem;
-                      font-weight: bold;
-                    ">
-                      ${process.env.REACT_APP_PERSONAL_NAME || "EJ"}
-                    </div>
-                  `;
                 }}
               />
             </ProfileImage>
@@ -1301,7 +1305,7 @@ function HomePage() {
       {/* About Section */}
       <AboutSection id="about">
         <FloatingElements>
-          {[...Array(15)].map((_, i) => (
+          {[...Array(5)].map((_, i) => (
             <FloatingElement
               key={i}
               style={{
@@ -1382,7 +1386,7 @@ function HomePage() {
       {/* 기술 스택 섹션 */}
       <TechStackSection>
         <FloatingElements>
-          {[...Array(10)].map((_, i) => (
+          {[...Array(4)].map((_, i) => (
             <FloatingElement
               key={i}
               style={{
@@ -1449,7 +1453,7 @@ function HomePage() {
       {/* Projects Section */}
       <ProjectsSection id="projects">
         <FloatingElements>
-          {[...Array(10)].map((_, i) => (
+          {[...Array(4)].map((_, i) => (
             <FloatingElement
               key={i}
               style={{
@@ -1642,30 +1646,31 @@ function HomePage() {
                     viewport={{ once: true }}
                     whileHover={{ scale: 1.02 }}
                   >
-                    <ProjectTitle>Find Carrot Game</ProjectTitle>
+                    <ProjectTitle>rabris</ProjectTitle>
                     <ProjectDescription>
-                      React와 TypeScript를 활용한 인터랙티브 게임 개발. 사용자 경험을 중시한 UI/UX 디자인과 게임 로직 구현. 상태 관리 및 애니메이션 효과 적용.
+                      React 18 + TypeScript 로 다시 만든 테트리스. 7-bag 랜덤·SRS 라이트 월킥·고스트 프리뷰·하드 드롭까지
+                      실제로 동작하는 풀 게임 루프. 게임 상태는 단일 reducer 로 관리하고, 키 입력은 한 번만 바인딩한다.
                     </ProjectDescription>
                     <ProjectTech>
                       <TechTag>React</TechTag>
                       <TechTag>TypeScript</TechTag>
-                      <TechTag>Styled Components</TechTag>
-                      <TechTag>게임 로직</TechTag>
+                      <TechTag>useReducer</TechTag>
+                      <TechTag>Game Engine</TechTag>
                     </ProjectTech>
                     <ProjectActions>
                       <ProjectButton
-                        onClick={() => window.open('https://blu30cean.github.io/find-carrot', '_blank')}
+                        onClick={() => window.open('https://blu30cean.github.io/rabris', '_blank')}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        🎮 게임하기
+                        Play
                       </ProjectButton>
                       <ProjectButton
-                        onClick={() => window.open('https://github.com/BLU30CEAN/find-carrot', '_blank')}
+                        onClick={() => window.open('https://github.com/BLU30CEAN/rabris', '_blank')}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        📁 코드보기
+                        Source
                       </ProjectButton>
                     </ProjectActions>
                   </ProjectCard>
@@ -1677,34 +1682,32 @@ function HomePage() {
                     viewport={{ once: true }}
                     whileHover={{ scale: 1.02 }}
                   >
-                    <ProjectTitle>Netflix Clone</ProjectTitle>
+                    <ProjectTitle>pocket-poker</ProjectTitle>
                     <ProjectDescription>
-                      Netflix UI를 참고한 스트리밍 서비스 클론 프로젝트. 반응형 디자인과 모던 웹 기술을 활용한 사용자 인터페이스 구현. 영화 데이터 관리 및 카테고리별 분류 시스템.
+                      포지션·핸드·팟·상대 수를 넣으면 거친 EV 근사를 즉시 돌려준다.
+                      솔버 출력이 아닌 일상 직관 보강용 도구. 핸드 등급 룩업 × 포지션 배수 × 상대 수 감점이
+                      한 줄 식으로 굴러간다.
                     </ProjectDescription>
                     <ProjectTech>
-                      <TechTag>React</TechTag>
-                      <TechTag>TypeScript</TechTag>
-                      <TechTag>Styled Components</TechTag>
-                      <TechTag>반응형 디자인</TechTag>
+                      <TechTag>Vanilla JS</TechTag>
+                      <TechTag>HTML/CSS</TechTag>
+                      <TechTag>GTO Approx.</TechTag>
+                      <TechTag>Static Site</TechTag>
                     </ProjectTech>
                     <ProjectActions>
                       <ProjectButton
-                        onClick={() => {
-                          // 보안 경고로 인해 임시 비활성화
-                          alert('보안 경고로 인해 임시로 비활성화되었습니다. 곧 다시 활성화될 예정입니다.');
-                        }}
+                        onClick={() => window.open('https://blu30cean.github.io/pocket-poker', '_blank')}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        style={{ opacity: 0.5, cursor: 'not-allowed' }}
                       >
-                        🚫 임시 비활성화
+                        Open
                       </ProjectButton>
                       <ProjectButton
-                        onClick={() => window.open('https://github.com/BLU30CEAN/netflix-clone', '_blank')}
+                        onClick={() => window.open('https://github.com/BLU30CEAN/pocket-poker', '_blank')}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        📁 코드보기
+                        Source
                       </ProjectButton>
                     </ProjectActions>
                   </ProjectCard>
@@ -1716,51 +1719,17 @@ function HomePage() {
                     viewport={{ once: true }}
                     whileHover={{ scale: 1.02 }}
                   >
-                    <ProjectTitle>Tetris Game</ProjectTitle>
+                    <ProjectTitle>word-baseball</ProjectTitle>
                     <ProjectDescription>
-                      클래식 테트리스 게임을 React와 TypeScript로 구현. 게임 상태 관리, 키보드 이벤트 처리, 점수 시스템 등 완전한 게임 로직 구현. 사용자 친화적인 인터페이스와 애니메이션 효과.
+                      한글 자모를 야구공처럼 던지는 5타석 워들. 음절을 자모로 분해해 strike·ball·out 으로 판정한다.
+                      중복 자모는 strikeDup 으로 따로 표시. Next.js 정적 export + 클라이언트 정답 픽으로
+                      모든 방문자가 매번 다른 게임을 본다.
                     </ProjectDescription>
                     <ProjectTech>
-                      <TechTag>React</TechTag>
+                      <TechTag>Next.js</TechTag>
                       <TechTag>TypeScript</TechTag>
-                      <TechTag>게임 로직</TechTag>
-                      <TechTag>상태 관리</TechTag>
-                    </ProjectTech>
-                    <ProjectActions>
-                      <ProjectButton
-                        onClick={() => window.open('https://blu30cean.github.io/rabris', '_blank')}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        🎮 게임하기
-                      </ProjectButton>
-                      <ProjectButton
-                        onClick={() => window.open('https://github.com/BLU30CEAN/rabris', '_blank')}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        📁 코드보기
-                      </ProjectButton>
-                    </ProjectActions>
-                  </ProjectCard>
-
-                  <ProjectCard
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.35 }}
-                    viewport={{ once: true }}
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <ProjectTitle>KWB</ProjectTitle>
-                    <ProjectDescription>
-                      KWB(Korean Word Baseball)를 포트폴리오에서 바로 실행할 수 있도록 붙인 한글 워드 야구 게임이다.
-                      GitHub raw 공개 단어 데이터를 불러와 자모 입력, strike/ball/out 판정, 로컬 통계 저장, 새 게임 시작을 지원한다.
-                    </ProjectDescription>
-                    <ProjectTech>
-                      <TechTag>React</TechTag>
-                      <TechTag>TypeScript</TechTag>
-                      <TechTag>Hangul Decomposition</TechTag>
-                      <TechTag>Keyboard Input</TechTag>
+                      <TechTag>Hangul</TechTag>
+                      <TechTag>Static Export</TechTag>
                     </ProjectTech>
                     <ProjectActions>
                       <ProjectButton
@@ -1768,14 +1737,50 @@ function HomePage() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        🎮 게임하기
+                        Play
                       </ProjectButton>
                       <ProjectButton
                         onClick={openWordBaseballRepo}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        📁 코드보기
+                        Source
+                      </ProjectButton>
+                    </ProjectActions>
+                  </ProjectCard>
+
+                  <ProjectCard
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.02 }}
+                  >
+                    <ProjectTitle>find-carrot</ProjectTitle>
+                    <ProjectDescription>
+                      지뢰찾기를 토끼 굴로 비틀어본 픽셀 게임. Win98 톤을 유지하되 컬러는 코발트 라인으로 캘리브레이션.
+                      게임 보드 상태와 클릭 판정만 React 로 묶고, 그 외 시각 요소는 전부 CSS 픽셀 아트로 표현.
+                    </ProjectDescription>
+                    <ProjectTech>
+                      <TechTag>React</TechTag>
+                      <TechTag>TypeScript</TechTag>
+                      <TechTag>Pixel Art</TechTag>
+                      <TechTag>Game Logic</TechTag>
+                    </ProjectTech>
+                    <ProjectActions>
+                      <ProjectButton
+                        onClick={() => window.open('https://blu30cean.github.io/find-carrot', '_blank')}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        Play
+                      </ProjectButton>
+                      <ProjectButton
+                        onClick={() => window.open('https://github.com/BLU30CEAN/find-carrot', '_blank')}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        Source
                       </ProjectButton>
                     </ProjectActions>
                   </ProjectCard>
@@ -1812,7 +1817,7 @@ function HomePage() {
       {/* Contact Section */}
       <ContactSection id="contact">
         <FloatingElements>
-          {[...Array(8)].map((_, i) => (
+          {[...Array(3)].map((_, i) => (
             <FloatingElement
               key={i}
               style={{
