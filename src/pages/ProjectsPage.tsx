@@ -218,18 +218,18 @@ const LiveDemoButton = styled.a`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: ${(props) => props.theme.colors.secondary};
+  color: ${(props) => props.theme.colors.accent};
   text-decoration: none;
   font-weight: 500;
   transition: all 0.3s ease;
   padding: 0.5rem 1rem;
-  border: 1px solid ${(props) => props.theme.colors.secondary};
+  border: 1px solid ${(props) => props.theme.colors.accent};
   border-radius: 20px;
   background: transparent;
 
   &:hover {
     transform: translateX(5px);
-    background: ${(props) => props.theme.colors.secondary};
+    background: ${(props) => props.theme.colors.accent};
     color: white;
   }
 `;

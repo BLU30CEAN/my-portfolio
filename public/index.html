@@ -1,65 +1,92 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="light">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Full-Stack & AI integration — React, Spring Boot, FastAPI, 실시간 미디어. 공식 문서 기반으로 구현한 포트폴리오."
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="format-detection" content="telephone=no" />
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f8fd" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#04101f" />
+
+    <title>EJ · Full-Stack & AI Engineer Portfolio</title>
+    <meta name="description" content="React·TypeScript·Spring Boot·FastAPI·LiveKit 등 풀스택과 실시간 AI 미디어를 운영 단계까지 책임지는 개발자 EJ의 포트폴리오." />
+    <meta name="author" content="EJ" />
+    <meta name="robots" content="index,follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:title" content="EJ · Full-Stack & AI Engineer Portfolio" />
+    <meta property="og:description" content="실시간 AI 아바타·앱-웹 브릿지·결제 시스템을 한 사람의 책임 범위 안에서 다뤄온 풀스택 엔지니어." />
+    <meta property="og:image" content="%PUBLIC_URL%/profile.jpg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="EJ · Full-Stack & AI Engineer Portfolio" />
+    <meta name="twitter:description" content="공식 문서 기반으로 실패 경로부터 설계하는 풀스택 개발자." />
+    <meta name="twitter:image" content="%PUBLIC_URL%/profile.jpg" />
+
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
+    <!--
+      First-paint 테마 동기화: React 마운트 전에 저장된 mode/시스템 prefer를 읽어
+      data-theme 과 body 배경을 미리 칠한다. 다크 -> 라이트 깜빡임을 제거.
     -->
-    <title>Blue Ocean Portfolio</title>
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var resolved = stored === "light" || stored === "dark"
+            ? stored
+            : prefersDark ? "dark" : "light";
+          var root = document.documentElement;
+          root.setAttribute("data-theme", resolved);
+          root.style.colorScheme = resolved;
+          var bg = resolved === "dark" ? "#04101f" : "#f4f8fd";
+          var fg = resolved === "dark" ? "#eaf3ff" : "#0b1a2a";
+          root.style.background = bg;
+          root.style.color = fg;
+        } catch (e) {}
+      })();
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "EJ",
+        "jobTitle": "Full-Stack & AI Engineer",
+        "url": "https://blu30cean.github.io/my-portfolio",
+        "sameAs": ["https://github.com/BLU30CEAN"]
+      }
+    </script>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>이 페이지는 자바스크립트가 필요합니다.</noscript>
     <div id="root"></div>
     <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
-      // MIT License
-      // https://github.com/rafgraph/spa-github-pages
-      // This script checks to see if a redirect is present in the query string,
-      // converts it back into the correct url and adds it to the
-      // browser's history using window.history.replaceState(...),
-      // which won't cause the browser to attempt to load the new url.
-      // When the single page app is loaded further down in this file,
-      // the correct url will be waiting in the browser's history for
-      // the single page app to route accordingly.
-      (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
+      // Single Page Apps for GitHub Pages — rafgraph/spa-github-pages (MIT)
+      (function (l) {
+        if (l.search[1] === "/") {
+          var decoded = l.search
+            .slice(1)
+            .split("&")
+            .map(function (s) {
+              return s.replace(/~and~/g, "&");
+            })
+            .join("?");
+          window.history.replaceState(
+            null,
+            null,
+            l.pathname.slice(0, -1) + decoded + l.hash
           );
         }
-      }(window.location))
+      })(window.location);
     </script>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>

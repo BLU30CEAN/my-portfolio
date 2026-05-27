@@ -1,23 +1,6 @@
 import "styled-components";
+import type { AppTheme } from "../theme/tokens";
 
 declare module "styled-components" {
-  export interface DefaultTheme {
-    colors: {
-      primary: string;
-      secondary: string;
-      accent: string;
-      background: string;
-      surface: string;
-      text: string;
-      textSecondary: string;
-      border: string;
-      gradient: string;
-      gradientSecondary: string;
-    };
-    breakpoints: {
-      mobile: string;
-      tablet: string;
-      desktop: string;
-    };
-  }
+  export interface DefaultTheme extends AppTheme {}
 }
