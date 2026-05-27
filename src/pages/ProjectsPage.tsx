@@ -218,18 +218,18 @@ const LiveDemoButton = styled.a`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: ${(props) => props.theme.colors.secondary};
+  color: ${(props) => props.theme.colors.accent};
   text-decoration: none;
   font-weight: 500;
   transition: all 0.3s ease;
   padding: 0.5rem 1rem;
-  border: 1px solid ${(props) => props.theme.colors.secondary};
+  border: 1px solid ${(props) => props.theme.colors.accent};
   border-radius: 20px;
   background: transparent;
 
   &:hover {
     transform: translateX(5px);
-    background: ${(props) => props.theme.colors.secondary};
+    background: ${(props) => props.theme.colors.accent};
     color: white;
   }
 `;
@@ -329,7 +329,7 @@ function ProjectsPage() {
       id: 1,
       title: "Find Carrot Game",
       description:
-        "React와 TypeScript로 개발한 당근 찾기 게임입니다. 클릭으로 숨겨진 당근을 찾아 점수를 얻는 재미있는 웹 게임입니다.",
+        "React와 TypeScript로 만든 당근 찾기 웹 게임입니다. 화면 곳곳에 숨겨진 당근을 클릭으로 찾아내며 점수를 쌓아 가는 가벼운 미니게임입니다.",
       category: "game",
       icon: Carrot,
       bgColor: "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
@@ -367,7 +367,7 @@ function ProjectsPage() {
       id: 5,
       title: "KWB",
       description:
-        "KWB(Korean Word Baseball)를 포트폴리오에서 바로 실행할 수 있도록 붙인 한글 워드 야구 게임입니다. GitHub raw 공개 단어 목록으로 자모 입력, strike/ball/out 판정, 로컬 통계 저장을 지원합니다.",
+        "KWB(Korean Word Baseball)를 포트폴리오 안에서 바로 실행할 수 있도록 다듬은 한글 워드 야구 게임입니다. GitHub raw에 공개된 단어 목록을 가져와 자모 단위 입력, strike·ball·out 판정, 로컬 통계 저장을 지원합니다.",
       category: "game",
       icon: Gamepad2,
       bgColor: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
@@ -403,7 +403,7 @@ function ProjectsPage() {
       id: 2,
       title: "Netflix Clone",
       description:
-        "Netflix의 UI/UX를 참고하여 만든 영화 스트리밍 플랫폼 클론입니다. 영화 정보 표시와 반응형 디자인을 구현했습니다.",
+        "Netflix의 UI·UX 패턴을 참고해 직접 만든 영화 스트리밍 플랫폼 클론입니다. 영화 정보 카드와 반응형 레이아웃을 세심하게 구현했습니다.",
       category: "web",
       icon: Video,
       bgColor: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
@@ -442,7 +442,7 @@ function ProjectsPage() {
       id: 3,
       title: "Rabris (Tetris Clone)",
       description:
-        "클래식 테트리스 게임을 React와 TypeScript로 재구현한 프로젝트입니다. 게임 로직과 키보드 컨트롤을 완벽하게 구현했습니다.",
+        "클래식 테트리스 게임을 React와 TypeScript로 다시 구현한 프로젝트입니다. 블록 회전·소거·키보드 컨트롤까지 게임 로직 전반을 빈틈없이 완성했습니다.",
       category: "game",
       icon: Gamepad2,
       bgColor: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
@@ -478,13 +478,15 @@ function ProjectsPage() {
     },
     {
       id: 4,
-      title: "AI 인터랙티브 아바타 플랫폼",
+      title: "AI 인터랙티브 메타휴먼 아바타 플랫폼",
       description:
-        "OpenAI Whisper(STT) → GPT-4o-mini/Claude 3.5 → ElevenLabs TTS → LiveAvatar 립싱크로 이어지는 엔드투엔드 AI 파이프라인을 설계·구현했습니다.",
+        "HeyGen·LiveAvatar 같은 메타휴먼 실시간 API와 연동해 STT → LLM(GPT-4o-mini·Claude 등) → ElevenLabs TTS·립싱크까지 이어지는 흐름을 오케스트레이션했습니다. 채팅·음성·화상통화(WebRTC)·WebSocket 패턴을 하나의 제품 안에서 통합한 사례입니다.",
       category: "web",
       icon: Brain,
       bgColor: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
       tech: [
+        "HeyGen",
+        "LiveAvatar",
         "OpenAI",
         "ElevenLabs",
         "LiveKit",
@@ -497,6 +499,7 @@ function ProjectsPage() {
         { icon: TrendingUp, label: "모델 라우팅", value: "GPT-4o-mini / Claude 3.5" },
       ],
       features: [
+        "HeyGen · LiveAvatar 계열 메타휴먼 연동",
         "STT → LLM → TTS → LipSync 파이프라인",
         "WebRTC 실시간 스트리밍",
         "WebSocket 오디오 전송",
@@ -515,7 +518,7 @@ function ProjectsPage() {
       id: 6,
       title: "AI 기반 LLM 서비스 Android Native 앱",
       description:
-        "Android Native 앱 기능 구현과 React(TypeScript) WebView 페이지 개발을 담당했습니다. 앱-웹 브릿지, 네이티브 기능 연동, Zustand/Jotai 상태 관리, Tailwind CSS·Shadcn UI 기반 UI 구현으로 일관된 사용자 경험을 맞췄습니다.",
+        "Android Native 앱 기능 구현과 React(TypeScript) 기반 WebView 페이지 개발을 함께 담당했습니다. 앱·웹 브릿지 통신, 네이티브 기능 연동, Zustand·Jotai 상태 관리, Tailwind CSS·Shadcn UI 기반의 화면 구성을 통해 어느 진입점에서든 일관된 사용자 경험을 제공했습니다.",
       category: "backend",
       icon: Globe,
       bgColor: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
@@ -550,7 +553,7 @@ function ProjectsPage() {
       id: 7,
       title: "앱인앱 주문채널 인프라",
       description:
-        "React(TypeScript) 기반 앱인앱 주문채널과 Spring Boot·PostgreSQL 주문 API를 AWS EC2/Jenkins로 배포 자동화하고, JWT 인증과 NICE Payments/OKPOS 연동을 구축했습니다.",
+        "React(TypeScript) 기반 앱인앱 주문채널과 Spring Boot·PostgreSQL 주문 API를 한 번에 설계하고, AWS EC2와 Jenkins로 배포 자동화를 잡았습니다. JWT 인증과 NICE Payments·OKPOS 결제 연동까지 운영 단계의 안정성을 함께 챙겼습니다.",
       category: "cloud",
       icon: Smartphone,
       bgColor: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
@@ -599,7 +602,8 @@ function ProjectsPage() {
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          AI, 모바일, 백엔드, 클라우드까지 실무에서 다룬 프로젝트들입니다
+          AI·모바일·백엔드·클라우드까지, 실무 현장에서 직접 책임지고 다뤄 본
+          프로젝트들을 한곳에 모았습니다.
         </SectionSubtitle>
 
         <FilterButtons>

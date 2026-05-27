@@ -1,136 +1,110 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from "react";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
+import {
+  AppTheme,
+  darkTheme,
+  lightTheme,
+  themeToCssVars,
+} from "../theme/tokens";
 
-// 테마 타입 확장
-declare module "styled-components" {
-  export interface DefaultTheme {
-    colors: {
-      background: string;
-      surface: string;
-      text: string;
-      textSecondary: string;
-      primary: string;
-      secondary: string;
-      border: string;
-      gradient: string;
-    };
-    shadows: {
-      card: string;
-      button: string;
-    };
-  }
-}
+type ThemeMode = "light" | "dark" | "device";
 
-type ThemeType = "light" | "dark" | "device";
-
-interface ThemeContextType {
-  theme: ThemeType;
-  setTheme: (theme: ThemeType) => void;
+interface ThemeContextValue {
+  mode: ThemeMode;
+  setMode: (m: ThemeMode) => void;
+  effective: "light" | "dark";
   isDark: boolean;
+  toggle: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+const STORAGE_KEY = "theme";
 
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme must be used within a ThemeProvider");
-  }
-  return context;
+const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
+
+export const useTheme = (): ThemeContextValue => {
+  const ctx = useContext(ThemeContext);
+  if (!ctx) throw new Error("useTheme must be used within <ThemeProvider>");
+  return ctx;
 };
 
-interface ThemeProviderProps {
+/** SSR/CSR 동일하게 안전한 system theme 감지 */
+function getSystemTheme(): "light" | "dark" {
+  if (typeof window === "undefined" || !window.matchMedia) return "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
+function applyCssVars(theme: AppTheme) {
+  if (typeof document === "undefined") return;
+  const root = document.documentElement;
+  const vars = themeToCssVars(theme);
+  Object.entries(vars).forEach(([k, v]) => root.style.setProperty(k, v));
+  root.setAttribute("data-theme", theme.mode);
+  root.style.colorScheme = theme.mode;
+}
+
+interface ProviderProps {
   children: React.ReactNode;
 }
 
-// 테마 색상 정의 - Blue Ocean 컨셉
-const lightTheme = {
-  colors: {
-    background: "#f0f8ff", // Alice Blue
-    surface: "#ffffff",
-    text: "#1a1a1a",
-    textSecondary: "#666666",
-    primary: "#0066cc", // Deep Blue
-    secondary: "#ff6b6b",
-    border: "#e0e0e0",
-    gradient: "linear-gradient(135deg, #0066cc, #0099ff, #66b3ff)",
-  },
-  shadows: {
-    card: "0 4px 20px rgba(0, 102, 204, 0.1)",
-    button: "0 4px 20px rgba(0, 102, 204, 0.3)",
-  },
-  breakpoints: {
-    mobile: "768px",
-    tablet: "1024px",
-    desktop: "1200px",
-  },
-};
-
-const darkTheme = {
-  colors: {
-    background: "#001a33", // Deep Ocean Blue
-    surface: "#002b4d", // Ocean Surface
-    text: "#ffffff",
-    textSecondary: "#b3d9ff", // Light Blue Text
-    primary: "#0099ff", // Ocean Blue
-    secondary: "#ff6b6b",
-    border: "#004080", // Deep Blue Border
-    gradient: "linear-gradient(135deg, #0099ff, #66b3ff, #99ccff)",
-  },
-  shadows: {
-    card: "0 4px 20px rgba(0, 153, 255, 0.2)",
-    button: "0 4px 20px rgba(0, 153, 255, 0.4)",
-  },
-  breakpoints: {
-    mobile: "768px",
-    tablet: "1024px",
-    desktop: "1200px",
-  },
-};
-
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = useState<ThemeType>(() => {
-    const saved = localStorage.getItem("theme");
-    return (saved as ThemeType) || "device";
+export const ThemeProvider: React.FC<ProviderProps> = ({ children }) => {
+  const [mode, setModeState] = useState<ThemeMode>(() => {
+    if (typeof window === "undefined") return "device";
+    const saved = window.localStorage.getItem(STORAGE_KEY);
+    return saved === "light" || saved === "dark" || saved === "device"
+      ? saved
+      : "device";
   });
 
-  const [isDark, setIsDark] = useState(false);
-
-  const getSystemTheme = () => {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  };
-
-  const getEffectiveTheme = () => {
-    return theme === "device" ? getSystemTheme() : theme;
-  };
-
-  const currentTheme = getEffectiveTheme() === "dark" ? darkTheme : lightTheme;
+  const [systemTheme, setSystemTheme] = useState<"light" | "dark">(() =>
+    getSystemTheme(),
+  );
 
   useEffect(() => {
-    const effectiveTheme = theme === "device" ? getSystemTheme() : theme;
-    localStorage.setItem("theme", theme);
-    setIsDark(effectiveTheme === "dark");
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const handler = () => setSystemTheme(mq.matches ? "dark" : "light");
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
-    // 시스템 테마 변경 감지
-    if (theme === "device") {
-      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-      const handleChange = () => {
-        const nextEffectiveTheme = theme === "device" ? getSystemTheme() : theme;
-        setIsDark(nextEffectiveTheme === "dark");
-      };
-      
-      mediaQuery.addEventListener("change", handleChange);
-      return () => mediaQuery.removeEventListener("change", handleChange);
-    }
+  const effective: "light" | "dark" = mode === "device" ? systemTheme : mode;
+  const theme = effective === "dark" ? darkTheme : lightTheme;
+
+  useLayoutEffect(() => {
+    applyCssVars(theme);
   }, [theme]);
 
+  const setMode = useCallback((next: ThemeMode) => {
+    setModeState(next);
+    try {
+      window.localStorage.setItem(STORAGE_KEY, next);
+    } catch {
+      /* private mode 등 무시 */
+    }
+  }, []);
+
+  const toggle = useCallback(() => {
+    setMode(effective === "dark" ? "light" : "dark");
+  }, [effective, setMode]);
+
+  const value = useMemo<ThemeContextValue>(
+    () => ({ mode, setMode, effective, isDark: effective === "dark", toggle }),
+    [mode, setMode, effective, toggle],
+  );
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, isDark }}>
-      <StyledThemeProvider theme={currentTheme}>
-        {children}
-      </StyledThemeProvider>
+    <ThemeContext.Provider value={value}>
+      <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>
     </ThemeContext.Provider>
   );
 };

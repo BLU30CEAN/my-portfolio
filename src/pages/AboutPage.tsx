@@ -246,7 +246,7 @@ function AboutPage() {
   const achievements = [
     { icon: Users, title: "주요 프로젝트", value: "5개" },
     { icon: TrendingUp, title: "실시간 지연시간", value: "500ms 이하" },
-    { icon: Zap, title: "상태 관리", value: "Zustand · Jotai" },
+    { icon: Zap, title: "상태·서버캐시", value: "TanStack Query · Zustand" },
     { icon: Award, title: "배포/문서화", value: "Docker · Swagger" },
   ];
 
@@ -256,33 +256,38 @@ function AboutPage() {
       icon: Code,
       skills: [
         "React & TypeScript",
-        "React Native",
-        "JavaScript (ES6+)",
-        "Tailwind CSS",
-        "Shadcn UI",
-        "Zustand / Jotai",
+        "Next.js (App Router 예: word-baseball)",
+        "React Native · Expo EAS",
+        "Tailwind CSS · Radix(shadcn 패턴)",
+        "Zustand",
+        "TanStack Query",
+        "i18next",
       ],
     },
     {
       category: "Backend & AI",
       icon: Brain,
       skills: [
-        "Java & Spring Boot",
-        "Python & FastAPI",
-        "REST API",
-        "Swagger 문서화",
-        "OpenAI / Claude / ElevenLabs",
+        "Java 21 · Spring Boot 4 · Maven",
+        "MyBatis (XML Mapper) · MySQL",
+        "Spring Security · Batch · Quartz",
+        "Thymeleaf · Log4j2 · Actuator",
+        "Python · FastAPI · Uvicorn",
+        "OpenAI / ElevenLabs / LiveAvatar / LiveKit",
+        "pydub · multipart · JWT (백엔드 템플릿 패턴)",
       ],
     },
     {
       category: "Mobile & Realtime",
       icon: Smartphone,
       skills: [
-        "Android Native",
-        "WebView Bridge",
-        "WebRTC / WebSocket",
-        "오디오 스트리밍",
-        "상태 동기화",
+        "React Native 0.83 / React 19",
+        "LiveKit (Room · Track)",
+        "WebSocket Custom Mode",
+        "RN WebView",
+        "Firebase (FCM) · Notifee",
+        "오디오 녹음 · 스트리밍 패턴",
+        "SSE/REST와 TanStack 동기화",
       ],
     },
     {
@@ -302,27 +307,32 @@ function AboutPage() {
     {
       date: "2025.04 - 2026.04",
       title: "유탑소프트 · Convergence Lab",
-      description: "AI 기반 LLM 서비스의 Android Native 앱 기능 구현, React(TypeScript) WebView 개발, 실시간 스트리밍과 전역 상태 관리를 담당",
+      description:
+        "React Native 앱에서 TanStack Query·Zustand·LiveKit·LiveAvatar 세션과 WebSocket, Firebase(FCM), WebView 오디오 파이프라인을 담당했습니다. 포털 레인에서는 Spring Boot 4(Java 21)·MyBatis·Batch/Quartz·Thymeleaf, FastAPI 보조 레인에서는 multipart STT와 pydub PCM 처리를 함께 다뤘습니다.",
     },
     {
       date: "2024.04 - 2025.04",
       title: "앱인앱 주문채널 신규 구축",
-      description: "React(TypeScript) 프론트엔드, Spring Boot·PostgreSQL API, AWS EC2·Jenkins 배포 자동화, JWT 인증, PG/OKPOS 연동",
+      description:
+        "React(TypeScript) 프론트엔드와 Spring Boot·PostgreSQL API를 설계하고, AWS EC2·Jenkins 배포 자동화, JWT 인증, NICE Payments·OKPOS 결제 연동을 직접 구현했습니다.",
     },
     {
       date: "2023.01 - 2024.03",
       title: "홈페이지 및 모바일 앱 운영",
-      description: "고객/임직원/협력사 3종 앱 유지보수, 기능 추가, JIRA·Confluence 요청 대응, 365일 운영 대응",
+      description:
+        "고객·임직원·협력사 3종 앱을 유지·보수하며 기능 개선과 JIRA·Confluence 요청에 대응했고, 서비스 중단 없는 운영 안정성을 함께 책임졌습니다.",
     },
     {
       date: "2022.08 - 2022.12",
       title: "SAP U4A ERP QA 모듈 구축",
-      description: "ABAP, SAP HANA Cloud 기반 ERP QA 모듈 개발과 보안 규율이 엄격한 환경에서의 협업 경험",
+      description:
+        "ABAP과 SAP HANA Cloud 기반의 ERP QA 모듈을 개발하며, 보안 규율이 엄격한 환경에서의 협업 경험을 쌓았습니다.",
     },
     {
       date: "2021.05 - 2022.04",
       title: "결제 앱 솔루션 개발",
-      description: "Java, JSP, Android 네이티브 앱과 NICE PG/VAN 결제 연동 구현",
+      description:
+        "Java·JSP·Android 네이티브 앱을 기반으로 NICE PG·VAN 결제 연동을 구현했습니다.",
     },
   ];
 
@@ -345,9 +355,11 @@ function AboutPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            5년간의 실무 경험을 바탕으로 AI 서비스, 모바일 브리지, 결제/주문 시스템까지
-            폭넓게 다뤄온 개발자입니다. 현재는 유탑소프트에서 AI 기반 LLM 서비스의
-            Android Native 앱 기능 구현과 React(TypeScript) WebView 개발을 주도하고 있습니다.
+            지난 5년 동안 AI 서비스, 모바일·웹 연동, 결제·주문 시스템을 한
+            사람의 책임 안에서 끝까지 다뤄 온 풀스택 개발자입니다. 최근에는
+            메타휴먼(HeyGen·LiveAvatar)과 LLM 실시간 연동, Android Native·
+            React(TypeScript) WebView 통합을 맡아 요구 정의에서 설계, 운영
+            모니터링까지 하나의 흐름으로 정돈해 왔습니다.
           </SectionSubtitle>
         </Section>
 
@@ -372,18 +384,25 @@ function AboutPage() {
                 <Brain size={28} />
               </ProjectIcon>
               <ProjectInfo>
-                <ProjectTitle>AI 인터랙티브 아바타 플랫폼</ProjectTitle>
+                <ProjectTitle>
+                  AI 인터랙티브 메타휴먼 아바타 플랫폼
+                </ProjectTitle>
                 <ProjectPeriod>2025.04 - 2026.04</ProjectPeriod>
               </ProjectInfo>
             </ProjectHeader>
 
             <ProjectDescription>
-              OpenAI Whisper(STT) → GPT-4o-mini/Claude 3.5 → ElevenLabs TTS → LiveAvatar 립싱크로
-              이어지는 엔드투엔드 AI 파이프라인을 설계·구현했습니다. WebRTC 기반 실시간 스트리밍과
-              WebSocket 오디오 전송, 예외 처리와 재시도 전략까지 포함해 운영 안정성을 높였습니다.
+              HeyGen·LiveAvatar 같은 실시간 AI 아바타 API와 연동해 STT →
+              LLM(GPT-4o-mini·Claude 등) → ElevenLabs TTS·립싱크까지
+              오케스트레이션을 직접 설계했습니다. 채팅·음성에 가까운 상태
+              흐름에 화상통화 영역의 WebRTC·WebSocket 오디오 패턴을 얹고,
+              꼼꼼한 예외 처리와 재시도 전략으로 운영 단계의 안정성을 끌어
+              올렸습니다.
             </ProjectDescription>
 
             <TechStack>
+              <TechTag>HeyGen</TechTag>
+              <TechTag>LiveAvatar</TechTag>
               <TechTag>OpenAI</TechTag>
               <TechTag>ElevenLabs</TechTag>
               <TechTag>LiveKit</TechTag>
