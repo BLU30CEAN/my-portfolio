@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, BookOpen, ImageOff } from "lucide-react";
+import { animate, stagger, text, createScope, type Scope } from "animejs";
 import {
   ML_JOURNAL_HERO_MEDIA_ENABLED,
   ML_JOURNAL_POSTS,
   type MlJournalPost,
 } from "../data/mlJournalPosts";
+import MiniGameCard from "../components/growth/MiniGameCard";
+import MiniGameRenderer from "../components/growth/MiniGameRegistry";
 
 const PageWrap = styled.div`
   min-height: 100vh;
@@ -17,7 +20,7 @@ const PageWrap = styled.div`
 `;
 
 const Inner = styled.div`
-  max-width: 740px;
+  max-width: 780px;
   margin: 0 auto;
 `;
 
@@ -219,10 +222,56 @@ function HeroMedia({ post }: { post: MlJournalPost }) {
 
 function GrowthJournalPage() {
   const navigate = useNavigate();
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const titleRef = useRef<HTMLHeadingElement | null>(null);
+
+  // page-level anime.js intro: splitText on title char-by-char, scramble on each tag
+  useEffect(() => {
+    if (!rootRef.current) return;
+
+    let scope: Scope | null = null;
+    scope = createScope({ root: rootRef.current }).add((self) => {
+      if (titleRef.current) {
+        const splitter = text.splitText(titleRef.current, {
+          chars: { wrap: "clip" },
+        });
+        self?.register(splitter);
+        animate(splitter.chars, {
+          opacity: [0, 1],
+          translateY: [22, 0],
+          rotateX: [-65, 0],
+          duration: 720,
+          delay: stagger(28, { start: 120 }),
+          ease: "outBack",
+        });
+      }
+
+      // scramble tags on appearance
+      const tagEls = rootRef.current!.querySelectorAll<HTMLElement>("[data-journal-tag]");
+      tagEls.forEach((el, i) => {
+        const original = el.textContent ?? "";
+        animate(el, {
+          text: text.scrambleText({
+            text: original,
+            chars: "uppercase",
+            revealRate: 24,
+            settleDuration: 220,
+            from: "left",
+          }),
+          duration: 700,
+          delay: 240 + i * 60,
+        });
+      });
+    });
+
+    return () => {
+      scope?.revert();
+    };
+  }, []);
 
   return (
     <PageWrap>
-      <Inner>
+      <Inner ref={rootRef}>
         <BackBar>
           <BackBtn
             type="button"
@@ -239,7 +288,7 @@ function GrowthJournalPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
         >
-          <PageTitle>연구 노트 · 자기 학습</PageTitle>
+          <PageTitle ref={titleRef}>연구 노트 · 자기 학습</PageTitle>
           <PageLead>
             <BookOpen
               size={18}
@@ -251,8 +300,9 @@ function GrowthJournalPage() {
               aria-hidden
             />
             pandas·scikit-learn 등 ML 입문 레인은 <strong>실무 과제 외에 자기 학습 노트로
-            근거를 남기는 영역</strong>으로 두었습니다. 아래 카드 구조에 맞춰 본문·캡처만
-            갈아 끼우면 블로그와 같은 위치에서 이력이 됩니다.
+            근거를 남기는 영역</strong>으로 두었습니다. 각 항목에는 anime.js v4 로 만든
+            <strong> 인터랙티브 미니게임</strong>을 함께 두어, 글을 읽다 손으로 한 번 더 체득할
+            수 있게 했습니다.
           </PageLead>
 
           {ML_JOURNAL_POSTS.map((post, index) => (
@@ -268,7 +318,9 @@ function GrowthJournalPage() {
                 <span>{post.period}</span>
                 <TagRow>
                   {post.tags.map((t) => (
-                    <Tag key={t}>{t}</Tag>
+                    <Tag key={t} data-journal-tag>
+                      {t}
+                    </Tag>
                   ))}
                 </TagRow>
               </ArticleMeta>
@@ -282,6 +334,12 @@ function GrowthJournalPage() {
                   <SectionBody>{s.body}</SectionBody>
                 </SectionBlock>
               ))}
+
+              {post.miniGame ? (
+                <MiniGameCard meta={post.miniGame}>
+                  <MiniGameRenderer id={post.miniGame.id} />
+                </MiniGameCard>
+              ) : null}
             </Article>
           ))}
         </motion.div>
