@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 import { useReducedMotion } from "framer-motion";
 
 const float = keyframes`
@@ -32,9 +32,13 @@ const Dot = styled.span<{
   opacity: 0.5;
   ${(p) =>
     p.$reduced
-      ? `opacity: 0.45;`
-      : `animation: ${float} ${p.$duration} ease-in-out infinite;
-         animation-delay: ${p.$delay};`}
+      ? css`
+          opacity: 0.45;
+        `
+      : css`
+          animation: ${float} ${p.$duration} ease-in-out infinite;
+          animation-delay: ${p.$delay};
+        `}
 `;
 
 /**
