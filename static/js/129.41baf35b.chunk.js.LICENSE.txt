@@ -1,0 +1,69 @@
+/**
+ * @license lucide-react v0.525.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * Anime.js - animation - ESM
+ * @version v4.4.1
+ * @license MIT
+ * @copyright 2026 - Julian Garnier
+ */
+
+/**
+ * Anime.js - core - ESM
+ * @version v4.4.1
+ * @license MIT
+ * @copyright 2026 - Julian Garnier
+ */
+
+/**
+ * Anime.js - easings - ESM
+ * @version v4.4.1
+ * @license MIT
+ * @copyright 2026 - Julian Garnier
+ */
+
+/**
+ * Anime.js - engine - ESM
+ * @version v4.4.1
+ * @license MIT
+ * @copyright 2026 - Julian Garnier
+ */
+
+/**
+ * Anime.js - scope - ESM
+ * @version v4.4.1
+ * @license MIT
+ * @copyright 2026 - Julian Garnier
+ */
+
+/**
+ * Anime.js - text - ESM
+ * @version v4.4.1
+ * @license MIT
+ * @copyright 2026 - Julian Garnier
+ */
+
+/**
+ * Anime.js - timeline - ESM
+ * @version v4.4.1
+ * @license MIT
+ * @copyright 2026 - Julian Garnier
+ */
+
+/**
+ * Anime.js - timer - ESM
+ * @version v4.4.1
+ * @license MIT
+ * @copyright 2026 - Julian Garnier
+ */
+
+/**
+ * Anime.js - utils - ESM
+ * @version v4.4.1
+ * @license MIT
+ * @copyright 2026 - Julian Garnier
+ */
