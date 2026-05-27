@@ -308,31 +308,31 @@ function AboutPage() {
       date: "2025.04 - 2026.04",
       title: "유탑소프트 · Convergence Lab",
       description:
-        "RN 앱: TanStack Query·Zustand·LiveKit(react-native)·LiveAvatar 세션/WS·Firebase(FCM)·WebView 및 오디오 파이프라인. 포털: Spring Boot 4(Java 21)·MyBatis·Batch/Quartz/Thymeleaf. FastAPI 보조 레인으로 multipart STT·pydub PCM 등 (근거 레포 패키지·문서 레벨로 정렬).",
+        "React Native 앱에서 TanStack Query·Zustand·LiveKit·LiveAvatar 세션과 WebSocket, Firebase(FCM), WebView 오디오 파이프라인을 담당했습니다. 포털 레인에서는 Spring Boot 4(Java 21)·MyBatis·Batch/Quartz·Thymeleaf, FastAPI 보조 레인에서는 multipart STT와 pydub PCM 처리를 함께 다뤘습니다.",
     },
     {
       date: "2024.04 - 2025.04",
       title: "앱인앱 주문채널 신규 구축",
       description:
-        "React(TypeScript) 프론트엔드, Spring Boot·PostgreSQL API, AWS EC2·Jenkins 배포 자동화, JWT 인증, PG/OKPOS 연동",
+        "React(TypeScript) 프론트엔드와 Spring Boot·PostgreSQL API를 설계하고, AWS EC2·Jenkins 배포 자동화, JWT 인증, NICE Payments·OKPOS 결제 연동을 직접 구현했습니다.",
     },
     {
       date: "2023.01 - 2024.03",
       title: "홈페이지 및 모바일 앱 운영",
       description:
-        "고객/임직원/협력사 3종 앱 유지보수, 기능 추가, JIRA·Confluence 요청 대응, 무중단 운영 대응",
+        "고객·임직원·협력사 3종 앱을 유지·보수하며 기능 개선과 JIRA·Confluence 요청에 대응했고, 서비스 중단 없는 운영 안정성을 함께 책임졌습니다.",
     },
     {
       date: "2022.08 - 2022.12",
       title: "SAP U4A ERP QA 모듈 구축",
       description:
-        "ABAP, SAP HANA Cloud 기반 ERP QA 모듈 개발과 보안 규율이 엄격한 환경에서의 협업 경험",
+        "ABAP과 SAP HANA Cloud 기반의 ERP QA 모듈을 개발하며, 보안 규율이 엄격한 환경에서의 협업 경험을 쌓았습니다.",
     },
     {
       date: "2021.05 - 2022.04",
       title: "결제 앱 솔루션 개발",
       description:
-        "Java, JSP, Android 네이티브 앱과 NICE PG/VAN 결제 연동 구현",
+        "Java·JSP·Android 네이티브 앱을 기반으로 NICE PG·VAN 결제 연동을 구현했습니다.",
     },
   ];
 
@@ -355,11 +355,11 @@ function AboutPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            5년 동안 AI 서비스·모바일 브리지·결제/주문 시스템을 한 사람의 책임
-            범위 안에서 다뤄 온 풀스택 개발자입니다. 최근에는
-            메타휴먼(HeyGen·LiveAvatar)·LLM 실시간 연동과 Android Native ·
-            React(TypeScript) WebView 통합을 맡으며, 요구 정의 → 설계 → 운영
-            모니터링까지 한 흐름으로 정렬해 왔습니다.
+            지난 5년 동안 AI 서비스, 모바일·웹 연동, 결제·주문 시스템을 한
+            사람의 책임 안에서 끝까지 다뤄 온 풀스택 개발자입니다. 최근에는
+            메타휴먼(HeyGen·LiveAvatar)과 LLM 실시간 연동, Android Native·
+            React(TypeScript) WebView 통합을 맡아 요구 정의에서 설계, 운영
+            모니터링까지 하나의 흐름으로 정돈해 왔습니다.
           </SectionSubtitle>
         </Section>
 
@@ -392,11 +392,12 @@ function AboutPage() {
             </ProjectHeader>
 
             <ProjectDescription>
-              HeyGen·LiveAvatar 등 실시간 AI 아바타 API와 연동해 STT →
-              LLM(GPT-4o-mini/Claude 등) → ElevenLabs TTS·립싱크까지
-              오케스트레이션했습니다. 채팅·음성과 유사한 상태 흐름에, 미디어는
-              화상통화와 맞닿은 WebRTC·WebSocket 오디오 패턴을 적용했으며 예외
-              처리·재시도로 운영 안정성을 높였습니다.
+              HeyGen·LiveAvatar 같은 실시간 AI 아바타 API와 연동해 STT →
+              LLM(GPT-4o-mini·Claude 등) → ElevenLabs TTS·립싱크까지
+              오케스트레이션을 직접 설계했습니다. 채팅·음성에 가까운 상태
+              흐름에 화상통화 영역의 WebRTC·WebSocket 오디오 패턴을 얹고,
+              꼼꼼한 예외 처리와 재시도 전략으로 운영 단계의 안정성을 끌어
+              올렸습니다.
             </ProjectDescription>
 
             <TechStack>

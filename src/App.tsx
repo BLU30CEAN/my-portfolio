@@ -66,7 +66,7 @@ const NAV_ITEMS: NavItem[] = [
   { id: "tech", label: "Stack", section: "tech" },
   { id: "references", label: "References", section: "references" },
   { id: "projects", label: "Projects", section: "projects" },
-  { id: "journal", label: "연구 노트", route: "/journal" },
+  { id: "journal", label: "학습 노트", route: "/journal" },
   { id: "contact", label: "Contact", section: "contact" },
 ];
 
@@ -133,7 +133,7 @@ function AppShell() {
 
       <Main id="main-content">
         <Suspense
-          fallback={<RouteFallback>로딩 중…</RouteFallback>}
+          fallback={<RouteFallback>잠시만 기다려 주세요…</RouteFallback>}
         >
           <AnimatePresence mode="wait">
             <motion.div

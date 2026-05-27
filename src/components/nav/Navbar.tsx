@@ -249,7 +249,7 @@ const Navbar: React.FC<Props> = ({
   };
 
   return (
-    <NavWrap $isScrolled={isScrolled} aria-label="주요">
+    <NavWrap $isScrolled={isScrolled} aria-label="주요 메뉴">
       <Inner>
         <Logo
           onClick={goHome}

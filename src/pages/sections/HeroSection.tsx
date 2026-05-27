@@ -295,12 +295,14 @@ const HeroSection: React.FC<Props> = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.18 }}
           >
-            5년 동안 웹·모바일·AI를 한 제품 안에 엮어 온 풀스택 엔지니어입니다.
-            React·TypeScript·Spring Boot·FastAPI를 도구로 두고{" "}
-            <strong>앱-웹 브릿지, 실시간 스트리밍, 배포 자동화</strong>까지
-            하나의 흐름으로 설계해 운영 단계까지 책임집니다. 새 기능보다{" "}
-            <strong>실패 경로</strong>를 먼저 그리고, 모를 때는 추정 대신{" "}
-            <strong>공식 문서와 작은 실험</strong>에서 출발합니다.
+            웹·모바일·AI를 하나의 제품 안에서 연결해 온 5년 차 풀스택
+            엔지니어입니다. React·TypeScript·Spring Boot·FastAPI를 손에 익은
+            도구로 삼아{" "}
+            <strong>앱·웹 연동, 실시간 스트리밍, 배포 자동화</strong>까지 하나의
+            흐름으로 설계하고, 운영 단계의 안정성까지 책임집니다. 새 기능을
+            얹기 전에 <strong>예외가 발생할 수 있는 경로</strong>를 먼저 그려 보고,
+            모르는 영역은 추정 대신 <strong>공식 문서와 작은 실험</strong>에서
+            출발하는 편이 결국 더 빠르다고 믿습니다.
           </Description>
 
           <Actions
@@ -358,7 +360,7 @@ const HeroSection: React.FC<Props> = ({
               )}
             </ProfileInner>
             <Badge>
-              <Pulse /> 운영까지 책임지는 풀스택
+              <Pulse /> 운영 단계까지 책임지는 풀스택
             </Badge>
           </ProfileCard>
         </ProfileWrap>

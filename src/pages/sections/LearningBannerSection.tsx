@@ -93,16 +93,16 @@ const LearningBannerSection: React.FC = () => {
       >
         <Head>
           <BookOpen size={26} strokeWidth={2} aria-hidden />
-          <Title>연구 노트 · ML 자기 학습</Title>
+          <Title>학습 노트 · ML 자기 수련 기록</Title>
         </Head>
         <Text>
-          <strong>pandas·scikit-learn</strong> 중심의 노트북 실습 이력,
-          막혔던 지점과 풀어간 과정은 별도 <strong>블로그형 페이지</strong>에
-          두었습니다. 플롯·노트 캡처는 <code>public/learning/*.png</code> 로
-          넣어 카드 헤더 이미지로 연결하면 됩니다.
+          <strong>pandas·scikit-learn</strong>을 직접 만지며 정리한 실습 노트,
+          막혔던 지점과 그 매듭을 풀어 간 과정을 별도 페이지에 모아 두었습니다.
+          글로만 끝내지 않고, 같은 개념을 손으로 한 번 더 다뤄 볼 수 있는{" "}
+          <strong>인터랙티브 미니게임</strong>도 함께 두었습니다.
         </Text>
         <MagneticButton onClick={() => navigate("/journal")}>
-          연구 노트 페이지 열기 <ArrowRight size={18} />
+          학습 노트 살펴보기 <ArrowRight size={18} />
         </MagneticButton>
       </Card>
     </Section>

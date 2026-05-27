@@ -193,9 +193,9 @@ function HeroMedia({ post }: { post: MlJournalPost }) {
         <PlaceholderFig>
           <ImageOff size={44} strokeWidth={1.25} />
           <span>
-            이미지 삽입: <code>{post.heroImage ?? "/learning/*.png"}</code>
+            연결된 이미지가 아직 준비되지 않았습니다.
             <br />
-            `public/learning/`에 파일을 두면 자동 표시됩니다.
+            노트 본문을 먼저 살펴봐 주세요.
           </span>
         </PlaceholderFig>
         {post.heroCaption ? (
@@ -279,7 +279,7 @@ function GrowthJournalPage() {
             whileTap={{ scale: 0.98 }}
             onClick={() => navigate("/")}
           >
-            <ArrowLeft size={18} aria-hidden /> 홈으로
+            <ArrowLeft size={18} aria-hidden /> 메인으로 돌아가기
           </BackBtn>
         </BackBar>
 
@@ -288,7 +288,7 @@ function GrowthJournalPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
         >
-          <PageTitle ref={titleRef}>연구 노트 · 자기 학습</PageTitle>
+          <PageTitle ref={titleRef}>학습 노트 · 스스로 다지는 ML 기초</PageTitle>
           <PageLead>
             <BookOpen
               size={18}
@@ -299,10 +299,11 @@ function GrowthJournalPage() {
               }}
               aria-hidden
             />
-            pandas·scikit-learn 등 ML 입문 레인은 <strong>실무 과제 외에 자기 학습 노트로
-            근거를 남기는 영역</strong>으로 두었습니다. 각 항목에는 anime.js v4 로 만든
-            <strong> 인터랙티브 미니게임</strong>을 함께 두어, 글을 읽다 손으로 한 번 더 체득할
-            수 있게 했습니다.
+            pandas·scikit-learn처럼 ML 기초 영역은
+            <strong> 실무 과제와는 별도로, 자기 학습 노트에 근거를 남겨 두는 자리</strong>
+            로 두었습니다. 각 글에는 anime.js v4 로 만든
+            <strong> 인터랙티브 미니게임</strong>을 함께 두어, 같은 개념을 손으로 한 번
+            더 다뤄 보며 머리에 새길 수 있게 했습니다.
           </PageLead>
 
           {ML_JOURNAL_POSTS.map((post, index) => (

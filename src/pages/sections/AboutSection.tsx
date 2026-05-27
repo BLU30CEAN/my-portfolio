@@ -98,10 +98,10 @@ type StatItem = {
 };
 
 const STATS: StatItem[] = [
-  { icon: Award, to: 5, suffix: "년", label: "풀스택 경력" },
-  { icon: Users, staticValue: "B2B · AI", label: "실무 도메인" },
-  { icon: Layers, to: 35, suffix: "+", label: "운용 스택" },
-  { icon: Zap, staticValue: "E2E", label: "파이프라인 설계" },
+  { icon: Award, to: 5, suffix: "년", label: "풀스택 실무 경력" },
+  { icon: Users, staticValue: "B2B · AI", label: "주력 도메인" },
+  { icon: Layers, to: 35, suffix: "+", label: "현업에서 다룬 스택" },
+  { icon: Zap, staticValue: "E2E", label: "설계부터 운영까지" },
 ];
 
 const AboutSection: React.FC = () => {
@@ -109,8 +109,8 @@ const AboutSection: React.FC = () => {
     <Section id="about" dotCount={10} dotSeed={2} fullHeight glow>
       <SectionTitle
         eyebrow="About"
-        title="실패 경로를 먼저 그린다"
-        subtitle="새 기능을 붙이기 전에 운영 단계의 부담을 먼저 그려보는 습관 — 5년 동안 다듬어 온 한 가지 원칙."
+        title="예외 경로부터 먼저 설계합니다"
+        subtitle="새 기능을 더하기 전에 운영자가 떠안을 부담을 먼저 그려 보는 습관 — 5년 동안 한 가지 원칙으로 다듬어 왔습니다."
       />
 
       <Grid>
@@ -121,21 +121,23 @@ const AboutSection: React.FC = () => {
           transition={{ duration: 0.6 }}
         >
           <p>
-            개발을 시작한 계기는 단순했습니다. 내가 만든 코드 한 줄이 누군가의
-            화면 앞에서 바로 결과로 돌아오는 감각, 그 즉시성을 가장 정직한
-            일이라 느꼈습니다.
+            개발을 시작한 계기는 단순했습니다. 제가 쓴 코드 한 줄이 누군가의
+            화면에서 곧바로 결과로 돌아오는 감각, 그 즉시성이야말로 가장 정직한
+            보상이라고 느꼈습니다.
           </p>
           <p>
-            지난 5년은 그 감각을 <strong>운영까지 책임지는 흐름</strong>으로
-            넓혀 온 시간이었습니다. 결제, 앱-웹 브릿지, LLM·메타휴먼
-            실시간 연동, WebRTC·WebSocket 기반 음성·화상 스트리밍까지 운영
-            부담이 큰 도메인에서 한 가지 원칙을 다듬어 왔습니다 ─{" "}
-            <strong>새 기능을 붙이기 전에 실패 경로부터 설계한다.</strong>
+            지난 5년은 그 감각을 <strong>운영 단계까지 책임지는 흐름</strong>
+            으로 넓혀 온 시간이었습니다. 결제, 앱·웹 연동, LLM·메타휴먼 실시간
+            연동, WebRTC·WebSocket 기반 음성·화상 스트리밍처럼 운영 부담이 큰
+            도메인을 거치며 한 가지 원칙을 다듬어 왔습니다 —{" "}
+            <strong>
+              새 기능을 붙이기에 앞서, 예외 상황의 경로부터 먼저 설계한다.
+            </strong>
           </p>
           <p>
-            모르는 영역을 만나면 추정 대신 공식 문서와 변경 이력에서
-            출발하고, 재현 가능한 작은 실험으로 가설을 좁힙니다. 화려한 기술이
-            아니라 운영자가 안심하고 잠들 수 있는 시스템을 만드는 데 시간을
+            낯선 영역을 만나면 추정 대신 공식 문서와 변경 이력에서 출발하고,
+            재현 가능한 작은 실험으로 가설을 좁혀 갑니다. 화려한 기술보다,
+            운영자가 안심하고 밤잠을 청할 수 있는 시스템을 만드는 데 시간을
             쓰고 싶습니다.
           </p>
         </Story>

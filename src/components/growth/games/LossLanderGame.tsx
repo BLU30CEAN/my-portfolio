@@ -252,10 +252,10 @@ export function LossLanderGame() {
   useEffect(() => {
     if (!statusRef.current) return;
     const map: Record<typeof outcome, string> = {
-      idle: "대기 중 — Play 를 누르세요",
-      win: "🎯 전역 최저점 안착!",
-      diverge: "💥 발산: 학습률을 낮추세요",
-      stuck: "🪨 정체: 너무 작거나 지역 최저점",
+      idle: "대기 중 — Play 버튼을 눌러 시작해 주세요",
+      win: "🎯 전역 최저점에 안전하게 안착했습니다",
+      diverge: "💥 발산했습니다 — 학습률을 조금 낮춰 보세요",
+      stuck: "🪨 멈춤 — 학습률이 너무 작거나 지역 최저점에 갇혔습니다",
     };
     statusRef.current.textContent = map[outcome];
   }, [outcome]);
@@ -323,7 +323,7 @@ export function LossLanderGame() {
         <Btns>
           <span style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem" }}>
             <Activity size={14} aria-hidden />
-            <span ref={statusRef}>대기 중 — Play 를 누르세요</span>
+            <span ref={statusRef}>대기 중 — Play 버튼을 눌러 시작해 주세요</span>
           </span>
           <span style={{ display: "inline-flex", gap: "0.5rem" }}>
             <Btn type="button" onClick={start} disabled={running}>

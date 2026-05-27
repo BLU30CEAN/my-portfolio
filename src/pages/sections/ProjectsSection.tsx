@@ -191,8 +191,8 @@ const ProjectsSection: React.FC = () => {
     <Section id="projects" dotCount={8} dotSeed={4} fullHeight glow>
       <SectionTitle
         eyebrow="Projects"
-        title="만든 것들이 어디서 굴러갔는지"
-        subtitle="운영 트래픽·결제·실시간 미디어를 한 사람의 책임 범위 안에서 다뤄온 작업들."
+        title="실서비스에서 검증된 작업들"
+        subtitle="운영 트래픽·결제·실시간 미디어까지, 설계에서 배포·모니터링 단계를 끝까지 책임져 본 프로젝트를 모았습니다."
       />
 
       <TabBarWrap>

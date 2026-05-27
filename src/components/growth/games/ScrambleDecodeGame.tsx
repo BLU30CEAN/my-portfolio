@@ -10,7 +10,7 @@ const LINES: string[] = [
   "always log: rows_in, rows_out, na_ratio",
 ];
 
-const HIDDEN_BONUS = "★ 디크립트 완료 — 'measure twice, train once.' ★";
+const HIDDEN_BONUS = "★ 모두 풀어 냈습니다 — 'measure twice, train once.' ★";
 
 const Wrap = styled.div`
   display: flex;
@@ -220,10 +220,10 @@ export function ScrambleDecodeGame() {
 
       <Footer>
         <span>
-          Decrypted: <strong>{unlockedCount}</strong> / {LINES.length}
+          풀어 낸 문장: <strong>{unlockedCount}</strong> / {LINES.length}
         </span>
         <ResetBtn type="button" onClick={reset}>
-          <RotateCcw size={14} aria-hidden /> 다시 암호화
+          <RotateCcw size={14} aria-hidden /> 다시 흐리기
         </ResetBtn>
       </Footer>
     </Wrap>

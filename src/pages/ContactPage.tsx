@@ -340,24 +340,24 @@ function ContactPage() {
     if (!formData.name || !formData.email || !formData.message) {
       setMessage({
         type: "error",
-        text: "모든 필수 필드를 입력해주세요.",
+        text: "필수 항목을 모두 채워 주세요.",
       });
       setIsSubmitting(false);
       return;
     }
 
+    const successText =
+      "메시지가 무사히 전달되었습니다. 확인 후 빠르게 답변드리겠습니다.";
+    const failureText =
+      "전송 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.";
+
     try {
-      // 서버 API 우선 시도
       const response = await apiClient.submitContact(formData);
 
       if (response.success) {
-        setMessage({
-          type: "success",
-          text: "메시지가 성공적으로 전송되었습니다! 곧 연락드리겠습니다.",
-        });
+        setMessage({ type: "success", text: successText });
         setFormData({ name: "", email: "", subject: "", message: "" });
       } else {
-        // 서버 실패 시 Google Sheets로 폴백
         const contactData = {
           ...formData,
           timestamp: new Date().toISOString(),
@@ -366,20 +366,13 @@ function ContactPage() {
         const googleSuccess = await submitToGoogleSheets(contactData);
 
         if (googleSuccess) {
-          setMessage({
-            type: "success",
-            text: "메시지가 성공적으로 전송되었습니다! 곧 연락드리겠습니다.",
-          });
+          setMessage({ type: "success", text: successText });
           setFormData({ name: "", email: "", subject: "", message: "" });
         } else {
-          setMessage({
-            type: "error",
-            text: "전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
-          });
+          setMessage({ type: "error", text: failureText });
         }
       }
     } catch (error) {
-      // 서버 오류 시 Google Sheets로 폴백
       try {
         const contactData = {
           ...formData,
@@ -389,22 +382,13 @@ function ContactPage() {
         const googleSuccess = await submitToGoogleSheets(contactData);
 
         if (googleSuccess) {
-          setMessage({
-            type: "success",
-            text: "메시지가 성공적으로 전송되었습니다! 곧 연락드리겠습니다.",
-          });
+          setMessage({ type: "success", text: successText });
           setFormData({ name: "", email: "", subject: "", message: "" });
         } else {
-          setMessage({
-            type: "error",
-            text: "전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
-          });
+          setMessage({ type: "error", text: failureText });
         }
       } catch (googleError) {
-        setMessage({
-          type: "error",
-          text: "전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
-        });
+        setMessage({ type: "error", text: failureText });
       }
     }
 
@@ -453,7 +437,7 @@ function ContactPage() {
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          프로젝트 협업이나 기술 문의가 있으시면 언제든 연락주세요
+          프로젝트 협업이나 기술 문의가 있으시면 언제든 편하게 연락 주세요.
         </SectionSubtitle>
 
         <ThankYouSection
@@ -462,27 +446,27 @@ function ContactPage() {
           transition={{ duration: 0.8, delay: 0.3 }}
           viewport={{ once: true }}
         >
-          <ThankYouTitle>🙏 감사합니다</ThankYouTitle>
+          <ThankYouTitle>진심으로 감사합니다</ThankYouTitle>
           <ThankYouText>
             포트폴리오를 끝까지 살펴봐 주셔서 감사합니다.
             <br />
-            웹·모바일·AI를 한 흐름으로 다루는 5년 차 풀스택 개발자로,
+            웹·모바일·AI를 하나의 흐름으로 엮어 온 5년 차 풀스택 개발자로서,
             <br />
-            LLM·실시간 메타휴먼·결제·앱–웹 브릿지처럼 운영 부담이 큰 도메인에서
+            LLM·실시간 메타휴먼·결제·앱·웹 연동처럼 운영 부담이 큰 도메인을
             <br />
-            설계 → 구현 → 모니터링까지 한 사람의 책임 범위 안에서 정렬해 왔습니다.
-            <br />
-            <br />
-            새 기술을 평가할 때는 공식 문서와 변경 이력에서 출발하고,
-            <br />
-            모르는 영역은 추정 대신 재현 가능한 작은 실험을 먼저 둡니다.
-            <br />
-            화려한 기능보다, 운영자가 안심할 수 있는 시스템을 만드는 데
-            <br />
-            시간을 쓰고 싶습니다.
+            설계에서 구현, 모니터링까지 한 사람의 책임 안에서 정돈해 왔습니다.
             <br />
             <br />
-            협업이나 기술 문의가 있으시면 편하게 연락 주세요.
+            낯선 기술을 마주할 때는 공식 문서와 변경 이력에서부터 출발하고,
+            <br />
+            모르는 영역은 추정 대신 재현 가능한 작은 실험으로 먼저 확인합니다.
+            <br />
+            화려한 기능을 좇기보다, 운영자가 안심하고 잠들 수 있는 시스템을
+            <br />
+            만드는 데 시간을 쓰고 싶다는 마음으로 일해 왔습니다.
+            <br />
+            <br />
+            함께 만들어 갈 기회가 있다면 언제든 가벼운 마음으로 연락 주세요.
           </ThankYouText>
         </ThankYouSection>
 
@@ -503,7 +487,7 @@ function ContactPage() {
                   ej.an.company@gmail.com
                 </ContactLink>
                 <br />
-                업무 시간: 평일 9:00 - 18:00
+                연락 가능 시간: 평일 오전 9시 — 오후 6시
               </ContactCardContent>
             </ContactCard>
 
@@ -515,10 +499,10 @@ function ContactPage() {
             >
               <ContactCardTitle>
                 <MessageSquare size={20} />
-                소셜 미디어
+                소셜 채널
               </ContactCardTitle>
               <ContactCardContent>
-                프로젝트와 업데이트를 확인하세요
+                진행 중인 프로젝트와 최근 작업 흐름은 아래 채널에서 살펴보실 수 있습니다.
                 <SocialLinks>
                   <SocialLink
                     href="https://github.com/BLU30CEAN"
@@ -553,11 +537,11 @@ function ContactPage() {
                 위치
               </ContactCardTitle>
               <ContactCardContent>
-                서울특별시, 대한민국
+                서울특별시 거주 · 대한민국
                 <br />
                 원격 근무 가능
                 <br />
-                온라인 미팅 선호
+                온라인 미팅 우선
               </ContactCardContent>
             </ContactCard>
           </ContactInfo>
@@ -572,6 +556,10 @@ function ContactPage() {
               <h3 style={{ marginBottom: "2rem", color: "#ffffff" }}>
                 메시지 보내기
               </h3>
+              <p style={{ marginTop: "-1.25rem", marginBottom: "1.5rem", color: "rgba(255,255,255,0.7)", fontSize: "0.95rem", lineHeight: 1.6 }}>
+                업무 제안·기술 문의·간단한 인사 모두 환영합니다. 답변은 정중하고
+                신속하게 드리겠습니다.
+              </p>
 
               {message && (
                 <Message
@@ -589,13 +577,13 @@ function ContactPage() {
               )}
 
               <FormGroup>
-                <FormLabel>이름 *</FormLabel>
+                <FormLabel>성함 *</FormLabel>
                 <FormInput
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  placeholder="이름을 입력하세요"
+                  placeholder="어떻게 불러 드리면 좋을까요?"
                   required
                 />
               </FormGroup>
@@ -607,7 +595,7 @@ function ContactPage() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="이메일을 입력하세요"
+                  placeholder="회신 받으실 이메일 주소를 적어 주세요"
                   required
                 />
               </FormGroup>
@@ -619,7 +607,7 @@ function ContactPage() {
                   name="subject"
                   value={formData.subject}
                   onChange={handleInputChange}
-                  placeholder="제목을 입력하세요"
+                  placeholder="한 줄로 요약해 주시면 좋습니다 (선택)"
                 />
               </FormGroup>
 
@@ -629,7 +617,7 @@ function ContactPage() {
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
-                  placeholder="프로젝트나 협업에 대해 이야기해보세요"
+                  placeholder="협업·문의 내용을 편하게 적어 주세요"
                   required
                 />
               </FormGroup>
@@ -640,7 +628,7 @@ function ContactPage() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {isSubmitting ? "전송 중..." : "메시지 보내기"}
+                {isSubmitting ? "보내는 중..." : "메시지 보내기"}
                 <Send size={20} />
               </SubmitButton>
             </ContactForm>

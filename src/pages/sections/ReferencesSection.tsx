@@ -120,14 +120,14 @@ const ReferencesSection: React.FC = () => {
     <Section id="references" dotCount={6} dotSeed={5} glow>
       <SectionTitle
         eyebrow="References"
-        title="공식 레퍼런스 중심"
-        subtitle="원문 스펙·변경 이력이 명확한 배포처만 포함했습니다. 구현 근거를 남길 때 참고했습니다."
+        title="공식 문서를 길잡이로 삼습니다"
+        subtitle="원문 스펙과 변경 이력이 명확한 곳만 모았습니다. 구현 근거를 남겨야 할 때 항상 먼저 펼쳐 본 문서들입니다."
       />
 
       <Lead>
-        각 링크는 원문 스펙·가이드를 유지하고 있는 배포처만 포함했습니다.
-        업계에서 자주 회자되는 “블로그 요약본”보다 변경 이력이 명확한 문서를
-        우선해 구현 근거를 남길 때 참고했습니다.
+        모은 링크는 모두 원문 스펙·가이드를 직접 관리하는 공식 배포처입니다.
+        업계에 떠도는 “요약 블로그”보다, 변경 이력이 또렷한 문서를 먼저
+        근거로 삼는 편이 결국 가장 빠른 길이라고 믿어 왔습니다.
       </Lead>
 
       <Grid>
@@ -158,7 +158,7 @@ const ReferencesSection: React.FC = () => {
       </Grid>
 
       <Footer>
-        이 포트폴리오 자체의 구현 레퍼런스:&nbsp; Framer Motion 계열(
+        이 포트폴리오 자체의 구현 근거:&nbsp; 모션은 Framer Motion 계열(
         <a
           href="https://motion.dev/docs/react-motion-component"
           target="_blank"
@@ -166,15 +166,15 @@ const ReferencesSection: React.FC = () => {
         >
           Motion for React
         </a>
-        ), styled-components(
+        ), 스타일링은 styled-components(
         <a
           href="https://styled-components.com/docs"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Documentation
+          공식 문서
         </a>
-        ).
+        )를 따랐습니다.
       </Footer>
     </Section>
   );

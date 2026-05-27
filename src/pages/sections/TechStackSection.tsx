@@ -160,8 +160,8 @@ const TechStackSection: React.FC = () => {
     <Section id="tech" dotCount={8} dotSeed={3} fullHeight glow>
       <SectionTitle
         eyebrow="Stack"
-        title="운용 단계까지 검증된 도구들"
-        subtitle="각 도구는 실제 제품에서 트래픽·장애·배포 사이클을 지나본 것만 추렸습니다."
+        title="현장에서 검증한 기술 스택"
+        subtitle="실제 운영 중인 제품에서 트래픽·예외 대응·배포 사이클을 한 번이라도 함께 통과해 본 도구만 추렸습니다."
       />
 
       <Stack>

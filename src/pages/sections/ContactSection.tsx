@@ -187,28 +187,28 @@ const ContactSection: React.FC<{ email: string }> = ({ email }) => {
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(email);
-      toast.success("이메일이 클립보드에 복사되었습니다.");
+      toast.success("이메일 주소를 복사했습니다.");
     } catch {
-      toast.error("복사에 실패했습니다. 직접 선택해주세요.");
+      toast.error("복사에 실패했습니다. 주소를 직접 선택해 주세요.");
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!message.trim()) {
-      toast.info("메시지를 입력해주세요.");
+      toast.info("메시지 내용을 먼저 입력해 주세요.");
       return;
     }
     const ok = await submit();
-    if (ok) toast.success("방명록이 성공적으로 남겨졌습니다.");
+    if (ok) toast.success("소중한 메시지를 잘 전달받았습니다. 감사합니다.");
   };
 
   return (
     <Section id="contact" dotCount={8} dotSeed={6} fullHeight glow>
       <SectionTitle
         eyebrow="Contact"
-        title="함께 만들고 싶다면"
-        subtitle="평일 24시간, 주말 48시간 안에 답변드립니다."
+        title="함께 만들어 갈 분을 기다리고 있습니다"
+        subtitle="평일에는 24시간 이내, 주말에도 48시간 이내에 정중히 답변드리겠습니다."
       />
 
       <InfoGrid>
@@ -239,8 +239,8 @@ const ContactSection: React.FC<{ email: string }> = ({ email }) => {
             <Briefcase size={18} /> 고용 형태
           </InfoHead>
           <InfoBody>
-            정직원 선호 (프리랜서도 협의 가능)<br />
-            프로젝트 기반 협업도 고려
+            정규직 채용을 우선 검토하고 있으며,<br />
+            프리랜서·프로젝트 단위 협업도 열어 두고 있습니다.
           </InfoBody>
         </InfoCard>
 
@@ -269,8 +269,8 @@ const ContactSection: React.FC<{ email: string }> = ({ email }) => {
             <Clock size={18} /> 응답 시간
           </InfoHead>
           <InfoBody>
-            평일 24시간 이내<br />
-            주말 48시간 이내
+            평일 24시간 이내 답변<br />
+            주말·공휴일 48시간 이내 답변
           </InfoBody>
         </InfoCard>
       </InfoGrid>
@@ -290,7 +290,7 @@ const ContactSection: React.FC<{ email: string }> = ({ email }) => {
         transition={{ duration: 0.5 }}
       >
         <GbTitle>방명록</GbTitle>
-        <GbLead>간단한 메시지나 응원의 말씀을 남겨주세요.</GbLead>
+        <GbLead>짧은 인사도, 협업 제안도 좋습니다. 편하게 한마디 남겨 주세요.</GbLead>
         <Form onSubmit={handleSubmit}>
           <Input
             placeholder="이름 (선택)"
@@ -299,13 +299,13 @@ const ContactSection: React.FC<{ email: string }> = ({ email }) => {
             onChange={(e) => setName(e.target.value)}
           />
           <Textarea
-            placeholder="메시지를 입력하세요…"
+            placeholder="전하고 싶은 이야기를 자유롭게 적어 주세요…"
             maxLength={200}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
           <Submit type="submit" $disabled={submitting}>
-            {submitting ? "전송 중…" : "메시지 남기기"}
+            {submitting ? "보내는 중…" : "메시지 보내기"}
           </Submit>
         </Form>
       </Guestbook>
