@@ -1,0 +1,10 @@
+{
+  "source": "gitlab",
+  "username": "eunjun",
+  "profileUrl": "https://git.utopsoft.co.kr/eunjun",
+  "exportedAt": null,
+  "method": "pending",
+  "note": "GITLAB_TOKEN=xxx npm run export:gitlab 로 갱신 (VPN/사내망 필요)",
+  "total": 0,
+  "contributions": []
+}
