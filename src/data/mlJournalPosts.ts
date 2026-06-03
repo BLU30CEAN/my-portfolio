@@ -61,16 +61,16 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
     ],
     miniGame: {
       id: "cell-sorter",
-      title: "Cell Sorter · 결측 데이터 정리하기",
+      title: "Cell Sorter · Pandas 정렬·결측 처리 인터랙션",
       pitch:
-        "Pandas의 `sort_values`와 `dropna` 과정을 손으로 재현해 보는 미니게임입니다. 흩어진 셀을 드래그해 오름차순으로 줄 세우고, `NaN` 은 휴지통으로 보내 주세요.",
+        "Pandas의 `sort_values`와 `dropna` 오퍼레이션을 시각적으로 재현하는 드래그 앤 드롭 게임입니다. 흩어진 데이터 셀을 오름차순으로 정렬하고, `NaN` 값은 휴지통 영역으로 제거하여 클린 데이터셋을 완성하세요.",
       rules: [
         "셀을 드래그해 오름차순으로 슬롯에 정렬합니다",
         "`NaN` 카드는 휴지통(🗑) 영역으로 드래그해 제거합니다",
-        "모두 맞추면 폭죽 효과와 함께 정확도 100%가 표시됩니다",
+        "모든 셀이 정확한 순서로 정렬되면 폭죽 효과와 함께 정확도 100%가 표시됩니다",
       ],
       performance:
-        "`createDraggable`과 `stagger`, `utils.snap`으로 슬롯에 자연스럽게 붙도록 했고, 완료 시 `createTimeline`으로 마무리 연출을 더했습니다.",
+        "`createDraggable`과 `stagger` 애니메이션, `utils.snap`으로 슬롯에 자연스럽게 스냅되도록 구현했고, 완료 시 `createTimeline`으로 성공 연출을 더했습니다.",
     },
   },
   {
@@ -97,16 +97,16 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
     ],
     miniGame: {
       id: "decision-boundary",
-      title: "Decision Boundary · 손으로 그어 보는 분류기",
+      title: "Decision Boundary · 실시간 분류 경계선 조정 체험",
       pitch:
-        "Logistic Regression이나 Linear SVM의 결정 경계를 마우스로 직접 그어 보는 미니게임입니다. 빨강·파랑 두 클래스의 점을 두 핸들로 회전·이동하며 갈라 보세요.",
+        "Logistic Regression이나 Linear SVM의 결정 경계(decision boundary)를 마우스 인터랙션으로 직접 조정하는 시뮬레이터입니다. 빨강·파랑 두 클래스로 분포된 데이터 포인트를 경계선으로 정확히 분리하고, 실시간으로 정확도를 확인하세요.",
       rules: [
         "두 핸들을 드래그해 경계선의 위치와 각도를 조정합니다",
         "선의 위쪽은 파랑, 아래쪽은 빨강으로 자동 분류됩니다",
-        "실시간 Accuracy 가 100%에 닿으면 클리어 (일부러 깔끔히 갈리지 않는 분포도 섞어 두었습니다)",
+        "실시간 Accuracy가 100%에 도달하면 클리어 (일부 데이터는 의도적으로 완전 분리가 불가능합니다)",
       ],
       performance:
-        "`createDraggable` 두 개로 선분 양 끝점을 잡고, 매 프레임 `utils.lerp`로 정확도 카운터를 부드럽게 보간합니다. SVG 안의 점·선 색은 즉시 반영됩니다.",
+        "`createDraggable` 두 개로 선분의 양 끝점을 제어하고, 매 프레임 `utils.lerp`로 정확도 카운터를 부드럽게 보간합니다. SVG 내 점·선 색상은 즉시 반영됩니다.",
     },
   },
   {
@@ -133,16 +133,16 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
     ],
     miniGame: {
       id: "loss-lander",
-      title: "Loss Lander · 학습률을 직접 다뤄 보는 시뮬레이터",
+      title: "Loss Navigator · 경사하강 파라미터 최적화 체험",
       pitch:
-        "공을 손실(Loss) 곡선의 최저점에 안전하게 내려놓는 미니 시뮬레이션입니다. 학습률 슬라이더를 너무 키우면 튕겨 나가고, 너무 줄이면 시간 안에 도착하지 못합니다.",
+        "손실(Loss) 곡면 위에 놓인 공을 전역 최솟값으로 안착시키는 인터랙티브 시뮬레이터입니다. 학습률(learning rate)을 너무 크게 설정하면 발산하고, 너무 작으면 제한 시간 내 수렴하지 못합니다. 실제 gradient descent의 하이퍼파라미터 튜닝 감각을 손으로 익혀보세요.",
       rules: [
-        "초기 위치는 곡선의 윗부분 어딘가에서 시작합니다",
-        "학습률 슬라이더를 조절해 공이 굴러가는 속도를 정합니다",
-        "전역 최솟값(가장 낮은 지점) ±허용 오차 안에 멈추면 클리어",
+        "공의 초기 위치는 곡선 상단 임의 지점에 배치됩니다",
+        "학습률 슬라이더를 실시간으로 조절해 하강 속도를 제어합니다",
+        "전역 최솟값 ±허용 오차 범위 내 안착 시 클리어 (시간 제한 있음)",
       ],
       performance:
-        "`svg.createMotionPath`로 공을 곡선 위에 올려놓고, `createTimer`로 매 틱마다 gradient × lr 만큼 진행률을 갱신합니다. 발산이 일어나면 화면이 살짝 흔들리는 연출을 더했습니다.",
+        "`svg.createMotionPath`로 공을 손실 곡선 위에 물리적으로 배치하고, `createTimer`로 매 틱마다 gradient × learning_rate 만큼 진행률을 갱신합니다. 발산 조건 감지 시 화면 shake 연출을 추가했습니다.",
     },
   },
   {
@@ -169,16 +169,39 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
     ],
     miniGame: {
       id: "scramble-decode",
-      title: "Decryption · 한 줄씩 풀어 보기",
+      title: "핵심 메모 · 한 줄씩 확인하기",
       pitch:
-        "흐려진 ML 격언과 메모를 클릭으로 한 줄씩 풀어 가는 미니게임입니다. 모든 라인을 풀면 마지막에 숨겨진 한 줄이 보너스로 떠오릅니다.",
+        "학습 노트에서 실제로 남겨 둔 핵심 문장을 가려 두었다가, 클릭하면 scrambleText 애니메이션과 함께 원문을 확인하는 인터랙션입니다. 난잡한 기호 대신 · 마스크로 가독성을 유지하고, 네 줄을 모두 열면 보너스 한마디가 나타납니다.",
       rules: [
-        "흐릿한 라인을 클릭하면 scrambleText 효과로 천천히 풀려납니다",
-        "한 번 풀린 라인은 잠기며, 다시 눌러도 재생되지 않습니다",
-        "모든 라인을 풀면 숨겨진 한 줄이 새롭게 나타납니다",
+        "가려진 라인(·)을 클릭하면 원문이 순서대로 드러납니다",
+        "확인한 라인은 잠기며, 재클릭해도 다시 재생되지 않습니다",
+        "네 줄 모두 확인하면 보너스 메시지가 나타납니다",
       ],
       performance:
-        "Anime.js v4의 `scrambleText({ chars, revealRate, settleDuration })`를 활용하고, 문자 풀(charset)을 ML 어휘로 커스터마이즈했습니다.",
+        "잠금 상태는 구두점·공백을 유지한 · 마스크로 표시하고, `scrambleText` charset은 `·▪░▒`만 사용해 깨진 문자열처럼 보이지 않게 했습니다.",
     },
+  },
+  {
+    id: "github-heatmap-merge",
+    title: "여러 GitHub 계정의 contribution을 하나의 히트맵으로",
+    period: "자기 학습 노트 · 포트폴리오 데이터 파이프라인",
+    tags: ["GitHub", "API", "data-viz"],
+    sections: [
+      {
+        heading: "왜 합산이 필요했는가",
+        body:
+          "실무·학습·개인 프로젝트를 `BLU30CEAN`, `bbo14` 등 여러 GitHub 계정으로 나눠 관리하고 있었습니다. 메인 포트폴리오 히트맵은 mock 데이터(1,240 commits 등)를 쓰고 있어, 실제 활동과 어긋나 신뢰를 떨어뜨릴 수 있었습니다. ‘여러 계정의 합집합’을 한 그래프로 보여 주는 것이 목표였습니다.",
+      },
+      {
+        heading: "진행 과정",
+        body:
+          "1) `github-contributions-api`로 계정별 지난 1년 일별 contribution을 조회합니다. 2) `date` 키 기준으로 count를 합산합니다. 3) 합산 최댓값 대비 4단계 level을 재계산해 GitHub contribution graph와 같은 색 농도를 씁니다. 4) GitHub REST API로 public repo 수·star 수도 계정별 합산합니다. 5) `GitHubActivitySection`에서 로딩·에러·계정별 breakdown chip을 함께 표시합니다.",
+      },
+      {
+        heading: "결과 및 한계",
+        body:
+          "홈페이지 GitHub 섹션에 GitHub + GitLab 합산 히트맵이 반영됩니다. GitLab(`git.utopsoft.co.kr/eunjun`)은 브라우저에서 직접 조회할 수 없어, `npm run export:gitlab`로 `public/data/gitlab-eunjun.json`을 생성·커밋하는 방식입니다. private contribution·비공개 프로젝트명은 JSON에 포함하지 않습니다.",
+      },
+    ],
   },
 ];

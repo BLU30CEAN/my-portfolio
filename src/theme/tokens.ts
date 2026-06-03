@@ -88,20 +88,20 @@ const typography = {
 } as const;
 
 const lightColors: ColorTokens = {
-  background: "#f4f8fd",
-  backgroundElevated: "#ffffff",
-  surface: "#ffffff",
-  surfaceMuted: "#eef3fa",
-  text: "#0b1a2a",
-  textSecondary: "#3b5168",
-  textMuted: "#6a7e94",
+  background: "#f5f7f9",
+  backgroundElevated: "#fafbfc",
+  surface: "#fafbfc",
+  surfaceMuted: "#eff2f5",
+  text: "#1a2332",
+  textSecondary: "#475569",
+  textMuted: "#64748b",
   primary: "#0a6dd6",
   primarySoft: "rgba(10, 109, 214, 0.12)",
   accent: "#19c2ff",
   success: "#1f9d55",
   danger: "#e1473d",
-  border: "#dbe6f2",
-  borderStrong: "#b8cce0",
+  border: "#e2e8f0",
+  borderStrong: "#cbd5e1",
   ring: "rgba(10, 109, 214, 0.35)",
   selection: "rgba(10, 109, 214, 0.22)",
   scrollTrack: "transparent",
@@ -144,11 +144,11 @@ const darkColors: ColorTokens = {
 };
 
 const lightShadows: ShadowTokens = {
-  card: "0 1px 2px rgba(11, 26, 42, 0.04), 0 8px 24px rgba(11, 26, 42, 0.06)",
+  card: "0 1px 2px rgba(26, 35, 50, 0.03), 0 6px 20px rgba(26, 35, 50, 0.04)",
   cardHover:
-    "0 2px 6px rgba(11, 26, 42, 0.06), 0 16px 40px rgba(10, 109, 214, 0.12)",
-  button: "0 8px 20px rgba(10, 109, 214, 0.28)",
-  glow: "0 0 0 4px rgba(10, 109, 214, 0.18)",
+    "0 2px 4px rgba(26, 35, 50, 0.04), 0 12px 32px rgba(10, 109, 214, 0.08)",
+  button: "0 6px 16px rgba(10, 109, 214, 0.22)",
+  glow: "0 0 0 3px rgba(10, 109, 214, 0.15)",
 };
 
 const darkShadows: ShadowTokens = {

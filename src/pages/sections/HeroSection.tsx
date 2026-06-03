@@ -4,6 +4,7 @@ import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } fro
 import { ArrowRight, Github, Mail } from "lucide-react";
 import Section from "../../components/layout/Section";
 import MagneticButton from "../../components/ui/MagneticButton";
+import CodeTypingDemo from "../../components/ui/CodeTypingDemo";
 
 const Grid = styled.div`
   display: grid;
@@ -222,6 +223,14 @@ type Props = {
   onPrimary: () => void;
 };
 
+const TECH_STACK_LINES = [
+  { raw: 'const frontend = ["React", "TypeScript", "Next.js"];', delay: 400 },
+  { raw: 'const backend = ["Spring Boot", "FastAPI", "PostgreSQL"];', delay: 400 },
+  { raw: 'const ai = ["OpenAI", "LLM Orchestration", "WebRTC"];', delay: 400 },
+  { raw: 'const devOps = ["AWS", "Docker", "Jenkins", "Datadog"];', delay: 600 },
+  { raw: '// 운영 단계까지 책임지는 E2E 경험', delay: 0 },
+];
+
 const HeroSection: React.FC<Props> = ({
   displayName,
   githubUrl,
@@ -296,26 +305,37 @@ const HeroSection: React.FC<Props> = ({
             transition={{ duration: 0.6, delay: 0.18 }}
           >
             웹·모바일·AI를 하나의 제품 안에서 연결해 온 5년 차 풀스택
-            엔지니어입니다. React·TypeScript·Spring Boot·FastAPI를 손에 익은
-            도구로 삼아{" "}
-            <strong>앱·웹 연동, 실시간 스트리밍, 배포 자동화</strong>까지 하나의
-            흐름으로 설계하고, 운영 단계의 안정성까지 책임집니다. 새 기능을
-            얹기 전에 <strong>예외가 발생할 수 있는 경로</strong>를 먼저 그려 보고,
-            모르는 영역은 추정 대신 <strong>공식 문서와 작은 실험</strong>에서
-            출발하는 편이 결국 더 빠르다고 믿습니다.
+            엔지니어입니다.{" "}
+            <strong>사용자 시나리오 전체를 먼저 그려낸 뒤</strong>, 해피 패스보다{" "}
+            <strong>엣지 케이스의 안정성</strong>에 더 집중하고, 모르는 영역은
+            추정 대신 <strong>공식 문서와 작은 실험</strong>으로 확신을 쌓아가는
+            방식을 선호합니다.
           </Description>
+
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.24 }}
+            style={{ marginTop: '1.25rem' }}
+          >
+            <CodeTypingDemo
+              title="my-tech-stack.ts"
+              typingSpeed={45}
+              startDelay={1200}
+              lines={TECH_STACK_LINES}
+            />
+          </motion.div>
 
           <Actions
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.24 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
           >
             <MagneticButton variant="primary" onClick={onPrimary}>
               프로젝트 보기 <ArrowRight size={18} />
             </MagneticButton>
             <MagneticButton
               variant="ghost"
-              strength={10}
               onClick={() => {
                 window.location.href = `mailto:${email}`;
               }}

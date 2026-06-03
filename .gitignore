@@ -8,7 +8,11 @@
 
 # testing
 /coverage
-*.md
+
+# internal development docs (개발 노트 - 본인만 보기)
+VISUAL_IMPROVEMENTS_SUMMARY.md
+IMAGE_ASSET_GUIDE.md
+
 # production
 /build
 

@@ -2,7 +2,6 @@
   "name": "my-portfolio",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
   "homepage": "https://blu30cean.github.io/my-portfolio",
   "dependencies": {
     "@tanstack/react-query": "^5.83.0",
@@ -35,6 +34,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "verify:tech-icons": "node scripts/verify-tech-stack-icons.mjs",
+    "export:gitlab": "node --use-system-ca scripts/export-gitlab-contributions.mjs",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },

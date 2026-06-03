@@ -57,14 +57,13 @@ const EmailRow = styled.div`
 const CopyBtn = styled.button`
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  justify-content: center;
+  flex-shrink: 0;
   background: ${(p) => p.theme.colors.primarySoft};
   color: ${(p) => p.theme.colors.primary};
   border: 1px solid transparent;
   border-radius: ${(p) => p.theme.radii.sm};
-  padding: 0.4rem 0.65rem;
-  font-size: 0.8rem;
-  font-weight: 600;
+  padding: 0.45rem;
   cursor: pointer;
   transition: all ${(p) => p.theme.motion.durFast}
     ${(p) => p.theme.motion.easeOut};
@@ -224,7 +223,7 @@ const ContactSection: React.FC<{ email: string }> = ({ email }) => {
           <EmailRow>
             <InfoBody>{email}</InfoBody>
             <CopyBtn onClick={copyEmail} aria-label="이메일 복사">
-              <Copy size={14} /> 복사
+              <Copy size={14} />
             </CopyBtn>
           </EmailRow>
         </InfoCard>

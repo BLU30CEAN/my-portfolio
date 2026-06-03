@@ -5,6 +5,7 @@ import { Briefcase, Gamepad2, ExternalLink, Github, Ban } from "lucide-react";
 import Section from "../../components/layout/Section";
 import SectionTitle from "../../components/ui/SectionTitle";
 import { PROJECTS, ProjectTab } from "../../data/projects";
+import ProjectMetricsMini from "../../components/ui/ProjectMetricsMini";
 
 const TabBar = styled.div`
   display: inline-flex;
@@ -247,6 +248,7 @@ const ProjectsSection: React.FC = () => {
                     <Tag key={t}>{t}</Tag>
                   ))}
                 </Tags>
+                {p.metrics && <ProjectMetricsMini metrics={p.metrics} />}
                 {p.actions && p.actions.length > 0 && (
                   <Actions>
                     {p.actions.map((a) => {

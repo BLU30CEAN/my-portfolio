@@ -65,23 +65,34 @@ const Tile = styled(motion.div)`
   border-radius: ${(p) => p.theme.radii.md};
   border: 1px solid ${(p) => p.theme.colors.border};
   min-height: 92px;
-  cursor: default;
+  cursor: pointer;
   transition: transform ${(p) => p.theme.motion.durFast}
       ${(p) => p.theme.motion.easeOut},
     border-color ${(p) => p.theme.motion.durFast}
       ${(p) => p.theme.motion.easeOut},
     box-shadow ${(p) => p.theme.motion.durFast}
       ${(p) => p.theme.motion.easeOut};
+  transform-style: preserve-3d;
+  perspective: 1000px;
 
   &:hover {
-    transform: translateY(-3px);
+    transform: translateY(-6px) rotateX(5deg);
     border-color: ${(p) => p.theme.colors.primary};
-    box-shadow: ${(p) => p.theme.shadows.cardHover};
+    box-shadow: ${(p) => p.theme.shadows.cardHover},
+      0 12px 28px -8px ${(p) => p.theme.colors.primary}40;
+  }
+
+  &:hover .icon-box {
+    transform: scale(1.12) rotateZ(8deg);
   }
 
   &:hover .tip {
     opacity: 1;
     transform: translate(-50%, -6px);
+  }
+
+  &:active {
+    transform: translateY(-3px) scale(0.98);
   }
 `;
 
@@ -94,6 +105,25 @@ const IconBox = styled.div`
   align-items: center;
   justify-content: center;
   border: 1px solid ${(p) => p.theme.colors.border};
+  transition: transform ${(p) => p.theme.motion.dur}
+    ${(p) => p.theme.motion.easeOut};
+  position: relative;
+  
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 12px;
+    background: ${(p) => p.theme.colors.gradient};
+    opacity: 0;
+    transition: opacity ${(p) => p.theme.motion.durFast}
+      ${(p) => p.theme.motion.easeOut};
+    z-index: -1;
+  }
+
+  .tile:hover &::after {
+    opacity: 0.3;
+  }
 
   img {
     width: 28px;
@@ -179,12 +209,18 @@ const TechStackSection: React.FC = () => {
               {cat.technologies.map((tech, ti) => (
                 <Tile
                   key={tech.name}
+                  className="tile"
                   initial={{ opacity: 0, y: 14 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-15%" }}
                   transition={{ duration: 0.4, delay: ci * 0.04 + ti * 0.03 }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    transition: { duration: 0.2 } 
+                  }}
+                  whileTap={{ scale: 0.97 }}
                 >
-                  <IconBox>
+                  <IconBox className="icon-box">
                     <SafeImg src={tech.image} name={tech.name} />
                   </IconBox>
                   <TileName>{tech.name}</TileName>

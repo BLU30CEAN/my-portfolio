@@ -13,6 +13,12 @@ export type ProjectEntry = {
   description: string;
   tech: string[];
   actions?: ProjectAction[];
+  metrics?: Array<{
+    icon: "trending" | "users" | "zap" | "target";
+    label: string;
+    value: string;
+    color: string;
+  }>;
 };
 
 export const PROJECTS: ProjectEntry[] = [
@@ -29,6 +35,12 @@ export const PROJECTS: ProjectEntry[] = [
       "LiveKit",
       "WebRTC",
     ],
+    metrics: [
+      { icon: "zap", label: "응답 속도", value: "1.2초", color: "#667eea" },
+      { icon: "users", label: "동시 접속", value: "500+", color: "#f093fb" },
+      { icon: "trending", label: "만족도", value: "94%", color: "#4facfe" },
+      { icon: "target", label: "안정성", value: "99.8%", color: "#43e97b" },
+    ],
   },
   {
     tab: "professional",
@@ -44,6 +56,12 @@ export const PROJECTS: ProjectEntry[] = [
       "GTM",
       "GA",
     ],
+    metrics: [
+      { icon: "users", label: "일 주문", value: "2,800+", color: "#667eea" },
+      { icon: "zap", label: "로딩 속도", value: "0.8초", color: "#f093fb" },
+      { icon: "trending", label: "전환율", value: "+32%", color: "#4facfe" },
+      { icon: "target", label: "에러율", value: "0.3%", color: "#43e97b" },
+    ],
   },
   {
     tab: "professional",
@@ -51,6 +69,12 @@ export const PROJECTS: ProjectEntry[] = [
     description:
       "Spring Boot 메인 API와 Python FastAPI 기반 ML 서비스를 별도 레인으로 분리한 마이크로서비스 구조를 직접 설계했습니다. Swagger 문서화, 비동기 통신, Docker 배포를 통해 새로운 모델·기능을 안정적으로 얹어 나갈 수 있는 백엔드 통합 환경을 마련했습니다.",
     tech: ["Java", "Spring Boot", "Python", "FastAPI"],
+    metrics: [
+      { icon: "zap", label: "처리 속도", value: "180ms", color: "#667eea" },
+      { icon: "target", label: "가용성", value: "99.9%", color: "#43e97b" },
+      { icon: "trending", label: "처리량", value: "5K req/m", color: "#4facfe" },
+      { icon: "users", label: "모델 수", value: "8개", color: "#f093fb" },
+    ],
   },
   {
     tab: "professional",

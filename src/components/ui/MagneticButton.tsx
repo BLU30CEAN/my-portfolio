@@ -1,8 +1,7 @@
-import React, { useRef } from "react";
+import React from "react";
 import styled from "styled-components";
-import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
 
-const Btn = styled(motion.button)<{ $variant: "primary" | "ghost" }>`
+const Btn = styled.button<{ $variant: "primary" | "ghost" }>`
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -24,75 +23,55 @@ const Btn = styled(motion.button)<{ $variant: "primary" | "ghost" }>`
   letter-spacing: -0.01em;
   box-shadow: ${(p) =>
     p.$variant === "primary" ? p.theme.shadows.button : "none"};
-  transition: background ${(p) => p.theme.motion.durFast}
-      ${(p) => p.theme.motion.easeOut},
-    border-color ${(p) => p.theme.motion.durFast}
-      ${(p) => p.theme.motion.easeOut},
-    color ${(p) => p.theme.motion.durFast} ${(p) => p.theme.motion.easeOut};
+  transition:
+    opacity ${(p) => p.theme.motion.durFast} ${(p) => p.theme.motion.easeOut},
+    border-color ${(p) => p.theme.motion.durFast} ${(p) => p.theme.motion.easeOut},
+    color ${(p) => p.theme.motion.durFast} ${(p) => p.theme.motion.easeOut},
+    box-shadow ${(p) => p.theme.motion.durFast} ${(p) => p.theme.motion.easeOut};
 
   &:hover {
     ${(p) =>
-      p.$variant === "ghost" &&
-      `
+      p.$variant === "primary"
+        ? `
+      opacity: 0.92;
+      box-shadow: ${p.theme.shadows.cardHover};
+    `
+        : `
       border-color: ${p.theme.colors.primary};
       color: ${p.theme.colors.primary};
     `}
   }
+
+  &:active {
+    opacity: 0.88;
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${(p) => p.theme.colors.ring};
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
 `;
 
-type Props = React.ComponentProps<typeof motion.button> & {
+type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
   variant?: "primary" | "ghost";
-  /** 자석 강도. 0 = 없음. 기본 18. */
-  strength?: number;
 };
 
-/**
- * 마우스가 가까이 오면 버튼이 살짝 끌려오는 magnetic 인터랙션.
- * `prefers-reduced-motion` 시 비활성화.
- */
+/** 고정형 CTA 버튼 — hover는 색/투명도만 변경 */
 const MagneticButton: React.FC<Props> = ({
   children,
   variant = "primary",
-  strength = 18,
+  type = "button",
   ...rest
-}) => {
-  const ref = useRef<HTMLButtonElement>(null);
-  const reduced = useReducedMotion();
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 240, damping: 18, mass: 0.4 });
-  const sy = useSpring(y, { stiffness: 240, damping: 18, mass: 0.4 });
-
-  const onMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (reduced || !ref.current) return;
-    const r = ref.current.getBoundingClientRect();
-    const cx = r.left + r.width / 2;
-    const cy = r.top + r.height / 2;
-    const dx = (e.clientX - cx) / (r.width / 2);
-    const dy = (e.clientY - cy) / (r.height / 2);
-    x.set(dx * strength);
-    y.set(dy * strength);
-  };
-
-  const onLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <Btn
-      ref={ref}
-      $variant={variant}
-      style={{ x: sx, y: sy }}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      whileTap={{ scale: 0.96 }}
-      {...rest}
-    >
-      {children}
-    </Btn>
-  );
-};
+}) => (
+  <Btn $variant={variant} type={type} {...rest}>
+    {children}
+  </Btn>
+);
 
 export default MagneticButton;

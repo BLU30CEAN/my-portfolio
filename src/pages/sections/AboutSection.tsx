@@ -5,6 +5,7 @@ import { Award, Layers, Users, Zap } from "lucide-react";
 import Section from "../../components/layout/Section";
 import SectionTitle from "../../components/ui/SectionTitle";
 import CountUp from "../../components/ui/CountUp";
+import MetricsBarChart from "../../components/ui/MetricsBarChart";
 
 const Grid = styled.div`
   display: grid;
@@ -37,6 +38,7 @@ const StatsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
+  margin-bottom: 1.25rem;
 `;
 
 const StatCard = styled(motion.div)`
@@ -109,8 +111,8 @@ const AboutSection: React.FC = () => {
     <Section id="about" dotCount={10} dotSeed={2} fullHeight glow>
       <SectionTitle
         eyebrow="About"
-        title="예외 경로부터 먼저 설계합니다"
-        subtitle="새 기능을 더하기 전에 운영자가 떠안을 부담을 먼저 그려 보는 습관 — 5년 동안 한 가지 원칙으로 다듬어 왔습니다."
+        title="사용자 시나리오 전체를 먼저 그립니다"
+        subtitle="새 기능을 더하기 전에 엣지 케이스의 안정성을 먼저 검증하는 습관 — 5년 동안 한 가지 원칙으로 다듬어 왔습니다."
       />
 
       <Grid>
@@ -131,7 +133,7 @@ const AboutSection: React.FC = () => {
             연동, WebRTC·WebSocket 기반 음성·화상 스트리밍처럼 운영 부담이 큰
             도메인을 거치며 한 가지 원칙을 다듬어 왔습니다 —{" "}
             <strong>
-              새 기능을 붙이기에 앞서, 예외 상황의 경로부터 먼저 설계한다.
+              사용자 시나리오 전체를 먼저 그린 뒤, 해피 패스보다 엣지 케이스의 안정성에 더 집중한다.
             </strong>
           </p>
           <p>
@@ -142,32 +144,76 @@ const AboutSection: React.FC = () => {
           </p>
         </Story>
 
-        <StatsGrid>
-          {STATS.map((s, i) => (
-            <StatCard
-              key={s.label}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-15%" }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-            >
-              <StatIconWrap>
-                <s.icon size={18} />
-              </StatIconWrap>
-              <StatValue>
-                {typeof s.to === "number" ? (
-                  <>
-                    <CountUp to={s.to} prefix={s.prefix} />
-                    {s.suffix && <span className="suffix">{s.suffix}</span>}
-                  </>
-                ) : (
-                  s.staticValue
-                )}
-              </StatValue>
-              <StatLabel>{s.label}</StatLabel>
-            </StatCard>
-          ))}
-        </StatsGrid>
+        <div>
+          <StatsGrid>
+            {STATS.map((s, i) => (
+              <StatCard
+                key={s.label}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-15%" }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+              >
+                <StatIconWrap>
+                  <s.icon size={18} />
+                </StatIconWrap>
+                <StatValue>
+                  {typeof s.to === "number" ? (
+                    <>
+                      <CountUp to={s.to} prefix={s.prefix} />
+                      {s.suffix && <span className="suffix">{s.suffix}</span>}
+                    </>
+                  ) : (
+                    s.staticValue
+                  )}
+                </StatValue>
+                <StatLabel>{s.label}</StatLabel>
+              </StatCard>
+            ))}
+          </StatsGrid>
+
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-15%" }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <MetricsBarChart
+              title="프로젝트 임팩트"
+              animationDelay={200}
+              metrics={[
+                {
+                  label: "응답 속도 개선",
+                  value: 68,
+                  max: 100,
+                  unit: "%",
+                  color: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                },
+                {
+                  label: "배포 자동화율",
+                  value: 95,
+                  max: 100,
+                  unit: "%",
+                  color: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+                },
+                {
+                  label: "에러율 감소",
+                  value: 82,
+                  max: 100,
+                  unit: "%",
+                  color: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+                },
+                {
+                  label: "코드 커버리지",
+                  value: 76,
+                  max: 100,
+                  unit: "%",
+                  color: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+                },
+              ]}
+            />
+          </motion.div>
+        </div>
       </Grid>
     </Section>
   );

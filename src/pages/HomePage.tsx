@@ -5,6 +5,7 @@ import AboutSection from "./sections/AboutSection";
 import TechStackSection from "./sections/TechStackSection";
 import ReferencesSection from "./sections/ReferencesSection";
 import ProjectsSection from "./sections/ProjectsSection";
+import GitHubActivitySection from "./sections/GitHubActivitySection";
 import LearningBannerSection from "./sections/LearningBannerSection";
 import ContactSection from "./sections/ContactSection";
 
@@ -33,6 +34,7 @@ const HomePage: React.FC = () => {
       <TechStackSection />
       <ReferencesSection />
       <ProjectsSection />
+      <GitHubActivitySection />
       <LearningBannerSection />
       <ContactSection email={email} />
     </>

@@ -1,16 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { animate, text } from "animejs";
-import { Lock, Unlock, RotateCcw, Sparkles } from "lucide-react";
+import { Eye, EyeOff, RotateCcw, Sparkles } from "lucide-react";
 
+/** 실제 학습 노트에서 뽑은 핵심 메모 — 잠금 해제 전에도 의미가 통하는 문장 */
 const LINES: string[] = [
-  "loss = mean( (y_true - y_pred)^2 )",
-  "for each epoch: w -= lr * dLoss/dw",
-  "overfitting starts where regularization sleeps",
-  "always log: rows_in, rows_out, na_ratio",
+  "train_test_split 이전에 fit_transform 하면 데이터 누수(leakage) 발생",
+  "불균형 데이터에서는 accuracy만 보면 ROC-AUC·F1을 함께 봐야 한다",
+  "learning rate가 크면 발산, 작으면 수렴 지연 — 시뮬레이터로 직접 확인",
+  "EDA 단계: rows_in, rows_out, na_ratio는 변환마다 로그에 남긴다",
 ];
 
-const HIDDEN_BONUS = "★ 모두 풀어 냈습니다 — 'measure twice, train once.' ★";
+const HIDDEN_BONUS =
+  "★ 핵심 네 줄을 모두 확인했습니다 — measure twice, train once ★";
+
+/** 복호화 애니메이션용 문자 — ML 기호 난잡함 대신 마스크 문자만 사용 */
+const SCRAMBLE_CHARS = "·▪░▒";
 
 const Wrap = styled.div`
   display: flex;
@@ -18,50 +23,79 @@ const Wrap = styled.div`
   gap: 0.55rem;
 `;
 
+const Hint = styled.p`
+  margin: 0 0 0.25rem;
+  font-size: 0.82rem;
+  color: ${(p) => p.theme.colors.textMuted};
+`;
+
 const Line = styled.button<{ $locked: boolean }>`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.6rem;
   width: 100%;
   text-align: left;
   padding: 0.7rem 0.85rem;
   border-radius: 10px;
-  border: 1px dashed ${(props) => props.theme.colors.border};
-  background: ${(props) => props.theme.colors.surface};
-  color: ${(props) =>
-    props.$locked ? props.theme.colors.textSecondary : props.theme.colors.text};
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 0.88rem;
+  border: 1px dashed
+    ${(p) =>
+      p.$locked ? p.theme.colors.border : `${p.theme.colors.primary}55`};
+  background: ${(p) => p.theme.colors.surface};
+  color: ${(p) =>
+    p.$locked ? p.theme.colors.textSecondary : p.theme.colors.text};
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    monospace;
+  font-size: 0.86rem;
+  line-height: 1.55;
   letter-spacing: 0.01em;
-  cursor: ${(props) => (props.$locked ? "default" : "pointer")};
+  cursor: ${(p) => (p.$locked ? "pointer" : "default")};
   transition: border-color 160ms ease, background 160ms ease;
 
   &:hover {
-    border-color: ${(props) =>
-      props.$locked ? props.theme.colors.border : props.theme.colors.primary};
+    border-color: ${(p) =>
+      p.$locked ? p.theme.colors.primary : `${p.theme.colors.primary}55`};
+    background: ${(p) =>
+      p.$locked ? `${p.theme.colors.primarySoft}` : p.theme.colors.surface};
+  }
+
+  svg {
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+    color: ${(p) =>
+      p.$locked ? p.theme.colors.textMuted : p.theme.colors.primary};
   }
 `;
 
-const LineText = styled.span`
+const LineText = styled.span<{ $locked: boolean }>`
   flex: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  min-width: 0;
+  white-space: pre-wrap;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  filter: ${(p) => (p.$locked ? "none" : "none")};
+  letter-spacing: ${(p) => (p.$locked ? "0.04em" : "0.01em")};
 `;
 
 const BonusLine = styled.div`
   margin-top: 0.5rem;
   padding: 0.7rem 0.85rem;
   border-radius: 10px;
-  border: 1px solid ${(props) => props.theme.colors.primary}40;
-  background: ${(props) => props.theme.colors.primary}10;
-  color: ${(props) => props.theme.colors.primary};
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 0.88rem;
+  border: 1px solid ${(p) => p.theme.colors.primary}40;
+  background: ${(p) => p.theme.colors.primary}10;
+  color: ${(p) => p.theme.colors.primary};
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    monospace;
+  font-size: 0.86rem;
+  line-height: 1.55;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
   opacity: 0;
+
+  svg {
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
 `;
 
 const Footer = styled.div`
@@ -69,7 +103,9 @@ const Footer = styled.div`
   justify-content: space-between;
   align-items: center;
   font-size: 0.82rem;
-  color: ${(props) => props.theme.colors.textSecondary};
+  color: ${(p) => p.theme.colors.textSecondary};
+  gap: 0.75rem;
+  flex-wrap: wrap;
 `;
 
 const ResetBtn = styled.button`
@@ -78,43 +114,50 @@ const ResetBtn = styled.button`
   gap: 0.35rem;
   padding: 0.4rem 0.75rem;
   border-radius: 8px;
-  border: 1px solid ${(props) => props.theme.colors.border};
-  background: ${(props) => props.theme.colors.surface};
-  color: ${(props) => props.theme.colors.text};
+  border: 1px solid ${(p) => p.theme.colors.border};
+  background: ${(p) => p.theme.colors.surface};
+  color: ${(p) => p.theme.colors.text};
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
   font-family: inherit;
 
   &:hover {
-    border-color: ${(props) => props.theme.colors.primary};
-    color: ${(props) => props.theme.colors.primary};
+    border-color: ${(p) => p.theme.colors.primary};
+    color: ${(p) => p.theme.colors.primary};
   }
 `;
 
-const CHARSET = "weights bias loss epoch grad ∇ μ σ θ λ ⟨⟩";
+/** 가독 가능한 마스크 — 구두점·공백 유지, 글자만 · 로 대체 */
+function maskLine(src: string): string {
+  return src
+    .split("")
+    .map((c) => {
+      if (c === " ") return " ";
+      if (/[.,:;()\-—/\\[\]<>_=+*^]/.test(c)) return c;
+      return "·";
+    })
+    .join("");
+}
 
 export function ScrambleDecodeGame() {
   const lineRefs = useRef<Array<HTMLSpanElement | null>>([]);
   const bonusRef = useRef<HTMLDivElement | null>(null);
-  const [unlocked, setUnlocked] = useState<boolean[]>(
-    () => LINES.map(() => false)
+  const [unlocked, setUnlocked] = useState<boolean[]>(() =>
+    LINES.map(() => false),
   );
   const [bonusShown, setBonusShown] = useState(false);
 
-  // initialize all lines with scrambled placeholder text
-  useEffect(() => {
+  const applyMasks = () => {
     LINES.forEach((src, i) => {
       const el = lineRefs.current[i];
       if (!el || unlocked[i]) return;
-      // fill with cipher-like placeholder of same length
-      const placeholder = src
-        .split("")
-        .map((c) => (c === " " ? " " : CHARSET[Math.floor(Math.random() * CHARSET.length)]))
-        .join("");
-      el.textContent = placeholder;
+      el.textContent = maskLine(src);
     });
-    // intentionally only on mount
+  };
+
+  useEffect(() => {
+    applyMasks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -126,15 +169,14 @@ export function ScrambleDecodeGame() {
     animate(el, {
       text: text.scrambleText({
         text: LINES[i],
-        chars: CHARSET,
-        revealRate: 18,
-        settleDuration: 240,
-        settleRate: 26,
+        chars: SCRAMBLE_CHARS,
+        revealRate: 14,
+        settleDuration: 200,
+        settleRate: 22,
         from: "left",
-        cursor: "█",
         ease: "outQuad",
       }),
-      duration: 1300,
+      duration: 1100,
     });
 
     setUnlocked((prev) => {
@@ -147,25 +189,26 @@ export function ScrambleDecodeGame() {
   useEffect(() => {
     if (unlocked.every(Boolean) && !bonusShown && bonusRef.current) {
       setBonusShown(true);
-      const span = bonusRef.current.querySelector("[data-bonus-text]") as HTMLElement | null;
+      const span = bonusRef.current.querySelector(
+        "[data-bonus-text]",
+      ) as HTMLElement | null;
       animate(bonusRef.current, {
         opacity: [0, 1],
-        translateY: [10, 0],
-        duration: 380,
+        translateY: [8, 0],
+        duration: 320,
         ease: "outQuad",
       });
       if (span) {
-        span.textContent = " ".repeat(HIDDEN_BONUS.length);
+        span.textContent = maskLine(HIDDEN_BONUS);
         animate(span, {
           text: text.scrambleText({
             text: HIDDEN_BONUS,
-            chars: "★_∇λμσθ⟨⟩",
-            revealRate: 22,
-            settleDuration: 280,
+            chars: SCRAMBLE_CHARS,
+            revealRate: 16,
+            settleDuration: 220,
             from: "center",
-            cursor: "_",
           }),
-          duration: 1500,
+          duration: 1200,
         });
       }
     }
@@ -179,12 +222,7 @@ export function ScrambleDecodeGame() {
     }
     LINES.forEach((src, i) => {
       const el = lineRefs.current[i];
-      if (!el) return;
-      const placeholder = src
-        .split("")
-        .map((c) => (c === " " ? " " : CHARSET[Math.floor(Math.random() * CHARSET.length)]))
-        .join("");
-      el.textContent = placeholder;
+      if (el) el.textContent = maskLine(src);
     });
   };
 
@@ -192,20 +230,24 @@ export function ScrambleDecodeGame() {
 
   return (
     <Wrap>
-      {LINES.map((_, i) => (
+      <Hint>가려진 핵심 메모를 클릭하면 원문이 드러납니다.</Hint>
+      {LINES.map((line, i) => (
         <Line
-          key={i}
+          key={line}
           type="button"
-          $locked={unlocked[i]}
+          $locked={!unlocked[i]}
           onClick={() => reveal(i)}
-          aria-label={unlocked[i] ? "decrypted" : "click to decrypt"}
+          aria-label={
+            unlocked[i] ? `메모: ${line}` : "클릭하여 메모 원문 보기"
+          }
         >
           {unlocked[i] ? (
-            <Unlock size={14} aria-hidden />
+            <Eye size={14} aria-hidden />
           ) : (
-            <Lock size={14} aria-hidden />
+            <EyeOff size={14} aria-hidden />
           )}
           <LineText
+            $locked={!unlocked[i]}
             ref={(el) => {
               lineRefs.current[i] = el;
             }}
@@ -220,10 +262,10 @@ export function ScrambleDecodeGame() {
 
       <Footer>
         <span>
-          풀어 낸 문장: <strong>{unlockedCount}</strong> / {LINES.length}
+          확인한 메모: <strong>{unlockedCount}</strong> / {LINES.length}
         </span>
         <ResetBtn type="button" onClick={reset}>
-          <RotateCcw size={14} aria-hidden /> 다시 흐리기
+          <RotateCcw size={14} aria-hidden /> 다시 가리기
         </ResetBtn>
       </Footer>
     </Wrap>
