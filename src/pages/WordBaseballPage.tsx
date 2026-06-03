@@ -834,7 +834,7 @@ function WordBaseballPage() {
               <ExternalLink size={16} />
               원본 저장소
             </MiniLink>
-            <BackLink to="/projects">
+            <BackLink to="/" state={{ scrollTo: "projects" }}>
               <ArrowLeft size={16} />
               프로젝트로
             </BackLink>
@@ -849,7 +849,7 @@ function WordBaseballPage() {
       <PageFrame>
         <TopBar>
           <NavGroup>
-            <BackLink to="/projects">
+            <BackLink to="/" state={{ scrollTo: "projects" }}>
               <ArrowLeft size={16} />
               프로젝트로 돌아가기
             </BackLink>

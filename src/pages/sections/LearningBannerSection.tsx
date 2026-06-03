@@ -96,8 +96,8 @@ const LearningBannerSection: React.FC = () => {
           <Title>학습 노트 · ML 자기 수련 기록</Title>
         </Head>
         <Text>
-          <strong>pandas·scikit-learn</strong>을 직접 만지며 정리한 실습 노트,
-          막혔던 지점과 그 매듭을 풀어 간 과정을 별도 페이지에 모아 두었습니다.
+          <strong>pandas·scikit-learn</strong>을 직접 만지며 정리한 실습 노트 —
+          해본 것, 막혔던 점, 정리한 것 순으로 별도 페이지에 모아 두었습니다.
           글로만 끝내지 않고, 같은 개념을 손으로 한 번 더 다뤄 볼 수 있는{" "}
           <strong>인터랙티브 미니게임</strong>도 함께 두었습니다.
         </Text>

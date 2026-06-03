@@ -1,5 +1,6 @@
 /**
- * 연구 노트(자기 학습 트랙) 카드 데이터.
+ * 학습 노트(자기 학습 트랙) 카드 데이터.
+ * - 섹션: 해본 것 → 막혔던 점 → 정리한 것 (글마다 동일한 흐름)
  * - 히어로 이미지: `ML_JOURNAL_HERO_MEDIA_ENABLED` 가 true 일 때만 렌더.
  * - 미니게임: `miniGame` 필드의 ID 가 `MiniGameRegistry` 의 키와 매칭.
  */
@@ -44,17 +45,17 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
     tags: ["pandas", "EDA", "Jupyter"],
     sections: [
       {
-        heading: "실습 과정",
+        heading: "해본 것",
         body:
           "`DataFrame`·Series 인덱싱, `groupby`, `merge`, 결측 처리(`fillna`, `dropna`), 기초 통계까지 반복 학습 노트와 작은 CSV 실습으로 차근차근 익혔습니다. 실무에서는 DB·CSV에서 뽑은 표를 같은 도구로 검증해 보는 흐름에 가장 가깝습니다.",
       },
       {
-        heading: "발목을 잡았던 지점",
+        heading: "막혔던 점",
         body:
           "멀티 인덱스, `SettingWithCopyWarning`, `merge` 이후 행이 갑자기 늘어나는 원인 추적이 가장 까다로웠습니다. 화면에 ‘보이는 결과’와 실제 ‘메모리·참조’가 따로 움직일 때 디버깅이 오래 걸렸습니다.",
       },
       {
-        heading: "매듭을 풀어 간 방법",
+        heading: "정리한 것",
         body:
           "필요한 곳에는 `copy()`를 명시하고, 인덱스를 정렬한 뒤에 `merge`를 거는 식으로 흐름을 단순화했습니다. 체이닝 대신 중간 변수를 두어 단계 수를 줄이고, EDA 단계에서는 ‘변환 전후 행 수·결측 비율’을 항상 로그로 남기는 습관을 들였습니다.",
       },
@@ -80,17 +81,17 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
     tags: ["scikit-learn", "ML", "metrics"],
     sections: [
       {
-        heading: "실습 과정",
+        heading: "해본 것",
         body:
           "`train_test_split`, `StandardScaler`를 얹은 파이프라인, 회귀·분류 기본 알고리즘, 교차 검증까지 노트와 예제 코드로 차근차근 익혔습니다. 실무 AI 연동 흐름과 견주어 ‘오프라인 평가’가 어디까지 닿을 수 있는지 가늠하는 자리로 삼았습니다.",
       },
       {
-        heading: "발목을 잡았던 지점",
+        heading: "막혔던 점",
         body:
           "하이퍼파라미터와 과적합·과소적합 사이의 미묘한 경계, 클래스가 불균형한 데이터에서 정확도만 바라보다 빠지는 함정, 그리고 파이프라인 안에서 데이터 누수(leakage)가 생기지 않도록 분할 시점을 잡는 일이 가장 어려웠습니다.",
       },
       {
-        heading: "매듭을 풀어 간 방법",
+        heading: "정리한 것",
         body:
           "동일한 random seed와 동일한 분할을 고정해 두고, 검증 분할을 ‘파이프라인 가장 앞단’과 일치시키는 습관을 들였습니다. 평가 지표는 한 가지로 끝내지 않고, 과제 성격에 따라 ROC-AUC·F1·recall 등을 함께 살펴 균형을 맞췄습니다.",
       },
@@ -116,17 +117,17 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
     tags: ["optimization", "loss", "intuition"],
     sections: [
       {
-        heading: "실습 과정",
+        heading: "해본 것",
         body:
           "선형·로지스틱 회귀의 비용함수, 1·2차 미분, 학습률(learning rate)의 영향을 노트와 시각화로 정리했습니다. ‘학습률이 너무 크면 발산하고, 너무 작으면 수렴이 더디다’는 감각은 글로만 봐서는 잘 와닿지 않아, 직접 굴려 보는 데모로 보강했습니다.",
       },
       {
-        heading: "발목을 잡았던 지점",
+        heading: "막혔던 점",
         body:
           "수식만 들여다보면 ‘gradient = 기울기’라는 개념은 잡혀도, 실제 loss surface가 방향마다 기울기가 다른(비등방, anisotropic) 형태일 때는 어디서 멈출지, 지역 최솟값이나 안장점(saddle)에 갇히는 상황을 감으로 잡기 어려웠습니다.",
       },
       {
-        heading: "매듭을 풀어 간 방법",
+        heading: "정리한 것",
         body:
           "학습률만 적용한 가장 단순한 경사하강법부터 시뮬레이터로 만들어, ‘초기값에 따라 서로 다른 골짜기에 안착한다’는 사실을 눈으로 확인했습니다. 이후 Adam·모멘텀 같은 변형도 같은 화면에 얹어 비교할 수 있도록 인터페이스를 열어 두었습니다.",
       },
@@ -152,19 +153,19 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
     tags: ["anime.js", "scrambleText", "DX"],
     sections: [
       {
-        heading: "실습 과정",
+        heading: "해본 것",
         body:
           "Anime.js v4가 새로 내놓은 `Text` 모듈(`splitText`, `scrambleText`)을 활용해, ‘읽는 사람이 한 줄씩 문장을 풀어 가며 내용을 발견한다’는 인터랙션을 만들어 봤습니다. 단순한 페이드인보다 손으로 참여하는 감각이 강해, ML 노트의 핵심 문장을 강조할 때 잘 어울렸습니다.",
       },
       {
-        heading: "발목을 잡았던 지점",
+        heading: "막혔던 점",
         body:
           "한국어·영문·기호가 섞인 문장에서 scramble에 쓰는 문자 풀(charset)을 한쪽 언어로만 두면 흐름이 어색해집니다. 또한 모바일에서 한 번에 너무 많은 라인을 그리면 60fps가 무너지기 쉬워, 동시에 움직이는 라인 수를 제한해야 했습니다.",
       },
       {
-        heading: "매듭을 풀어 간 방법",
+        heading: "정리한 것",
         body:
-          "라인마다 클릭 시점에 시작하는 게으른 트리거(lazy trigger)를 두고, 한 번 풀린 라인은 다시 재생되지 않도록 상태를 잠가 두었습니다. 문자 풀은 `weights`, `bias`, `loss`, `epoch` 같은 ML 어휘로 직접 채워, 풀리는 과정 자체에서도 의미가 묻어나도록 다듬었습니다.",
+          "라인마다 클릭 시점에 시작하는 게으른 트리거(lazy trigger)를 두고, 한 번 풀린 라인은 다시 재생되지 않도록 상태를 잠가 두었습니다. 문자 풀은 `weights`, `bias`, `loss`, `epoch` 같은 ML 어휘로 직접 채워, 풀리는 동작 자체에서도 의미가 묻어나도록 다듬었습니다.",
       },
     ],
     miniGame: {
@@ -188,19 +189,19 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
     tags: ["GitHub", "API", "data-viz"],
     sections: [
       {
-        heading: "왜 합산이 필요했는가",
+        heading: "해본 것",
         body:
-          "실무·학습·개인 프로젝트를 `BLU30CEAN`, `bbo14` 등 여러 GitHub 계정으로 나눠 관리하고 있었습니다. 메인 포트폴리오 히트맵은 mock 데이터(1,240 commits 등)를 쓰고 있어, 실제 활동과 어긋나 신뢰를 떨어뜨릴 수 있었습니다. ‘여러 계정의 합집합’을 한 그래프로 보여 주는 것이 목표였습니다.",
+          "실무·학습·개인 저장소를 `BLU30CEAN`, `bbo14` 등 여러 GitHub 계정으로 나눠 두었는데, 메인 포트폴리오 히트맵은 mock(1,240 commits 등)이라 실제 활동과 어긋날 수 있었습니다. `github-contributions-api`로 계정별 일별 contribution을 가져와 `date` 기준으로 합산하고, 합산 최댓값에 맞춰 GitHub contribution graph와 같은 4단계 level·색 농도를 다시 계산해 `GitHubActivitySection`에 붙였습니다.",
       },
       {
-        heading: "진행 과정",
+        heading: "막혔던 점",
         body:
-          "1) `github-contributions-api`로 계정별 지난 1년 일별 contribution을 조회합니다. 2) `date` 키 기준으로 count를 합산합니다. 3) 합산 최댓값 대비 4단계 level을 재계산해 GitHub contribution graph와 같은 색 농도를 씁니다. 4) GitHub REST API로 public repo 수·star 수도 계정별 합산합니다. 5) `GitHubActivitySection`에서 로딩·에러·계정별 breakdown chip을 함께 표시합니다.",
+          "GitLab(`git.utopsoft.co.kr/eunjun`)은 브라우저에서 직접 API를 칠 수 없어 CORS·인증 때문에 막혔습니다. private contribution은 공개 API만으로는 날짜·건수가 비어 보일 수 있고, 계정별 breakdown을 넣으면 칩이 많아져 모바일에서 한눈에 들어오기 어렵습니다.",
       },
       {
-        heading: "결과 및 한계",
+        heading: "정리한 것",
         body:
-          "홈페이지 GitHub 섹션에 GitHub + GitLab 합산 히트맵이 반영됩니다. GitLab(`git.utopsoft.co.kr/eunjun`)은 브라우저에서 직접 조회할 수 없어, `npm run export:gitlab`로 `public/data/gitlab-eunjun.json`을 생성·커밋하는 방식입니다. private contribution·비공개 프로젝트명은 JSON에 포함하지 않습니다.",
+          "GitHub는 런타임 합산, GitLab은 `npm run export:gitlab`로 `public/data/gitlab-eunjun.json`을 만들어 커밋하는 이원화로 맞췄습니다. public repo·star 수는 REST로 계정별 합산하고, JSON에는 비공개 프로젝트명을 넣지 않습니다. 지금은 홈 GitHub 섹션에서 GitHub + GitLab 합산 히트맵과 로딩·에러·계정 chip을 함께 볼 수 있습니다.",
       },
     ],
   },

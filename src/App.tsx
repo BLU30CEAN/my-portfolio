@@ -19,7 +19,7 @@ import { useScrollFlags } from "./hooks/useScrollFlags";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
-const ProjectsPage = lazy(() => import("./pages/ProjectsPage"));
+const ProjectsRedirect = lazy(() => import("./pages/ProjectsRedirect"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const WordBaseballPage = lazy(() => import("./pages/WordBaseballPage"));
 const GrowthJournalPage = lazy(() => import("./pages/GrowthJournalPage"));
@@ -146,7 +146,7 @@ function AppShell() {
               <Routes location={location}>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/about" element={<AboutPage />} />
-                <Route path="/projects" element={<ProjectsPage />} />
+                <Route path="/projects" element={<ProjectsRedirect />} />
                 <Route path="/journal" element={<GrowthJournalPage />} />
                 <Route path="/kwb" element={<WordBaseballPage />} />
                 <Route path="/word-baseball" element={<WordBaseballPage />} />
