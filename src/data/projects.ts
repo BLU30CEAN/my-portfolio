@@ -174,4 +174,23 @@ export const PROJECTS: ProjectEntry[] = [
       },
     ],
   },
+  {
+    tab: "personal",
+    title: "pocket-poker",
+    description:
+      "GTO EV 미니 계산기 — 포지션·핸드·팟·상대 수로 거친 EV 근사를 계산하는 Phase 1 static 도구. 솔버 출력이 아닌 일상 직관 보강용.",
+    tech: ["Vanilla JS", "CSS", "GTO", "Static Site"],
+    actions: [
+      {
+        label: "체험하러 가기",
+        href: "https://blu30cean.github.io/pocket-poker",
+        kind: "external",
+      },
+      {
+        label: "코드 살펴보기",
+        href: "https://github.com/BLU30CEAN/pocket-poker",
+        kind: "external",
+      },
+    ],
+  },
 ];
