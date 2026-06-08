@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-08T11:54:40.594Z",
+  "generatedAt": "2026-06-08T12:01:19.006Z",
   "runner": "playwright",
   "environment": "local",
   "summary": {
@@ -9,7 +9,7 @@
     "failed": 0,
     "skipped": 0,
     "flaky": 0,
-    "durationMs": 29868,
+    "durationMs": 17942,
     "passRate": 100
   },
   "suites": [
@@ -20,7 +20,7 @@
       "passed": 3,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 14028
+      "durationMs": 7725
     },
     {
       "id": "journal-spec",
@@ -29,7 +29,7 @@
       "passed": 2,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 5402
+      "durationMs": 3413
     },
     {
       "id": "navigation-spec",
@@ -38,7 +38,7 @@
       "passed": 2,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 5641
+      "durationMs": 4147
     },
     {
       "id": "qa-dashboard-spec",
@@ -47,11 +47,50 @@
       "passed": 2,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 4797
+      "durationMs": 2657
     }
   ],
-  "defects": [],
+  "defects": [
+    {
+      "id": "navigation-spec-ts-opens-journal-from-nav",
+      "suite": "Navigation",
+      "title": "opens journal from nav",
+      "file": "navigation.spec.ts",
+      "severity": "critical",
+      "status": "resolved",
+      "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+      "firstSeen": "2026-06-08T12:00:51.352Z",
+      "lastSeen": "2026-06-08T12:01:19.006Z",
+      "resolvedAt": "2026-06-08T12:01:19.006Z"
+    },
+    {
+      "id": "navigation-spec-ts-opens-qa-dashboard-route",
+      "suite": "Navigation",
+      "title": "opens QA dashboard route",
+      "file": "navigation.spec.ts",
+      "severity": "critical",
+      "status": "resolved",
+      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed",
+      "firstSeen": "2026-06-08T12:00:51.352Z",
+      "lastSeen": "2026-06-08T12:01:19.006Z",
+      "resolvedAt": "2026-06-08T12:01:19.006Z"
+    }
+  ],
   "history": [
+    {
+      "runAt": "2026-06-08T12:01:19.006Z",
+      "total": 9,
+      "passed": 9,
+      "failed": 0,
+      "passRate": 100
+    },
+    {
+      "runAt": "2026-06-08T12:00:51.352Z",
+      "total": 9,
+      "passed": 7,
+      "failed": 2,
+      "passRate": 77.8
+    },
     {
       "runAt": "2026-06-08T11:54:40.594Z",
       "total": 9,
