@@ -6,7 +6,7 @@ test.describe("Growth Journal", () => {
 
     const firstArticle = page.locator("article").first();
     await expect(firstArticle.getByRole("heading", { level: 2 })).toContainText(
-      "Playwright로 포트폴리오 QA 파이프라인 구축",
+      "Playwright E2E + QA Dashboard",
     );
   });
 
@@ -15,7 +15,7 @@ test.describe("Growth Journal", () => {
 
     const secondArticle = page.locator("article").nth(1);
     await expect(secondArticle.getByRole("heading", { level: 2 })).toContainText(
-      "여러 GitHub 계정의 contribution을 하나의 히트맵으로",
+      "Multi-account GitHub + GitLab heatmap",
     );
   });
 });
