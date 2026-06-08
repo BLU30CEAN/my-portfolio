@@ -16,6 +16,7 @@ import ScrollProgress from "./components/nav/ScrollProgress";
 import ScrollToTop from "./components/nav/ScrollToTop";
 import { useActiveSection } from "./hooks/useActiveSection";
 import { useScrollFlags } from "./hooks/useScrollFlags";
+import { useVisitTracker } from "./hooks/useVisitTracker";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
@@ -23,6 +24,7 @@ const ProjectsRedirect = lazy(() => import("./pages/ProjectsRedirect"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const WordBaseballPage = lazy(() => import("./pages/WordBaseballPage"));
 const GrowthJournalPage = lazy(() => import("./pages/GrowthJournalPage"));
+const QADashboardPage = lazy(() => import("./pages/QADashboardPage"));
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -64,9 +66,10 @@ const NAV_ITEMS: NavItem[] = [
   { id: "home", label: "Home", section: "home" },
   { id: "about", label: "About", section: "about" },
   { id: "tech", label: "Stack", section: "tech" },
-  { id: "references", label: "References", section: "references" },
   { id: "projects", label: "Projects", section: "projects" },
-  { id: "journal", label: "학습 노트", route: "/journal" },
+  { id: "engineering", label: "Engineering", section: "engineering" },
+  { id: "journal", label: "연구 노트", route: "/journal" },
+  { id: "qa", label: "QA", route: "/qa" },
   { id: "contact", label: "Contact", section: "contact" },
 ];
 
@@ -74,8 +77,8 @@ const HOME_SECTION_IDS = [
   "home",
   "about",
   "tech",
-  "references",
   "projects",
+  "engineering",
   "contact",
 ];
 
@@ -83,6 +86,7 @@ function AppShell() {
   const navigate = useNavigate();
   const location = useLocation();
   const isHome = location.pathname === "/";
+  useVisitTracker();
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const { scrolled, showTop } = useScrollFlags();
@@ -92,7 +96,9 @@ function AppShell() {
   const activeNavId = !isHome
     ? location.pathname === "/journal"
       ? "journal"
-      : ""
+      : location.pathname === "/qa"
+        ? "qa"
+        : ""
     : activeSection;
 
   const goSection = useCallback(
@@ -148,6 +154,7 @@ function AppShell() {
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/projects" element={<ProjectsRedirect />} />
                 <Route path="/journal" element={<GrowthJournalPage />} />
+                <Route path="/qa" element={<QADashboardPage />} />
                 <Route path="/kwb" element={<WordBaseballPage />} />
                 <Route path="/word-baseball" element={<WordBaseballPage />} />
                 <Route path="/contact" element={<ContactPage />} />
