@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-08T12:01:19.006Z",
+  "generatedAt": "2026-06-08T12:25:25.291Z",
   "runner": "playwright",
   "environment": "local",
   "summary": {
@@ -9,7 +9,7 @@
     "failed": 0,
     "skipped": 0,
     "flaky": 0,
-    "durationMs": 17942,
+    "durationMs": 23865,
     "passRate": 100
   },
   "suites": [
@@ -20,7 +20,7 @@
       "passed": 3,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 7725
+      "durationMs": 10903
     },
     {
       "id": "journal-spec",
@@ -29,7 +29,7 @@
       "passed": 2,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 3413
+      "durationMs": 4302
     },
     {
       "id": "navigation-spec",
@@ -38,7 +38,7 @@
       "passed": 2,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 4147
+      "durationMs": 5231
     },
     {
       "id": "qa-dashboard-spec",
@@ -47,7 +47,7 @@
       "passed": 2,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 2657
+      "durationMs": 3429
     }
   ],
   "defects": [
@@ -77,6 +77,13 @@
     }
   ],
   "history": [
+    {
+      "runAt": "2026-06-08T12:25:25.291Z",
+      "total": 9,
+      "passed": 9,
+      "failed": 0,
+      "passRate": 100
+    },
     {
       "runAt": "2026-06-08T12:01:19.006Z",
       "total": 9,
