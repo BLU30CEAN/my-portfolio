@@ -162,8 +162,8 @@ const EngineeringSection: React.FC = () => {
     <Section id="engineering" dotCount={10} dotSeed={6} fullHeight glow>
       <SectionTitle
         eyebrow="Engineering"
-        title="Full-stack + observability + QA"
-        subtitle="API p95 180ms, 배포 자동화 95%, Playwright 9/9. 한 제품 안에서 프론트/백/DB/관측을 연결합니다."
+        title="프론트만이 아닌, 운영까지 담당하는 엔지니어링"
+        subtitle="React/TypeScript로 UX를 다듬고, Java/Python 백엔드, DB, 관측, Playwright 회귀까지 한 제품 안에서 이어 붙입니다."
       />
 
       <Grid>
@@ -174,9 +174,11 @@ const EngineeringSection: React.FC = () => {
           transition={{ duration: 0.55 }}
         >
           <Lead>
-            <strong>Spring Boot</strong> API + <strong>FastAPI</strong> ML +
-            <strong> React/RN</strong> client. 운영 KPI는 Datadog/GA,
-            회귀는 Playwright JSON → <strong>/qa</strong>.
+            화면을 예쁘게 그리는 것과, 장애가 났을 때 원인을 좁히는 것은
+            같은 맥락이라고 봅니다. 프론트 인터랙션(anime.js, Framer Motion)과
+            백엔드/DB/관측을 함께 다루며, API p95 <strong>180ms</strong>, 배포
+            자동화 <strong>95%</strong>, Playwright <strong>9/9</strong>로
+            운영 KPI와 회귀를 맞춥니다.
           </Lead>
 
           <Pillars>

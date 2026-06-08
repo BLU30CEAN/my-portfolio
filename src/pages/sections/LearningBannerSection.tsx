@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { ArrowRight, FlaskConical, Gauge } from "lucide-react";
+import { ArrowRight, BookOpen, FlaskConical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Section from "../../components/layout/Section";
 import MagneticButton from "../../components/ui/MagneticButton";
@@ -116,6 +116,18 @@ const Actions = styled.div`
   gap: 0.65rem;
 `;
 
+const Text = styled.p`
+  color: ${(p) => p.theme.colors.textSecondary};
+  font-size: 0.95rem;
+  line-height: 1.74;
+  margin: 0 0 1.1rem;
+
+  strong {
+    color: ${(p) => p.theme.colors.text};
+    font-weight: 600;
+  }
+`;
+
 const METRICS = [
   { value: "9/9, 100%", label: "Playwright E2E pass rate" },
   { value: "4 suite, ~30s", label: "smoke regression (6 workers)" },
@@ -136,9 +148,16 @@ const LearningBannerSection: React.FC = () => {
         transition={{ duration: 0.55 }}
       >
         <Head>
-          <Gauge size={26} strokeWidth={2} aria-hidden />
-          <Title>QA Pipeline / Activity Data</Title>
+          <BookOpen size={26} strokeWidth={2} aria-hidden />
+          <Title>연구 노트 / QA Pipeline</Title>
         </Head>
+
+        <Text>
+          새 스택을 만날 때마다 포트폴리오 안에 작은 실험으로 남깁니다.{" "}
+          <strong>Playwright E2E</strong>, contribution merge, ML baseline까지
+          같은 방식으로 쌓아 두었고, 아래 수치와 Technical Notes에서 구현과
+          실행 이력을 볼 수 있습니다.
+        </Text>
 
         <MetricGrid>
           {METRICS.map((m) => (
@@ -156,11 +175,11 @@ const LearningBannerSection: React.FC = () => {
         </StackRow>
 
         <Actions>
-          <MagneticButton variant="ghost" onClick={() => navigate("/qa")}>
-            <FlaskConical size={16} aria-hidden /> QA Dashboard
-          </MagneticButton>
           <MagneticButton onClick={() => navigate("/journal")}>
             Technical Notes <ArrowRight size={18} />
+          </MagneticButton>
+          <MagneticButton variant="ghost" onClick={() => navigate("/qa")}>
+            <FlaskConical size={16} aria-hidden /> QA Dashboard
           </MagneticButton>
         </Actions>
       </Card>

@@ -281,7 +281,7 @@ const GitHubActivitySection: React.FC = () => {
     <Section id="github-activity" dotCount={6} dotSeed={6} glow>
       <SectionTitle
         eyebrow="GitHub"
-        title="Contribution merge"
+        title="지속적인 학습과 기록"
         subtitle="GitHub API runtime + GitLab static export. 365-day grid, account-level breakdown."
       />
 
