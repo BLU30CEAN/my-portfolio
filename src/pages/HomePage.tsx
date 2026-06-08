@@ -4,10 +4,11 @@ import { useLocation } from "react-router-dom";
 import HeroSection from "./sections/HeroSection";
 import AboutSection from "./sections/AboutSection";
 import TechStackSection from "./sections/TechStackSection";
-import ReferencesSection from "./sections/ReferencesSection";
 import ProjectsSection from "./sections/ProjectsSection";
+import EngineeringSection from "./sections/EngineeringSection";
 import GitHubActivitySection from "./sections/GitHubActivitySection";
 import LearningBannerSection from "./sections/LearningBannerSection";
+import ReferencesSection from "./sections/ReferencesSection";
 import ContactSection from "./sections/ContactSection";
 import {
   scrollToHomeSection,
@@ -39,10 +40,11 @@ const HomePage: React.FC = () => {
       />
       <AboutSection />
       <TechStackSection />
-      <ReferencesSection />
       <ProjectsSection />
-      <GitHubActivitySection />
+      <EngineeringSection />
       <LearningBannerSection />
+      <GitHubActivitySection />
+      <ReferencesSection />
       <ContactSection email={email} />
     </>
   );
