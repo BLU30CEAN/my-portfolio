@@ -32,6 +32,9 @@
     "start": "set PORT=3100 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:export": "node scripts/run-e2e-and-export.mjs",
     "eject": "react-scripts eject",
     "verify:tech-icons": "node scripts/verify-tech-stack-icons.mjs",
     "export:gitlab": "node --use-system-ca scripts/export-gitlab-contributions.mjs",
@@ -57,6 +60,7 @@
     ]
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "gh-pages": "^6.3.0"
   }
 }

@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-06-08T11:54:40.594Z",
+  "runner": "playwright",
+  "environment": "local",
+  "summary": {
+    "total": 9,
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "durationMs": 29868,
+    "passRate": 100
+  },
+  "suites": [
+    {
+      "id": "home-spec",
+      "name": "Home",
+      "file": "home.spec.ts",
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 14028
+    },
+    {
+      "id": "journal-spec",
+      "name": "Growth Journal",
+      "file": "journal.spec.ts",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 5402
+    },
+    {
+      "id": "navigation-spec",
+      "name": "Navigation",
+      "file": "navigation.spec.ts",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 5641
+    },
+    {
+      "id": "qa-dashboard-spec",
+      "name": "QA Dashboard",
+      "file": "qa-dashboard.spec.ts",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 4797
+    }
+  ],
+  "defects": [],
+  "history": [
+    {
+      "runAt": "2026-06-08T11:54:40.594Z",
+      "total": 9,
+      "passed": 9,
+      "failed": 0,
+      "passRate": 100
+    },
+    {
+      "runAt": "2026-06-08T11:22:55.544Z",
+      "total": 9,
+      "passed": 9,
+      "failed": 0,
+      "passRate": 100
+    },
+    {
+      "runAt": "2026-06-08T00:00:00.000Z",
+      "total": 9,
+      "passed": 9,
+      "failed": 0,
+      "passRate": 100
+    }
+  ]
+}
