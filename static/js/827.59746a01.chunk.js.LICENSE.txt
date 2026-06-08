@@ -34,20 +34,6 @@
  */
 
 /**
- * Anime.js - scope - ESM
- * @version v4.4.1
- * @license MIT
- * @copyright 2026 - Julian Garnier
- */
-
-/**
- * Anime.js - text - ESM
- * @version v4.4.1
- * @license MIT
- * @copyright 2026 - Julian Garnier
- */
-
-/**
  * Anime.js - timeline - ESM
  * @version v4.4.1
  * @license MIT
