@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 import { animate, stagger } from "animejs";
 import {
@@ -8,84 +8,94 @@ import {
   Database,
   Server,
 } from "lucide-react";
+import { usePortfolioOpsData, type OpsFeedStatus } from "../../hooks/usePortfolioOpsData";
 
-type KpiKey = "error" | "p95" | "db" | "uptime";
+type KpiKey = "passRate" | "runDuration" | "activity" | "defects";
 
 type KpiDef = {
   key: KpiKey;
   label: string;
-  target: number;
   unit: string;
   decimals: number;
   icon: React.ElementType;
   accent: string;
+  pick: (kpis: ReturnType<typeof usePortfolioOpsData>["kpis"]) => number | null;
+  format?: (v: number) => string;
 };
 
 const KPIS: KpiDef[] = [
   {
-    key: "error",
-    label: "에러율",
-    target: 0.28,
+    key: "passRate",
+    label: "E2E pass rate",
     unit: "%",
-    decimals: 2,
-    icon: AlertTriangle,
+    decimals: 0,
+    icon: CheckCircle2,
     accent: "#43e97b",
+    pick: (k) => k.passRate,
   },
   {
-    key: "p95",
-    label: "p95 지연",
-    target: 142,
-    unit: "ms",
+    key: "runDuration",
+    label: "E2E run time",
+    unit: "",
     decimals: 0,
     icon: Activity,
     accent: "#4facfe",
+    pick: (k) => k.runDuration,
+    format: (v) => (v < 1000 ? `${Math.round(v)}ms` : `${(v / 1000).toFixed(1)}s`),
   },
   {
-    key: "db",
-    label: "DB Pool",
-    target: 34,
-    unit: "%",
+    key: "activity",
+    label: "Dev activity (365d)",
+    unit: "",
     decimals: 0,
     icon: Database,
     accent: "#667eea",
+    pick: (k) => (k.activityTotal > 0 ? k.activityTotal : null),
+    format: (v) => v.toLocaleString("en-US"),
   },
   {
-    key: "uptime",
-    label: "가용성",
-    target: 99.94,
-    unit: "%",
-    decimals: 2,
-    icon: Server,
+    key: "defects",
+    label: "Open defects",
+    unit: "",
+    decimals: 0,
+    icon: AlertTriangle,
     accent: "#f093fb",
+    pick: (k) => k.openDefects,
+    format: (v) => String(Math.round(v)),
   },
 ];
 
-const SERVICES = [
-  { name: "spring-boot-api", port: "8080", status: "healthy" as const },
-  { name: "fastapi-ml", port: "8000", status: "healthy" as const },
-  { name: "postgresql-primary", port: "5432", status: "healthy" as const },
-];
+function buildSparklinePath(values: number[], width = 200, height = 64): string {
+  if (values.length === 0) return `M4 ${height / 2} L196 ${height / 2}`;
+  if (values.length === 1) return `M4 ${height / 2} L196 ${height / 2}`;
 
-const ALERTS = [
-  {
-    level: "resolved" as const,
-    msg: "JWT refresh 요청 급증 — 자동 스케일 완료",
-    ago: "2h",
-  },
-  {
-    level: "info" as const,
-    msg: "Jenkins deploy #1842 — production",
-    ago: "5h",
-  },
-  {
-    level: "watch" as const,
-    msg: "p95 지연 180ms 초과 — 쿼리 인덱스 검토",
-    ago: "1d",
-  },
-];
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const range = max - min || 1;
+  const padY = 10;
+  const usable = height - padY * 2;
 
-const SPARKLINE =
-  "M4 52 L28 44 L52 38 L76 42 L100 28 L124 32 L148 18 L172 22 L196 12";
+  return values
+    .map((v, i) => {
+      const x = 4 + (i / (values.length - 1)) * 192;
+      const y = padY + usable - ((v - min) / range) * usable;
+      return `${i === 0 ? "M" : "L"}${x.toFixed(1)} ${y.toFixed(1)}`;
+    })
+    .join(" ");
+}
+
+function feedStatusLabel(status: OpsFeedStatus): string {
+  switch (status) {
+    case "loading":
+      return "sync";
+    case "healthy":
+      return "ok";
+    case "degraded":
+      return "warn";
+    case "offline":
+      return "down";
+  }
+}
 
 const Panel = styled.div`
   position: relative;
@@ -151,13 +161,13 @@ const ChromeTitle = styled.div`
   font-family: ui-monospace, "Cascadia Code", monospace;
 `;
 
-const Live = styled.span`
+const Live = styled.span<{ $muted?: boolean }>`
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   font-size: 0.72rem;
   font-weight: 700;
-  color: ${(p) => p.theme.colors.success};
+  color: ${(p) => (p.$muted ? p.theme.colors.textMuted : p.theme.colors.success)};
   text-transform: uppercase;
   letter-spacing: 0.1em;
 
@@ -167,8 +177,12 @@ const Live = styled.span`
     height: 7px;
     border-radius: 50%;
     background: currentColor;
-    box-shadow: 0 0 0 3px ${(p) => p.theme.colors.success}30;
-    animation: pulse 2s ease-in-out infinite;
+    box-shadow: 0 0 0 3px
+      ${(p) =>
+        p.$muted
+          ? `${p.theme.colors.textMuted}20`
+          : `${p.theme.colors.success}30`};
+    animation: ${(p) => (p.$muted ? "none" : "pulse 2s ease-in-out infinite")};
   }
 
   @keyframes pulse {
@@ -343,13 +357,20 @@ const ServicePort = styled.span`
   font-size: 0.7rem;
 `;
 
-const StatusPill = styled.span`
+const StatusPill = styled.span<{ $status: OpsFeedStatus }>`
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
   font-size: 0.68rem;
   font-weight: 700;
-  color: ${(p) => p.theme.colors.success};
+  color: ${(p) =>
+    p.$status === "healthy"
+      ? p.theme.colors.success
+      : p.$status === "degraded"
+        ? "#febc2e"
+        : p.$status === "offline"
+          ? p.theme.colors.danger
+          : p.theme.colors.textMuted};
   text-transform: uppercase;
   letter-spacing: 0.06em;
 `;
@@ -370,16 +391,16 @@ const AlertRow = styled.div`
   }
 `;
 
-const AlertDot = styled.span<{ $level: "resolved" | "info" | "watch" }>`
+const AlertDot = styled.span<{ $level: "ok" | "info" | "warn" }>`
   flex-shrink: 0;
   width: 7px;
   height: 7px;
   border-radius: 50%;
   margin-top: 0.35rem;
   background: ${(p) =>
-    p.$level === "resolved"
+    p.$level === "ok"
       ? p.theme.colors.success
-      : p.$level === "watch"
+      : p.$level === "warn"
         ? "#febc2e"
         : p.theme.colors.primary};
 `;
@@ -391,24 +412,53 @@ const AlertAgo = styled.span`
   margin-left: auto;
 `;
 
-function formatKpi(value: number, decimals: number) {
-  return decimals > 0 ? value.toFixed(decimals) : String(Math.round(value));
+const EmptyHint = styled.p`
+  margin: 0;
+  font-size: 0.76rem;
+  color: ${(p) => p.theme.colors.textMuted};
+  line-height: 1.5;
+`;
+
+function formatKpiDisplay(
+  value: number | null,
+  kpi: KpiDef,
+): { main: string; unit: string } {
+  if (value == null) return { main: "—", unit: "" };
+  if (kpi.format) return { main: kpi.format(value), unit: "" };
+  const main =
+    kpi.decimals > 0 ? value.toFixed(kpi.decimals) : String(Math.round(value));
+  return { main, unit: kpi.unit };
 }
 
 const OpsDashboard: React.FC = () => {
   const rootRef = useRef<HTMLDivElement>(null);
   const sparkRef = useRef<SVGPathElement>(null);
+  const ops = usePortfolioOpsData();
   const [values, setValues] = useState<Record<KpiKey, number>>({
-    error: 0,
-    p95: 0,
-    db: 0,
-    uptime: 0,
+    passRate: 0,
+    runDuration: 0,
+    activity: 0,
+    defects: 0,
   });
   const [animated, setAnimated] = useState(false);
 
+  const targets = useMemo(() => {
+    return {
+      passRate: ops.kpis.passRate ?? 0,
+      runDuration: ops.kpis.runDuration ?? 0,
+      activity: ops.kpis.activityTotal ?? 0,
+      defects: ops.kpis.openDefects ?? 0,
+    };
+  }, [ops.kpis]);
+
+  const sparkline = useMemo(
+    () => buildSparklinePath(ops.trend.values),
+    [ops.trend.values],
+  );
+
   useEffect(() => {
     const root = rootRef.current;
-    if (!root) return;
+    if (!root || ops.loading || animated) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -417,12 +467,20 @@ const OpsDashboard: React.FC = () => {
         observer.disconnect();
 
         KPIS.forEach((kpi) => {
+          const target = targets[kpi.key];
           const state = { v: 0 };
           animate(state, {
-            v: kpi.target,
+            v: target,
             duration: 1400,
             ease: "outExpo",
-            delay: kpi.key === "error" ? 0 : kpi.key === "p95" ? 80 : kpi.key === "db" ? 160 : 240,
+            delay:
+              kpi.key === "passRate"
+                ? 0
+                : kpi.key === "runDuration"
+                  ? 80
+                  : kpi.key === "activity"
+                    ? 160
+                    : 240,
             onUpdate: () => {
               setValues((prev) => ({ ...prev, [kpi.key]: state.v }));
             },
@@ -448,7 +506,7 @@ const OpsDashboard: React.FC = () => {
         });
 
         const path = sparkRef.current;
-        if (path) {
+        if (path && ops.trend.values.length > 1) {
           const len = path.getTotalLength();
           path.style.strokeDasharray = `${len}`;
           path.style.strokeDashoffset = `${len}`;
@@ -465,7 +523,7 @@ const OpsDashboard: React.FC = () => {
 
     observer.observe(root);
     return () => observer.disconnect();
-  }, [animated]);
+  }, [ops.loading, animated, targets, ops.trend.values.length]);
 
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const r = e.currentTarget.getBoundingClientRect();
@@ -476,39 +534,53 @@ const OpsDashboard: React.FC = () => {
   };
 
   return (
-    <Panel ref={rootRef} onMouseMove={onMove} aria-label="운영 모니터링 대시보드 데모">
+    <Panel
+      ref={rootRef}
+      onMouseMove={onMove}
+      aria-label="포트폴리오 실시간 데이터 대시보드"
+    >
       <Chrome>
         <Dots>
           <span />
           <span />
           <span />
         </Dots>
-        <ChromeTitle>ops-console / production</ChromeTitle>
-        <Live>live</Live>
+        <ChromeTitle>portfolio-telemetry / live feeds</ChromeTitle>
+        <Live $muted={ops.loading}>{ops.loading ? "sync" : "live"}</Live>
       </Chrome>
 
       <Body>
         <KpiGrid>
-          {KPIS.map((kpi) => (
-            <KpiCard key={kpi.key} data-kpi>
-              <KpiTop>
-                <KpiLabel>{kpi.label}</KpiLabel>
-                <KpiIcon $color={kpi.accent}>
-                  <kpi.icon size={14} strokeWidth={2.25} aria-hidden />
-                </KpiIcon>
-              </KpiTop>
-              <KpiValue>
-                {formatKpi(values[kpi.key], kpi.decimals)}
-                <span className="unit">{kpi.unit}</span>
-              </KpiValue>
-            </KpiCard>
-          ))}
+          {KPIS.map((kpi) => {
+            const raw = kpi.pick(ops.kpis);
+            const display =
+              animated && raw != null
+                ? formatKpiDisplay(values[kpi.key], kpi)
+                : formatKpiDisplay(raw, kpi);
+
+            return (
+              <KpiCard key={kpi.key} data-kpi>
+                <KpiTop>
+                  <KpiLabel>{kpi.label}</KpiLabel>
+                  <KpiIcon $color={kpi.accent}>
+                    <kpi.icon size={14} strokeWidth={2.25} aria-hidden />
+                  </KpiIcon>
+                </KpiTop>
+                <KpiValue>
+                  {display.main}
+                  {display.unit ? (
+                    <span className="unit">{display.unit}</span>
+                  ) : null}
+                </KpiValue>
+              </KpiCard>
+            );
+          })}
         </KpiGrid>
 
         <ChartBlock>
           <ChartHead>
-            <ChartTitle>요청 처리량 (24h)</ChartTitle>
-            <ChartMeta>+12.4% vs yesterday</ChartMeta>
+            <ChartTitle>E2E pass rate trend</ChartTitle>
+            <ChartMeta>{ops.trend.meta}</ChartMeta>
           </ChartHead>
           <SparkSvg viewBox="0 0 200 64" preserveAspectRatio="none">
             <defs>
@@ -521,37 +593,43 @@ const OpsDashboard: React.FC = () => {
                 <stop offset="100%" stopColor="#667eea" stopOpacity="0" />
               </linearGradient>
             </defs>
-            <SparkArea d={`${SPARKLINE} L196 64 L4 64 Z`} />
-            <SparkPath ref={sparkRef} d={SPARKLINE} />
+            <SparkArea d={`${sparkline} L196 64 L4 64 Z`} />
+            <SparkPath ref={sparkRef} d={sparkline} />
           </SparkSvg>
         </ChartBlock>
 
         <Split>
           <SubPanel>
-            <SubTitle>서비스 상태</SubTitle>
-            {SERVICES.map((svc) => (
-              <ServiceRow key={svc.name} data-row>
+            <SubTitle>Data feeds</SubTitle>
+            {ops.feeds.map((feed) => (
+              <ServiceRow key={feed.id} data-row>
                 <div>
-                  <ServiceName>{svc.name}</ServiceName>
-                  <ServicePort> :{svc.port}</ServicePort>
+                  <ServiceName>{feed.name}</ServiceName>
+                  <ServicePort> {feed.detail}</ServicePort>
                 </div>
-                <StatusPill>
-                  <CheckCircle2 size={11} aria-hidden />
-                  {svc.status}
+                <StatusPill $status={feed.status}>
+                  <Server size={11} aria-hidden />
+                  {feedStatusLabel(feed.status)}
                 </StatusPill>
               </ServiceRow>
             ))}
           </SubPanel>
 
           <SubPanel>
-            <SubTitle>최근 알림</SubTitle>
-            {ALERTS.map((a) => (
-              <AlertRow key={a.msg} data-row>
-                <AlertDot $level={a.level} />
-                <span>{a.msg}</span>
-                <AlertAgo>{a.ago}</AlertAgo>
-              </AlertRow>
-            ))}
+            <SubTitle>Recent events</SubTitle>
+            {ops.events.length === 0 ? (
+              <EmptyHint>
+                Run <code>npm run test:e2e:export</code> to populate QA history.
+              </EmptyHint>
+            ) : (
+              ops.events.map((event) => (
+                <AlertRow key={`${event.message}-${event.ago}`} data-row>
+                  <AlertDot $level={event.level} />
+                  <span>{event.message}</span>
+                  <AlertAgo>{event.ago}</AlertAgo>
+                </AlertRow>
+              ))
+            )}
           </SubPanel>
         </Split>
       </Body>

@@ -152,8 +152,8 @@ const PILLARS = [
   {
     icon: LineChart,
     title: "관측 / QA",
-    text: "Datadog APM + GA/GTM 퍼널. Playwright 9/9 smoke, /qa JSON 리포트.",
-    stack: ["Datadog", "Playwright", "GA"],
+    text: "Datadog APM + GA/GTM 퍼널. E2E export JSON, /qa 대시보드 연동.",
+    stack: ["Datadog", "GA", "Jest"],
   },
 ] as const;
 
@@ -163,7 +163,7 @@ const EngineeringSection: React.FC = () => {
       <SectionTitle
         eyebrow="Engineering"
         title="프론트만이 아닌, 운영까지 담당하는 엔지니어링"
-        subtitle="React/TypeScript로 UX를 다듬고, Java/Python 백엔드, DB, 관측, Playwright 회귀까지 한 제품 안에서 이어 붙입니다."
+        subtitle="React/TypeScript로 UX를 다듬고, Java/Python 백엔드, DB, 관측, E2E 회귀까지 한 제품 안에서 이어 붙입니다."
       />
 
       <Grid>
@@ -177,7 +177,7 @@ const EngineeringSection: React.FC = () => {
             화면을 예쁘게 그리는 것과, 장애가 났을 때 원인을 좁히는 것은
             같은 맥락이라고 봅니다. 프론트 인터랙션(anime.js, Framer Motion)과
             백엔드/DB/관측을 함께 다루며, API p95 <strong>180ms</strong>, 배포
-            자동화 <strong>95%</strong>, Playwright <strong>9/9</strong>로
+            자동화 <strong>95%</strong>, E2E pass rate <strong>100%</strong>로
             운영 KPI와 회귀를 맞춥니다.
           </Lead>
 
@@ -220,7 +220,7 @@ const EngineeringSection: React.FC = () => {
               style={{ verticalAlign: "-2px", marginRight: 4 }}
               aria-hidden
             />
-            KPI demo UI — anime.js v4 sparkline animation (sample metrics)
+            portfolio-telemetry — qa-report, GitHub API, GitLab export 실데이터
           </Caption>
         </DashboardWrap>
       </Grid>
