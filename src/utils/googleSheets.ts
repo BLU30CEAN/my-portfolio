@@ -13,6 +13,19 @@ export type VisitPayload = {
   userAgent: string;
   sessionId: string;
   viewport: string;
+  clientIp: string;
+};
+
+export type QAReportSheetPayload = {
+  generatedAt: string;
+  total: number;
+  passed: number;
+  failed: number;
+  skipped: number;
+  passRate: number;
+  openDefects: number;
+  environment: string;
+  durationMs: number;
 };
 
 const GOOGLE_SCRIPT_URL = process.env.REACT_APP_GOOGLE_SCRIPT_WEBHOOK_URL || "";
@@ -83,6 +96,17 @@ export const trackVisitToGoogleSheets = async (
   });
 };
 
+/** Playwright export 후 QA 요약 — Google Sheets qa_runs 시트에 1행 append */
+export const syncQAReportToGoogleSheets = async (
+  payload: QAReportSheetPayload,
+): Promise<boolean> => {
+  if (!GOOGLE_SCRIPT_URL) return false;
+  return postToGoogleScript({
+    action: "syncQAReport",
+    data: payload,
+  });
+};
+
 /* ============================================================================
  * Google Apps Script (Code.gs) — Sheet 저장 + Gmail 알림 + Telegram 알림 통합본
  * ----------------------------------------------------------------------------
@@ -96,6 +120,8 @@ export const trackVisitToGoogleSheets = async (
  *     - SHEET_CONTACT   : Contact 시트 이름 (예: contact)
  *     - SHEET_GUESTBOOK : 방명록 시트 이름 (예: guestbook)
  *     - SHEET_VISITS    : 방문 로그 시트 이름 (예: visits)
+ *     - SHEET_QA        : QA 실행 이력 (예: qa_runs)
+ *     - SHEET_STATS     : 요약 카운터 (예: stats) — total_visits 등
  *  4) 배포 → 새 배포 → 유형 "웹 앱" → 액세스 권한 "모든 사용자".
  *  5) 발급된 /exec URL을 .env 의 REACT_APP_GOOGLE_SCRIPT_WEBHOOK_URL 에 입력.
  *
@@ -115,6 +141,8 @@ export const trackVisitToGoogleSheets = async (
  *     const SHEET_CONTACT   = props.getProperty('SHEET_CONTACT') || 'contact';
  *     const SHEET_GUESTBOOK = props.getProperty('SHEET_GUESTBOOK') || 'guestbook';
  *     const SHEET_VISITS    = props.getProperty('SHEET_VISITS') || 'visits';
+ *     const SHEET_QA        = props.getProperty('SHEET_QA') || 'qa_runs';
+ *     const SHEET_STATS     = props.getProperty('SHEET_STATS') || 'stats';
  *
  *     const ss = SpreadsheetApp.getActiveSpreadsheet();
  *     const body = JSON.parse(e.postData.contents);
@@ -124,13 +152,38 @@ export const trackVisitToGoogleSheets = async (
  *       const d = body.data || {};
  *       const sheet = ss.getSheetByName(SHEET_VISITS) || ss.insertSheet(SHEET_VISITS);
  *       if (sheet.getLastRow() === 0) {
- *         sheet.appendRow(['timestamp', 'path', 'referrer', 'userAgent', 'sessionId', 'viewport']);
+ *         sheet.appendRow(['timestamp', 'path', 'referrer', 'userAgent', 'sessionId', 'viewport', 'clientIp']);
  *       }
  *       sheet.appendRow([
  *         d.timestamp || new Date().toISOString(),
  *         d.path || '', d.referrer || '', d.userAgent || '',
- *         d.sessionId || '', d.viewport || '',
+ *         d.sessionId || '', d.viewport || '', d.clientIp || '',
  *       ]);
+ *       bumpStat_(ss, SHEET_STATS, 'total_visits', 1, true);
+ *       setStat_(ss, SHEET_STATS, 'last_visit_at', d.timestamp || new Date().toISOString());
+ *       setStat_(ss, SHEET_STATS, 'last_visit_ip', d.clientIp || '');
+ *       return json_({ success: true });
+ *     }
+ *
+ *     // ---------- QA 리포트 동기화 (npm run test:e2e:export) ----------
+ *     if (body.action === 'syncQAReport') {
+ *       const d = body.data || {};
+ *       const sheet = ss.getSheetByName(SHEET_QA) || ss.insertSheet(SHEET_QA);
+ *       if (sheet.getLastRow() === 0) {
+ *         sheet.appendRow([
+ *           'generatedAt', 'total', 'passed', 'failed', 'skipped',
+ *           'passRate', 'openDefects', 'environment', 'durationMs',
+ *         ]);
+ *       }
+ *       sheet.appendRow([
+ *         d.generatedAt || new Date().toISOString(),
+ *         d.total || 0, d.passed || 0, d.failed || 0, d.skipped || 0,
+ *         d.passRate || 0, d.openDefects || 0, d.environment || '', d.durationMs || 0,
+ *       ]);
+ *       setStat_(ss, SHEET_STATS, 'qa_pass_rate', d.passRate || 0);
+ *       setStat_(ss, SHEET_STATS, 'qa_total_tests', d.total || 0);
+ *       setStat_(ss, SHEET_STATS, 'qa_open_defects', d.openDefects || 0);
+ *       setStat_(ss, SHEET_STATS, 'qa_last_run', d.generatedAt || new Date().toISOString());
  *       return json_({ success: true });
  *     }
  *
@@ -204,6 +257,39 @@ export const trackVisitToGoogleSheets = async (
  * }
  *
  * function doGet() { return json_({ status: 'OK' }); }
+ *
+ * function ensureStatsSheet_(ss, name) {
+ *   var sheet = ss.getSheetByName(name) || ss.insertSheet(name);
+ *   if (sheet.getLastRow() === 0) {
+ *     sheet.appendRow(['metric', 'value']);
+ *   }
+ *   return sheet;
+ * }
+ *
+ * function setStat_(ss, sheetName, key, value) {
+ *   var sheet = ensureStatsSheet_(ss, sheetName);
+ *   var data = sheet.getDataRange().getValues();
+ *   for (var i = 1; i < data.length; i++) {
+ *     if (data[i][0] === key) {
+ *       sheet.getRange(i + 1, 2).setValue(value);
+ *       return;
+ *     }
+ *   }
+ *   sheet.appendRow([key, value]);
+ * }
+ *
+ * function bumpStat_(ss, sheetName, key, delta, isNumber) {
+ *   var sheet = ensureStatsSheet_(ss, sheetName);
+ *   var data = sheet.getDataRange().getValues();
+ *   for (var i = 1; i < data.length; i++) {
+ *     if (data[i][0] === key) {
+ *       var cur = Number(data[i][1] || 0);
+ *       sheet.getRange(i + 1, 2).setValue(cur + Number(delta || 0));
+ *       return;
+ *     }
+ *   }
+ *   sheet.appendRow([key, isNumber ? Number(delta || 0) : delta]);
+ * }
  *
  * function sendEmail_(to, opts) {
  *   if (!to) return;

@@ -5,6 +5,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { loadEnvFiles, resolveWebhookUrl } from "./load-env.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
@@ -126,7 +127,35 @@ function buildDefects(tests, runAt, previous = []) {
   });
 }
 
-function main() {
+async function syncToGoogleSheets(payload) {
+  const url = resolveWebhookUrl();
+  if (!url) {
+    console.warn(
+      "[export-qa-report] GOOGLE_SCRIPT_WEBHOOK_URL 미설정 — Sheets 동기화 스킵",
+    );
+    return;
+  }
+
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "syncQAReport", data: payload }),
+    });
+    const text = await res.text();
+    if (!res.ok) {
+      console.warn("[export-qa-report] Sheets sync HTTP", res.status, text);
+      return;
+    }
+    console.log("[export-qa-report] Sheets qa_runs + stats 동기화 완료");
+  } catch (err) {
+    console.warn("[export-qa-report] Sheets sync failed:", err);
+  }
+}
+
+async function main() {
+  loadEnvFiles();
+
   if (!fs.existsSync(INPUT)) {
     console.error(`[export-qa-report] missing ${INPUT} — run playwright test first`);
     process.exit(1);
@@ -186,6 +215,19 @@ function main() {
   console.log(
     `[export-qa-report] wrote ${OUTPUT} — ${passed}/${total} passed (${passRate}%)`,
   );
+
+  const openDefects = payload.defects.filter((d) => d.status === "open").length;
+  await syncToGoogleSheets({
+    generatedAt: runAt,
+    total,
+    passed,
+    failed,
+    skipped,
+    passRate,
+    openDefects,
+    environment: payload.environment,
+    durationMs,
+  });
 }
 
 main();

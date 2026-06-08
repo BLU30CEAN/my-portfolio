@@ -10,6 +10,7 @@ test.describe("QA Dashboard", () => {
     await expect(page.getByTestId("qa-total-tests")).toBeVisible();
     await expect(page.getByTestId("qa-open-defects")).toBeVisible();
     await expect(page.getByTestId("qa-suite-table")).toBeVisible();
+    await expect(page.getByTestId("qa-unlock-form")).toBeVisible();
   });
 
   test("shows defect log section", async ({ page }) => {

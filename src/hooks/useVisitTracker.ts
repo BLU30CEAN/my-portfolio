@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { fetchClientIp } from "../utils/clientIp";
 import {
   trackVisitToGoogleSheets,
   type VisitPayload,
@@ -36,6 +37,7 @@ function buildVisitPayload(path: string): VisitPayload {
     userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "",
     sessionId: getOrCreateSessionId(),
     viewport,
+    clientIp: "",
   };
 }
 
@@ -62,9 +64,14 @@ export function useVisitTracker() {
       /* private mode 등 — 중복 전송 가능하나 기록 자체는 시도 */
     }
 
-    const payload = buildVisitPayload(currentPath(location));
+    void (async () => {
+      const ip = await fetchClientIp();
+      const payload: VisitPayload = {
+        ...buildVisitPayload(currentPath(location)),
+        clientIp: ip,
+      };
 
-    void trackVisitToGoogleSheets(payload).then((ok) => {
+      const ok = await trackVisitToGoogleSheets(payload);
       if (process.env.NODE_ENV === "development") {
         console.info(
           ok
@@ -73,7 +80,7 @@ export function useVisitTracker() {
           payload,
         );
       }
-    });
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- 세션 최초 1회만
   }, []);
 }

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -9,9 +9,13 @@ import {
   ClipboardList,
   Clock,
   FlaskConical,
+  Lock,
+  Unlock,
   XCircle,
 } from "lucide-react";
 import { useQAReport } from "../hooks/useQAReport";
+import { useQAUnlock } from "../hooks/useQAUnlock";
+import { maskReportForView } from "../utils/qaMasking";
 import type { DefectSeverity, DefectStatus } from "../types/qaReport";
 
 const PageWrap = styled.div`
@@ -225,6 +229,63 @@ const Empty = styled.div`
   font-size: 0.88rem;
 `;
 
+const UnlockBar = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1.25rem;
+  padding: 0.9rem 1rem;
+  border-radius: ${(p) => p.theme.radii.lg};
+  border: 1px solid ${(p) => p.theme.colors.border};
+  background: ${(p) => p.theme.colors.surface};
+`;
+
+const PwInput = styled.input`
+  flex: 1;
+  min-width: 180px;
+  padding: 0.55rem 0.75rem;
+  border-radius: ${(p) => p.theme.radii.sm};
+  border: 1px solid ${(p) => p.theme.colors.border};
+  background: ${(p) => p.theme.colors.background};
+  color: ${(p) => p.theme.colors.text};
+  font-family: inherit;
+  font-size: 0.88rem;
+`;
+
+const UnlockBtn = styled.button`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: ${(p) => p.theme.radii.sm};
+  border: 1px solid ${(p) => p.theme.colors.borderStrong};
+  background: ${(p) => p.theme.colors.primarySoft};
+  color: ${(p) => p.theme.colors.primary};
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: inherit;
+
+  &:hover {
+    border-color: ${(p) => p.theme.colors.primary};
+  }
+`;
+
+const UnlockHint = styled.p`
+  width: 100%;
+  margin: 0;
+  font-size: 0.78rem;
+  color: ${(p) => p.theme.colors.textMuted};
+`;
+
+const UnlockError = styled.p`
+  width: 100%;
+  margin: 0;
+  font-size: 0.78rem;
+  color: ${(p) => p.theme.colors.danger};
+`;
+
 const MetaRow = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -259,6 +320,14 @@ function formatWhen(iso: string) {
 function QADashboardPage() {
   const navigate = useNavigate();
   const { data, loading, error } = useQAReport();
+  const { unlocked, unlock, lock, error: unlockError, passwordConfigured } =
+    useQAUnlock();
+  const [pw, setPw] = useState("");
+
+  const viewData = useMemo(
+    () => (data ? maskReportForView(data, unlocked) : null),
+    [data, unlocked],
+  );
 
   const openDefects = useMemo(
     () => data?.defects.filter((d) => d.status === "open") ?? [],
@@ -266,7 +335,7 @@ function QADashboardPage() {
   );
 
   const historyBars = useMemo(() => {
-    const hist = data?.history ?? [];
+    const hist = viewData?.history ?? [];
     const max = Math.max(1, ...hist.map((h) => h.total));
     return hist
       .slice()
@@ -276,7 +345,12 @@ function QADashboardPage() {
         ...h,
         heightPct: Math.max(12, Math.round((h.passed / max) * 100)),
       }));
-  }, [data]);
+  }, [viewData]);
+
+  const handleUnlock = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (unlock(pw)) setPw("");
+  };
 
   return (
     <PageWrap>
@@ -287,14 +361,58 @@ function QADashboardPage() {
           whileTap={{ scale: 0.98 }}
         >
           <ArrowLeft size={16} aria-hidden />
-          학습 노트로
+          연구 노트로
         </BackBtn>
 
         <Title>QA 대시보드</Title>
         <Lead>
-          Playwright smoke: 4 suites, 9 tests, static JSON export. Pass rate,
-          suite duration, defect severity, run history — single view.
+          공개 영역은 Pass Rate·건수만 표시합니다. 상세 결함·파일 경로·실행
+          환경은 관리자 비밀번호 해제 후 조회할 수 있습니다. 동일 요약은 Google
+          Sheets에도 기록됩니다.
         </Lead>
+
+        <UnlockBar data-testid="qa-unlock-form">
+          {unlocked ? (
+            <>
+              <UnlockHint>관리자 모드 — 상세 데이터 표시 중</UnlockHint>
+              <UnlockBtn type="button" onClick={lock}>
+                <Lock size={14} aria-hidden /> 다시 마스킹
+              </UnlockBtn>
+            </>
+          ) : (
+            <form
+              onSubmit={handleUnlock}
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "0.65rem",
+                width: "100%",
+                alignItems: "center",
+              }}
+            >
+              <UnlockHint>
+                상세 로그는 마스킹됨 — 관리자 비밀번호로 해제
+              </UnlockHint>
+              <PwInput
+                type="password"
+                placeholder="관리자 비밀번호"
+                value={pw}
+                onChange={(e) => setPw(e.target.value)}
+                autoComplete="current-password"
+                disabled={!passwordConfigured}
+              />
+              <UnlockBtn type="submit" disabled={!passwordConfigured || !pw}>
+                <Unlock size={14} aria-hidden /> 해제
+              </UnlockBtn>
+              {unlockError && <UnlockError>{unlockError}</UnlockError>}
+              {!passwordConfigured && (
+                <UnlockError>
+                  .env 에 REACT_APP_QA_PW 값을 확인하세요
+                </UnlockError>
+              )}
+            </form>
+          )}
+        </UnlockBar>
 
         {loading && <Empty>리포트 로딩 중…</Empty>}
         {error && (
@@ -304,20 +422,24 @@ function QADashboardPage() {
           </Empty>
         )}
 
-        {data && (
+        {viewData && data && (
           <>
             <MetaRow>
               <span>
-                마지막 실행: <strong>{formatWhen(data.generatedAt)}</strong>
+                마지막 실행:{" "}
+                <strong>
+                  {unlocked ? formatWhen(data.generatedAt) : "●●●"}
+                </strong>
               </span>
               <span>
                 Runner: <strong>{data.runner}</strong>
               </span>
               <span>
-                Env: <strong>{data.environment}</strong>
+                Env: <strong>{viewData.environment}</strong>
               </span>
               <span>
-                Duration: <strong>{formatDuration(data.summary.durationMs)}</strong>
+                Duration:{" "}
+                <strong>{formatDuration(data.summary.durationMs)}</strong>
               </span>
             </MetaRow>
 
@@ -366,7 +488,7 @@ function QADashboardPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.suites.map((s) => (
+                    {viewData.suites.map((s) => (
                       <tr key={s.id}>
                         <Td>
                           <Mono>{s.file.replace(/^e2e\//, "")}</Mono>
@@ -403,7 +525,11 @@ function QADashboardPage() {
                       key={h.runAt}
                       $h={h.heightPct}
                       $failed={h.failed > 0}
-                      title={`${formatWhen(h.runAt)} — ${h.passRate}%`}
+                      title={
+                        unlocked
+                          ? `${formatWhen(h.runAt)} — ${h.passRate}%`
+                          : `run — ${h.passRate}%`
+                      }
                     />
                   ))}
                 </HistoryBars>
@@ -422,7 +548,7 @@ function QADashboardPage() {
                 />
                 Defect Log
               </PanelHead>
-              {data.defects.length === 0 ? (
+              {viewData.defects.length === 0 ? (
                 <Empty>
                   <CheckCircle2
                     size={16}
@@ -443,7 +569,7 @@ function QADashboardPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.defects.map((d) => (
+                    {viewData.defects.map((d) => (
                       <tr key={d.id}>
                         <Td>
                           <Badge $tone={d.status}>
@@ -474,7 +600,9 @@ function QADashboardPage() {
                         <Td>
                           <Mono>{d.file.replace(/^e2e\//, "")}</Mono>
                         </Td>
-                        <Td>{formatWhen(d.lastSeen)}</Td>
+                        <Td>
+                          {unlocked ? formatWhen(d.lastSeen) : "●●●"}
+                        </Td>
                       </tr>
                     ))}
                   </tbody>
