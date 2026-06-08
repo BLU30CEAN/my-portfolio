@@ -6,15 +6,19 @@ interface ContactFormData {
   timestamp: string;
 }
 
+export type VisitPayload = {
+  timestamp: string;
+  path: string;
+  referrer: string;
+  userAgent: string;
+  sessionId: string;
+  viewport: string;
+};
+
 const GOOGLE_SCRIPT_URL = process.env.REACT_APP_GOOGLE_SCRIPT_WEBHOOK_URL || "";
 
-export const submitToGoogleSheets = async (
-  formData: ContactFormData
-): Promise<boolean> => {
+const postToGoogleScript = async (body: unknown): Promise<boolean> => {
   if (!GOOGLE_SCRIPT_URL) {
-    console.warn(
-      "[googleSheets] REACT_APP_GOOGLE_SCRIPT_WEBHOOK_URL 미설정. 폴백 저장 스킵."
-    );
     return false;
   }
 
@@ -25,10 +29,7 @@ export const submitToGoogleSheets = async (
       headers: {
         "Content-Type": "text/plain;charset=utf-8",
       },
-      body: JSON.stringify({
-        action: "submitContact",
-        data: formData,
-      }),
+      body: JSON.stringify(body),
     });
 
     if (response.type === "opaque") {
@@ -42,9 +43,44 @@ export const submitToGoogleSheets = async (
     const result = await response.json();
     return result.success === true;
   } catch (error) {
-    console.error("Error submitting to Google Sheets:", error);
+    console.error("[googleSheets] POST failed:", error);
     return false;
   }
+};
+
+export const submitToGoogleSheets = async (
+  formData: ContactFormData,
+): Promise<boolean> => {
+  if (!GOOGLE_SCRIPT_URL) {
+    console.warn(
+      "[googleSheets] REACT_APP_GOOGLE_SCRIPT_WEBHOOK_URL 미설정. 폴백 저장 스킵.",
+    );
+    return false;
+  }
+
+  return postToGoogleScript({
+    action: "submitContact",
+    data: formData,
+  });
+};
+
+/** 사이트 진입 시 세션당 1회 — Google Sheets visits 시트에 기록 */
+export const trackVisitToGoogleSheets = async (
+  payload: VisitPayload,
+): Promise<boolean> => {
+  if (!GOOGLE_SCRIPT_URL) {
+    if (process.env.NODE_ENV === "development") {
+      console.warn(
+        "[googleSheets] REACT_APP_GOOGLE_SCRIPT_WEBHOOK_URL 미설정. 방문 기록 스킵.",
+      );
+    }
+    return false;
+  }
+
+  return postToGoogleScript({
+    action: "trackVisit",
+    data: payload,
+  });
 };
 
 /* ============================================================================
@@ -59,6 +95,7 @@ export const submitToGoogleSheets = async (
  *     - TG_CHAT_ID      : 본인과 봇의 1:1 chat_id (선택)
  *     - SHEET_CONTACT   : Contact 시트 이름 (예: contact)
  *     - SHEET_GUESTBOOK : 방명록 시트 이름 (예: guestbook)
+ *     - SHEET_VISITS    : 방문 로그 시트 이름 (예: visits)
  *  4) 배포 → 새 배포 → 유형 "웹 앱" → 액세스 권한 "모든 사용자".
  *  5) 발급된 /exec URL을 .env 의 REACT_APP_GOOGLE_SCRIPT_WEBHOOK_URL 에 입력.
  *
@@ -77,9 +114,25 @@ export const submitToGoogleSheets = async (
  *     const TG_CHAT_ID      = props.getProperty('TG_CHAT_ID') || '';
  *     const SHEET_CONTACT   = props.getProperty('SHEET_CONTACT') || 'contact';
  *     const SHEET_GUESTBOOK = props.getProperty('SHEET_GUESTBOOK') || 'guestbook';
+ *     const SHEET_VISITS    = props.getProperty('SHEET_VISITS') || 'visits';
  *
  *     const ss = SpreadsheetApp.getActiveSpreadsheet();
  *     const body = JSON.parse(e.postData.contents);
+ *
+ *     // ---------- 방문 로그 (사이트 진입) ----------
+ *     if (body.action === 'trackVisit') {
+ *       const d = body.data || {};
+ *       const sheet = ss.getSheetByName(SHEET_VISITS) || ss.insertSheet(SHEET_VISITS);
+ *       if (sheet.getLastRow() === 0) {
+ *         sheet.appendRow(['timestamp', 'path', 'referrer', 'userAgent', 'sessionId', 'viewport']);
+ *       }
+ *       sheet.appendRow([
+ *         d.timestamp || new Date().toISOString(),
+ *         d.path || '', d.referrer || '', d.userAgent || '',
+ *         d.sessionId || '', d.viewport || '',
+ *       ]);
+ *       return json_({ success: true });
+ *     }
  *
  *     // ---------- Contact 폼 ----------
  *     if (body.action === 'submitContact') {
