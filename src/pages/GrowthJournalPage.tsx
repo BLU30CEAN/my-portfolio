@@ -288,7 +288,7 @@ function GrowthJournalPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
         >
-          <PageTitle ref={titleRef}>학습 노트 · 스스로 다지는 ML 기초</PageTitle>
+          <PageTitle ref={titleRef}>연구 노트 / QA와 ML 자기 수련</PageTitle>
           <PageLead>
             <BookOpen
               size={18}
@@ -299,11 +299,9 @@ function GrowthJournalPage() {
               }}
               aria-hidden
             />
-            pandas·scikit-learn처럼 ML 기초 영역은
-            <strong> 실무 과제와는 별도로, 자기 학습 노트에 근거를 남겨 두는 자리</strong>
-            로 두었습니다. 각 글에는 anime.js v4 로 만든
-            <strong> 인터랙티브 미니게임</strong>을 함께 두어, 같은 개념을 손으로 한 번
-            더 다뤄 보며 머리에 새길 수 있게 했습니다.
+            1번은 Playwright QA 파이프라인, 2번은 GitHub 히트맵 병합입니다. pandas,
+            scikit-learn ML 기초와 anime.js 미니게임도 이어집니다. E2E 결함 이력은{" "}
+            <strong>QA 대시보드(/qa)</strong>에서 조회할 수 있습니다.
           </PageLead>
 
           {ML_JOURNAL_POSTS.map((post, index) => (

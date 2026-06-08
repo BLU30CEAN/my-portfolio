@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { ArrowRight, BookOpen } from "lucide-react";
+import { ArrowRight, BookOpen, FlaskConical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Section from "../../components/layout/Section";
 import MagneticButton from "../../components/ui/MagneticButton";
@@ -60,6 +60,12 @@ const Title = styled.h2`
   line-height: 1.3;
 `;
 
+const Actions = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+`;
+
 const Text = styled.p`
   color: ${(p) => p.theme.colors.textSecondary};
   font-size: 0.95rem;
@@ -84,7 +90,7 @@ const LearningBannerSection: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <Section dotCount={6} dotSeed={7} glow>
+    <Section id="journal-banner" dotCount={6} dotSeed={7} glow>
       <Card
         initial={{ opacity: 0, y: 18 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -93,17 +99,22 @@ const LearningBannerSection: React.FC = () => {
       >
         <Head>
           <BookOpen size={26} strokeWidth={2} aria-hidden />
-          <Title>학습 노트 · ML 자기 수련 기록</Title>
+          <Title>연구 노트 / QA 자동화</Title>
         </Head>
         <Text>
-          <strong>pandas·scikit-learn</strong>을 직접 만지며 정리한 실습 노트 —
-          해본 것, 막혔던 점, 정리한 것 순으로 별도 페이지에 모아 두었습니다.
-          글로만 끝내지 않고, 같은 개념을 손으로 한 번 더 다뤄 볼 수 있는{" "}
-          <strong>인터랙티브 미니게임</strong>도 함께 두었습니다.
+          1번 글은 <strong>Playwright E2E + QA 대시보드</strong> 파이프라인,
+          2번은 <strong>GitHub 히트맵</strong> 데이터 병합입니다. pandas,
+          scikit-learn 실습과 인터랙티브 미니게임도 이어집니다. 결함 카운트는{" "}
+          <code>/qa</code> 대시보드에서 조회할 수 있습니다.
         </Text>
-        <MagneticButton onClick={() => navigate("/journal")}>
-          학습 노트 살펴보기 <ArrowRight size={18} />
-        </MagneticButton>
+        <Actions>
+          <MagneticButton onClick={() => navigate("/journal")}>
+            연구 노트 살펴보기 <ArrowRight size={18} />
+          </MagneticButton>
+          <MagneticButton variant="ghost" onClick={() => navigate("/qa")}>
+            <FlaskConical size={16} aria-hidden /> QA 대시보드
+          </MagneticButton>
+        </Actions>
       </Card>
     </Section>
   );

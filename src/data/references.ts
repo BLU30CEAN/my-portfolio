@@ -158,6 +158,12 @@ export const DEV_REFERENCE_ENTRIES: readonly DevReferenceEntry[] = [
   },
   {
     tag: "Ops",
+    title: "Datadog Documentation",
+    href: "https://docs.datadoghq.com/",
+    note: "APM·로그·메트릭·대시보드 구성 레퍼런스.",
+  },
+  {
+    tag: "Ops",
     title: "Docker Documentation",
     href: "https://docs.docker.com/",
     note: "배포 이식성·이미지·컴포즈 패턴.",

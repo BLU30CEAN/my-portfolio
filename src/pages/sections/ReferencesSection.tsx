@@ -121,7 +121,7 @@ const ReferencesSection: React.FC = () => {
       <SectionTitle
         eyebrow="References"
         title="공식 문서를 길잡이로 삼습니다"
-        subtitle="원문 스펙과 변경 이력이 명확한 곳만 모았습니다. 구현 근거를 남겨야 할 때 항상 먼저 펼쳐 본 문서들입니다."
+        subtitle="프로젝트와 엔지니어링 역량을 먼저 보여 드린 뒤, 구현 근거로 삼은 공식 문서를 페이지 하단에 모았습니다."
       />
 
       <Lead>

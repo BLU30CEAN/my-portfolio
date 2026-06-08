@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import styled, { keyframes } from "styled-components";
 import { motion } from "framer-motion";
-import { AlertCircle, Code2, GitCommit, Star } from "lucide-react";
+import { AlertCircle, Code2, GitCommit } from "lucide-react";
 import Section from "../../components/layout/Section";
 import SectionTitle from "../../components/ui/SectionTitle";
 import { GITHUB_HEATMAP_ACCOUNTS } from "../../config/githubAccounts";
@@ -268,12 +268,6 @@ const GitHubActivitySection: React.FC = () => {
           label: "Public Repositories",
           color: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
         },
-        {
-          icon: Star,
-          value: formatStat(data.totalStars),
-          label: "Stars Earned",
-          color: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-        },
       ]
     : [
         {
@@ -288,16 +282,10 @@ const GitHubActivitySection: React.FC = () => {
           label: "Public Repositories",
           color: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
         },
-        {
-          icon: Star,
-          value: "—",
-          label: "Stars Earned",
-          color: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-        },
       ];
 
   return (
-    <Section dotCount={6} dotSeed={6} glow>
+    <Section id="github-activity" dotCount={6} dotSeed={6} glow>
       <SectionTitle
         eyebrow="GitHub"
         title="지속적인 학습과 기록"
@@ -349,8 +337,8 @@ const GitHubActivitySection: React.FC = () => {
         >
           <HeatmapTitle>지난 1년 활동 히트맵 (계정 합산)</HeatmapTitle>
           <HeatmapCaption>
-            {accountLabel} — GitLab 데이터는{" "}
-            <code>npm run export:gitlab</code>로 갱신한 JSON을 사용합니다
+            {/* {accountLabel} — GitLab 데이터(기밀 프로젝트) 이력은{" "} */}
+            <code>npm</code>을 통해 빌드 시 자동으로 갱신한 JSON 데이터로 만들어 사용합니다.
             (issues·MR·push·comments).
           </HeatmapCaption>
 

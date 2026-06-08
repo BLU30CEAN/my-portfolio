@@ -78,6 +78,27 @@ const Role = styled(motion.h2)`
   }
 `;
 
+const SkillChips = styled(motion.div)`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+
+  @media (max-width: 960px) {
+    justify-content: center;
+  }
+`;
+
+const Chip = styled.span`
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid ${(p) => p.theme.colors.borderStrong};
+  background: ${(p) => p.theme.colors.surface};
+  color: ${(p) => p.theme.colors.textSecondary};
+  letter-spacing: -0.01em;
+`;
+
 const Description = styled(motion.p)`
   font-size: ${(p) => p.theme.typography.fluidBody};
   color: ${(p) => p.theme.colors.textSecondary};
@@ -223,11 +244,20 @@ type Props = {
   onPrimary: () => void;
 };
 
+const HERO_CHIPS = [
+  "React / TypeScript",
+  "Java / Spring Boot",
+  "Python / FastAPI",
+  "PostgreSQL",
+  "Datadog",
+  "anime.js",
+];
+
 const TECH_STACK_LINES = [
-  { raw: 'const frontend = ["React", "TypeScript", "Next.js"];', delay: 400 },
+  { raw: 'const frontend = ["React", "TypeScript", "anime.js"];', delay: 400 },
   { raw: 'const backend = ["Spring Boot", "FastAPI", "PostgreSQL"];', delay: 400 },
+  { raw: 'const observability = ["Datadog", "GA", "GTM", "Backoffice"];', delay: 400 },
   { raw: 'const ai = ["OpenAI", "LLM Orchestration", "WebRTC"];', delay: 400 },
-  { raw: 'const devOps = ["AWS", "Docker", "Jenkins", "Datadog"];', delay: 600 },
   { raw: '// 운영 단계까지 책임지는 E2E 경험', delay: 0 },
 ];
 
@@ -296,8 +326,19 @@ const HeroSection: React.FC<Props> = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.12 }}
           >
-            Full-Stack · <span className="muted">AI Service Engineer</span>
+            Full-Stack / <span className="muted">AI Service Engineer</span>
           </Role>
+
+          <SkillChips
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.16 }}
+            aria-label="핵심 기술"
+          >
+            {HERO_CHIPS.map((chip) => (
+              <Chip key={chip}>{chip}</Chip>
+            ))}
+          </SkillChips>
 
           <Description
             initial={{ opacity: 0, y: 14 }}

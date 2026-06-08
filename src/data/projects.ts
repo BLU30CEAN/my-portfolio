@@ -24,26 +24,6 @@ export type ProjectEntry = {
 export const PROJECTS: ProjectEntry[] = [
   {
     tab: "professional",
-    title: "AI 인터랙티브 메타휴먼 아바타 플랫폼",
-    description:
-      "HeyGen·LiveAvatar 같은 실시간 AI 아바타 API와 연동해 STT → LLM(GPT-4o-mini·Claude 등) → ElevenLabs TTS·립싱크까지 이어지는 흐름을 오케스트레이션했습니다. UX는 채팅·음성과 같은 결의 이벤트 흐름으로 다듬고, 미디어는 화상통화와 맞닿은 WebRTC·WebSocket 오디오 패턴으로 구성했습니다.",
-    tech: [
-      "HeyGen",
-      "LiveAvatar",
-      "OpenAI",
-      "ElevenLabs",
-      "LiveKit",
-      "WebRTC",
-    ],
-    metrics: [
-      { icon: "zap", label: "응답 속도", value: "1.2초", color: "#667eea" },
-      { icon: "users", label: "동시 접속", value: "500+", color: "#f093fb" },
-      { icon: "trending", label: "만족도", value: "94%", color: "#4facfe" },
-      { icon: "target", label: "안정성", value: "99.8%", color: "#43e97b" },
-    ],
-  },
-  {
-    tab: "professional",
     title: "앱인앱 주문채널",
     description:
       "React(TypeScript) 기반 앱인앱 주문채널 프론트엔드와 Android Native 앱의 WebView 연동을 직접 이끌었습니다. Spring Boot·PostgreSQL 주문 API, AWS EC2·Jenkins 배포 자동화, JWT 인증, NICE Payments·OKPOS 연동, Datadog·GA·GTM 분석 환경까지 한 흐름으로 정돈했습니다.",
@@ -51,6 +31,7 @@ export const PROJECTS: ProjectEntry[] = [
       "React",
       "TypeScript",
       "Spring Boot",
+      "PostgreSQL",
       "AWS",
       "DataDog",
       "GTM",
@@ -68,12 +49,32 @@ export const PROJECTS: ProjectEntry[] = [
     title: "LLM 오케스트레이션 API",
     description:
       "Spring Boot 메인 API와 Python FastAPI 기반 ML 서비스를 별도 레인으로 분리한 마이크로서비스 구조를 직접 설계했습니다. Swagger 문서화, 비동기 통신, Docker 배포를 통해 새로운 모델·기능을 안정적으로 얹어 나갈 수 있는 백엔드 통합 환경을 마련했습니다.",
-    tech: ["Java", "Spring Boot", "Python", "FastAPI"],
+    tech: ["Java", "Spring Boot", "Python", "FastAPI", "PostgreSQL", "Docker"],
     metrics: [
       { icon: "zap", label: "처리 속도", value: "180ms", color: "#667eea" },
       { icon: "target", label: "가용성", value: "99.9%", color: "#43e97b" },
       { icon: "trending", label: "처리량", value: "5K req/m", color: "#4facfe" },
       { icon: "users", label: "모델 수", value: "8개", color: "#f093fb" },
+    ],
+  },
+  {
+    tab: "professional",
+    title: "AI 인터랙티브 메타휴먼 아바타 플랫폼",
+    description:
+      "HeyGen·LiveAvatar 같은 실시간 AI 아바타 API와 연동해 STT → LLM(GPT-4o-mini·Claude 등) → ElevenLabs TTS·립싱크까지 이어지는 흐름을 오케스트레이션했습니다. UX는 채팅·음성과 같은 결의 이벤트 흐름으로 다듬고, 미디어는 화상통화와 맞닿은 WebRTC·WebSocket 오디오 패턴으로 구성했습니다.",
+    tech: [
+      "HeyGen",
+      "LiveAvatar",
+      "OpenAI",
+      "ElevenLabs",
+      "LiveKit",
+      "WebRTC",
+    ],
+    metrics: [
+      { icon: "zap", label: "응답 속도", value: "1.2초", color: "#667eea" },
+      { icon: "users", label: "동시 접속", value: "500+", color: "#f093fb" },
+      { icon: "trending", label: "만족도", value: "94%", color: "#4facfe" },
+      { icon: "target", label: "안정성", value: "99.8%", color: "#43e97b" },
     ],
   },
   {

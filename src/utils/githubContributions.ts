@@ -20,22 +20,15 @@ export interface GitHubUserProfile {
   public_repos: number;
 }
 
-export interface GitHubRepo {
-  stargazers_count: number;
-  fork: boolean;
-}
-
 export interface MergedGitHubActivity {
   accounts: string[];
   contributions: ContributionDay[];
   totalContributions: number;
   totalRepos: number;
-  totalStars: number;
   perAccount: Array<{
     login: string;
     contributions: number;
     repos: number;
-    stars: number;
     source: "github" | "gitlab";
     profileUrl?: string;
     pending?: boolean;
@@ -102,14 +95,6 @@ export async function fetchUserProfile(
   username: string,
 ): Promise<GitHubUserProfile> {
   return fetchJson(`https://api.github.com/users/${username}`);
-}
-
-export async function fetchUserStars(username: string): Promise<number> {
-  const repos = await fetchJson<GitHubRepo[]>(
-    `https://api.github.com/users/${username}/repos?per_page=100&type=owner&sort=updated`,
-  );
-  if (!Array.isArray(repos)) return 0;
-  return repos.reduce((sum, repo) => sum + (repo.stargazers_count ?? 0), 0);
 }
 
 /** GitHub 스타일 4단계 강도 (합산 count 기준) */
@@ -185,10 +170,9 @@ export async function fetchMergedGitHubActivity(
   const [perAccount, gitlabArchives] = await Promise.all([
     Promise.all(
       accounts.map(async (login) => {
-        const [contrib, profile, stars] = await Promise.all([
+        const [contrib, profile] = await Promise.all([
           fetchUserContributions(login),
           fetchUserProfile(login),
-          fetchUserStars(login),
         ]);
 
         const contributions = contrib.contributions.reduce(
@@ -200,7 +184,6 @@ export async function fetchMergedGitHubActivity(
           login: profile.login,
           contributions,
           repos: profile.public_repos,
-          stars,
           days: contrib.contributions,
           source: "github" as const,
           profileUrl: `https://github.com/${profile.login}`,
@@ -221,7 +204,6 @@ export async function fetchMergedGitHubActivity(
       login: src.label,
       contributions,
       repos: 0,
-      stars: 0,
       days,
       source: "gitlab" as const,
       profileUrl: src.profileUrl,
@@ -242,13 +224,11 @@ export async function fetchMergedGitHubActivity(
     contributions: mergedDays,
     totalContributions: mergedDays.reduce((sum, d) => sum + d.count, 0),
     totalRepos: perAccount.reduce((sum, a) => sum + a.repos, 0),
-    totalStars: perAccount.reduce((sum, a) => sum + a.stars, 0),
     perAccount: allAccounts.map(
-      ({ login, contributions, repos, stars, source, profileUrl, pending }) => ({
+      ({ login, contributions, repos, source, profileUrl, pending }) => ({
         login,
         contributions,
         repos,
-        stars,
         source,
         profileUrl,
         pending,

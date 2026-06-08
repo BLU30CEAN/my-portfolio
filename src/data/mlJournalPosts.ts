@@ -39,6 +39,52 @@ export interface MlJournalPost {
 
 export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
   {
+    id: "playwright-qa-pipeline",
+    title: "Playwright로 포트폴리오 QA 파이프라인 구축",
+    period: "연구 노트 · 자동화 테스트 / 2026",
+    tags: ["Playwright", "E2E", "QA Dashboard", "CRA"],
+    sections: [
+      {
+        heading: "해본 것",
+        body:
+          "my-portfolio(CRA + HashRouter)에 Playwright E2E를 붙이고, `npm run test:e2e:export`로 JSON 리포트를 `public/data/qa-report.json`에 반영하는 파이프라인을 만들었습니다. 홈 진입·네비게이션·학습 노트·QA 대시보드까지 스모크 시나리오를 codify했고, 실패 건은 `/qa` 대시보드에서 suite·심각도·재현 시각을 조회할 수 있게 정리했습니다.",
+      },
+      {
+        heading: "막혔던 점",
+        body:
+          "HashRouter는 URL이 `/#/path` 형태라 baseURL·`page.goto` 패턴을 맞춰야 했고, Google Sheets webhook은 no-cors라 응답 본문 검증이 불가능했습니다. CRA의 `set PORT=3100` 스크립트와 Playwright webServer 포트도 Windows/bash 환경마다 달라져 webServer `env.PORT`로 통일했습니다.",
+      },
+      {
+        heading: "정리한 것",
+        body:
+          "단위(Jest+RTL) / API 모킹(MSW) / E2E(Playwright)를 레이어로 나누고, 배포 전에는 E2E + 리포트 export로 결함 카운트를 시트 대신 정적 JSON + QA 대시보드에 남기기로 했습니다. 학습 노트 1번, GitHub 히트맵 섹션 2번 순으로 포트폴리오 스토리도 맞췄습니다. 상세 실행 이력은 사이트 내 QA 대시보드(`/qa`)에서 확인할 수 있습니다.",
+      },
+    ],
+  },
+  {
+    id: "github-heatmap-merge",
+    title: "여러 GitHub 계정의 contribution을 하나의 히트맵으로",
+    period: "연구 노트 · 포트폴리오 데이터 파이프라인",
+    tags: ["GitHub", "API", "data-viz"],
+    sections: [
+      {
+        heading: "해본 것",
+        body:
+          "실무·학습·개인 저장소를 `BLU30CEAN`, `bbo14` 등 여러 GitHub 계정으로 나눠 두었는데, 메인 포트폴리오 히트맵은 mock(1,240 commits 등)이라 실제 활동과 어긋날 수 있었습니다. `github-contributions-api`로 계정별 일별 contribution을 가져와 `date` 기준으로 합산하고, 합산 최댓값에 맞춰 GitHub contribution graph와 같은 4단계 level·색 농도를 다시 계산해 `GitHubActivitySection`에 붙였습니다.",
+      },
+      {
+        heading: "막혔던 점",
+        body:
+          "GitLab(`git.utopsoft.co.kr/eunjun`)은 브라우저에서 직접 API를 칠 수 없어 CORS·인증 때문에 막혔습니다. private contribution은 공개 API만으로는 날짜·건수가 비어 보일 수 있고, 계정별 breakdown을 넣으면 칩이 많아져 모바일에서 한눈에 들어오기 어렵습니다.",
+      },
+      {
+        heading: "정리한 것",
+        body:
+          "GitHub는 런타임 합산, GitLab은 `npm run export:gitlab`로 `public/data/gitlab-eunjun.json`을 만들어 커밋하는 이원화로 맞췄습니다. public repo 수는 REST로 계정별 합산하고, JSON에는 비공개 프로젝트명을 넣지 않습니다. star 수는 UI에 노출하지 않습니다. 지금은 홈 GitHub 섹션에서 GitHub + GitLab 합산 히트맵과 로딩·에러·계정 chip을 함께 볼 수 있습니다.",
+      },
+    ],
+  },
+  {
     id: "pandas-basics",
     title: "Pandas로 데이터의 결을 읽어 내기",
     period: "자기 학습 노트 · 기본기 다지기",
@@ -181,28 +227,5 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
       performance:
         "잠금 상태는 구두점·공백을 유지한 · 마스크로 표시하고, `scrambleText` charset은 `·▪░▒`만 사용해 깨진 문자열처럼 보이지 않게 했습니다.",
     },
-  },
-  {
-    id: "github-heatmap-merge",
-    title: "여러 GitHub 계정의 contribution을 하나의 히트맵으로",
-    period: "자기 학습 노트 · 포트폴리오 데이터 파이프라인",
-    tags: ["GitHub", "API", "data-viz"],
-    sections: [
-      {
-        heading: "해본 것",
-        body:
-          "실무·학습·개인 저장소를 `BLU30CEAN`, `bbo14` 등 여러 GitHub 계정으로 나눠 두었는데, 메인 포트폴리오 히트맵은 mock(1,240 commits 등)이라 실제 활동과 어긋날 수 있었습니다. `github-contributions-api`로 계정별 일별 contribution을 가져와 `date` 기준으로 합산하고, 합산 최댓값에 맞춰 GitHub contribution graph와 같은 4단계 level·색 농도를 다시 계산해 `GitHubActivitySection`에 붙였습니다.",
-      },
-      {
-        heading: "막혔던 점",
-        body:
-          "GitLab(`git.utopsoft.co.kr/eunjun`)은 브라우저에서 직접 API를 칠 수 없어 CORS·인증 때문에 막혔습니다. private contribution은 공개 API만으로는 날짜·건수가 비어 보일 수 있고, 계정별 breakdown을 넣으면 칩이 많아져 모바일에서 한눈에 들어오기 어렵습니다.",
-      },
-      {
-        heading: "정리한 것",
-        body:
-          "GitHub는 런타임 합산, GitLab은 `npm run export:gitlab`로 `public/data/gitlab-eunjun.json`을 만들어 커밋하는 이원화로 맞췄습니다. public repo·star 수는 REST로 계정별 합산하고, JSON에는 비공개 프로젝트명을 넣지 않습니다. 지금은 홈 GitHub 섹션에서 GitHub + GitLab 합산 히트맵과 로딩·에러·계정 chip을 함께 볼 수 있습니다.",
-      },
-    ],
   },
 ];
