@@ -246,19 +246,18 @@ type Props = {
 
 const HERO_CHIPS = [
   "React / TypeScript",
+  "Playwright E2E",
   "Java / Spring Boot",
   "Python / FastAPI",
   "PostgreSQL",
   "Datadog",
-  "anime.js",
 ];
 
 const TECH_STACK_LINES = [
   { raw: 'const frontend = ["React", "TypeScript", "anime.js"];', delay: 400 },
   { raw: 'const backend = ["Spring Boot", "FastAPI", "PostgreSQL"];', delay: 400 },
-  { raw: 'const observability = ["Datadog", "GA", "GTM", "Backoffice"];', delay: 400 },
-  { raw: 'const ai = ["OpenAI", "LLM Orchestration", "WebRTC"];', delay: 400 },
-  { raw: '// 운영 단계까지 책임지는 E2E 경험', delay: 0 },
+  { raw: 'const qa = ["Playwright", "9/9 pass", "JSON export"];', delay: 400 },
+  { raw: 'const observability = ["Datadog", "GA", "GTM"];', delay: 400 },
 ];
 
 const HeroSection: React.FC<Props> = ({
@@ -345,12 +344,9 @@ const HeroSection: React.FC<Props> = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.18 }}
           >
-            웹·모바일·AI를 하나의 제품 안에서 연결해 온 5년 차 풀스택
-            엔지니어입니다.{" "}
-            <strong>사용자 시나리오 전체를 먼저 그려낸 뒤</strong>, 해피 패스보다{" "}
-            <strong>엣지 케이스의 안정성</strong>에 더 집중하고, 모르는 영역은
-            추정 대신 <strong>공식 문서와 작은 실험</strong>으로 확신을 쌓아가는
-            방식을 선호합니다.
+            5년차 풀스택. B2C 주문 <strong>2,800+/day</strong>, AI p95{" "}
+            <strong>1.2s</strong>, Playwright <strong>9/9</strong> smoke.
+            엣지 케이스와 운영 지표로 품질을 맞춥니다.
           </Description>
 
           <motion.div

@@ -4,8 +4,6 @@ import { motion } from "framer-motion";
 import { AlertCircle, Code2, GitCommit } from "lucide-react";
 import Section from "../../components/layout/Section";
 import SectionTitle from "../../components/ui/SectionTitle";
-import { GITHUB_HEATMAP_ACCOUNTS } from "../../config/githubAccounts";
-import { GITLAB_ARCHIVE_SOURCES } from "../../config/gitlabSources";
 import { useGitHubActivity } from "../../hooks/useGitHubActivity";
 import {
   buildHeatmapGrid,
@@ -249,11 +247,6 @@ const GitHubActivitySection: React.FC = () => {
     [data],
   );
 
-  const accountLabel = [
-    ...GITHUB_HEATMAP_ACCOUNTS,
-    ...GITLAB_ARCHIVE_SOURCES.map((s) => s.label),
-  ].join(" + ");
-
   const stats = data
     ? [
         {
@@ -288,8 +281,8 @@ const GitHubActivitySection: React.FC = () => {
     <Section id="github-activity" dotCount={6} dotSeed={6} glow>
       <SectionTitle
         eyebrow="GitHub"
-        title="지속적인 학습과 기록"
-        subtitle={`GitHub(${GITHUB_HEATMAP_ACCOUNTS.join(", ")})와 GitLab(eunjun) 활동을 합산합니다. GitLab은 issue·MR·push·comment 포함.`}
+        title="Contribution merge"
+        subtitle="GitHub API runtime + GitLab static export. 365-day grid, account-level breakdown."
       />
 
       <Grid>
@@ -337,9 +330,8 @@ const GitHubActivitySection: React.FC = () => {
         >
           <HeatmapTitle>지난 1년 활동 히트맵 (계정 합산)</HeatmapTitle>
           <HeatmapCaption>
-            {/* {accountLabel} — GitLab 데이터(기밀 프로젝트) 이력은{" "} */}
-            <code>npm</code>을 통해 빌드 시 자동으로 갱신한 JSON 데이터로 만들어 사용합니다.
-            (issues·MR·push·comments).
+            GitHub runtime API + GitLab static JSON (`npm run export:gitlab`).
+            365-day merge, 4-level cells, issues/MR/push/comments.
           </HeatmapCaption>
 
           <HeatmapScroll>

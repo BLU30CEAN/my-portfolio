@@ -68,7 +68,7 @@ const NAV_ITEMS: NavItem[] = [
   { id: "tech", label: "Stack", section: "tech" },
   { id: "projects", label: "Projects", section: "projects" },
   { id: "engineering", label: "Engineering", section: "engineering" },
-  { id: "journal", label: "연구 노트", route: "/journal" },
+  { id: "journal", label: "Notes", route: "/journal" },
   { id: "qa", label: "QA", route: "/qa" },
   { id: "contact", label: "Contact", section: "contact" },
 ];

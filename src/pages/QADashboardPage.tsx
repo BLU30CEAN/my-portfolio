@@ -292,8 +292,8 @@ function QADashboardPage() {
 
         <Title>QA 대시보드</Title>
         <Lead>
-          Playwright E2E 실행 리포트를 정적 JSON으로 export해 조회합니다.
-          결함 건수, suite별 통과율, 실행 이력을 한 화면에서 추적합니다.
+          Playwright smoke: 4 suites, 9 tests, static JSON export. Pass rate,
+          suite duration, defect severity, run history — single view.
         </Lead>
 
         {loading && <Empty>리포트 로딩 중…</Empty>}

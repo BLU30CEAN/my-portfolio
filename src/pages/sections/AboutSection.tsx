@@ -100,10 +100,10 @@ type StatItem = {
 };
 
 const STATS: StatItem[] = [
-  { icon: Award, to: 5, suffix: "년", label: "풀스택 실무 경력" },
-  { icon: Users, staticValue: "B2B · AI", label: "주력 도메인" },
-  { icon: Layers, to: 35, suffix: "+", label: "현업에서 다룬 스택" },
-  { icon: Zap, staticValue: "E2E", label: "설계부터 운영까지" },
+  { icon: Award, to: 5, suffix: "년", label: "풀스택 실무" },
+  { icon: Zap, staticValue: "9/9", label: "Playwright E2E pass" },
+  { icon: Layers, to: 35, suffix: "+", label: "프로덕션 스택" },
+  { icon: Users, staticValue: "0.3%", label: "B2C 주문 에러율 (운영)" },
 ];
 
 const AboutSection: React.FC = () => {
@@ -111,8 +111,8 @@ const AboutSection: React.FC = () => {
     <Section id="about" dotCount={10} dotSeed={2} fullHeight glow>
       <SectionTitle
         eyebrow="About"
-        title="사용자 시나리오 전체를 먼저 그립니다"
-        subtitle="새 기능을 더하기 전에 엣지 케이스의 안정성을 먼저 검증하는 습관 — 5년 동안 한 가지 원칙으로 다듬어 왔습니다."
+        title="지표로 검증하는 5년"
+        subtitle="B2C 주문/결제, AI 실시간, Playwright 회귀. p95, 에러율, pass rate로 품질을 맞춥니다."
       />
 
       <Grid>
@@ -123,24 +123,16 @@ const AboutSection: React.FC = () => {
           transition={{ duration: 0.6 }}
         >
           <p>
-            개발을 시작한 계기는 단순했습니다. 제가 쓴 코드 한 줄이 누군가의
-            화면에서 곧바로 결과로 돌아오는 감각, 그 즉시성이야말로 가장 정직한
-            보상이라고 느꼈습니다.
+            B2C 주문 채널 <strong>일 2,800+건</strong>, 로딩{" "}
+            <strong>0.8s</strong>, 에러율 <strong>0.3%</strong>. AI 실시간은{" "}
+            <strong>p95 1.2s</strong>, 동시 접속 <strong>500+</strong>. 배포
+            전 <strong>Playwright 9/9</strong> smoke, 운영은 Datadog/GA로
+            회귀를 추적합니다.
           </p>
           <p>
-            지난 5년은 그 감각을 <strong>운영 단계까지 책임지는 흐름</strong>
-            으로 넓혀 온 시간이었습니다. 결제, 앱·웹 연동, LLM·메타휴먼 실시간
-            연동, WebRTC·WebSocket 기반 음성·화상 스트리밍처럼 운영 부담이 큰
-            도메인을 거치며 한 가지 원칙을 다듬어 왔습니다 —{" "}
-            <strong>
-              사용자 시나리오 전체를 먼저 그린 뒤, 해피 패스보다 엣지 케이스의 안정성에 더 집중한다.
-            </strong>
-          </p>
-          <p>
-            낯선 영역을 만나면 추정 대신 공식 문서와 변경 이력에서 출발하고,
-            재현 가능한 작은 실험으로 가설을 좁혀 갑니다. 화려한 기술보다,
-            운영자가 안심하고 밤잠을 청할 수 있는 시스템을 만드는 데 시간을
-            쓰고 싶습니다.
+            해피 패스보다 결제 실패, 세션 만료, WebRTC 끊김 같은{" "}
+            <strong>엣지 케이스</strong>를 먼저 재현하고, RCA는 로그와 DB
+            정합성으로 좁힙니다.
           </p>
         </Story>
 

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { ArrowRight, BookOpen, FlaskConical } from "lucide-react";
+import { ArrowRight, FlaskConical, Gauge } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Section from "../../components/layout/Section";
 import MagneticButton from "../../components/ui/MagneticButton";
@@ -42,7 +42,7 @@ const Head = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 0.65rem;
-  margin-bottom: 0.85rem;
+  margin-bottom: 1rem;
 
   svg {
     flex-shrink: 0;
@@ -60,31 +60,69 @@ const Title = styled.h2`
   line-height: 1.3;
 `;
 
+const MetricGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.65rem;
+  margin-bottom: 1.25rem;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const Metric = styled.div`
+  padding: 0.85rem 0.95rem;
+  border-radius: ${(p) => p.theme.radii.lg};
+  border: 1px solid ${(p) => p.theme.colors.border};
+  background: ${(p) => p.theme.colors.background};
+
+  strong {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: ${(p) => p.theme.colors.text};
+    margin-bottom: 0.2rem;
+  }
+
+  span {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: ${(p) => p.theme.colors.textMuted};
+    line-height: 1.45;
+  }
+`;
+
+const StackRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+`;
+
+const StackChip = styled.span`
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.25rem 0.55rem;
+  border-radius: 6px;
+  background: ${(p) => p.theme.colors.primarySoft};
+  color: ${(p) => p.theme.colors.primary};
+`;
+
 const Actions = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 0.65rem;
 `;
 
-const Text = styled.p`
-  color: ${(p) => p.theme.colors.textSecondary};
-  font-size: 0.95rem;
-  line-height: 1.74;
-  margin: 0 0 1.4rem;
+const METRICS = [
+  { value: "9/9, 100%", label: "Playwright E2E pass rate" },
+  { value: "4 suite, ~30s", label: "smoke regression (6 workers)" },
+  { value: "2 GitHub + GitLab", label: "365-day contribution merge" },
+] as const;
 
-  strong {
-    color: ${(p) => p.theme.colors.text};
-    font-weight: 600;
-  }
-
-  code {
-    font-size: 0.84em;
-    background: ${(p) => p.theme.colors.primarySoft};
-    color: ${(p) => p.theme.colors.primary};
-    padding: 0.1rem 0.4rem;
-    border-radius: 4px;
-  }
-`;
+const STACK = ["Playwright", "TypeScript", "JSON export", "TanStack Query"] as const;
 
 const LearningBannerSection: React.FC = () => {
   const navigate = useNavigate();
@@ -98,21 +136,31 @@ const LearningBannerSection: React.FC = () => {
         transition={{ duration: 0.55 }}
       >
         <Head>
-          <BookOpen size={26} strokeWidth={2} aria-hidden />
-          <Title>연구 노트 / QA 자동화</Title>
+          <Gauge size={26} strokeWidth={2} aria-hidden />
+          <Title>QA Pipeline / Activity Data</Title>
         </Head>
-        <Text>
-          1번 글은 <strong>Playwright E2E + QA 대시보드</strong> 파이프라인,
-          2번은 <strong>GitHub 히트맵</strong> 데이터 병합입니다. pandas,
-          scikit-learn 실습과 인터랙티브 미니게임도 이어집니다. 결함 카운트는{" "}
-          <code>/qa</code> 대시보드에서 조회할 수 있습니다.
-        </Text>
+
+        <MetricGrid>
+          {METRICS.map((m) => (
+            <Metric key={m.label}>
+              <strong>{m.value}</strong>
+              <span>{m.label}</span>
+            </Metric>
+          ))}
+        </MetricGrid>
+
+        <StackRow aria-label="핵심 스택">
+          {STACK.map((s) => (
+            <StackChip key={s}>{s}</StackChip>
+          ))}
+        </StackRow>
+
         <Actions>
-          <MagneticButton onClick={() => navigate("/journal")}>
-            연구 노트 살펴보기 <ArrowRight size={18} />
-          </MagneticButton>
           <MagneticButton variant="ghost" onClick={() => navigate("/qa")}>
-            <FlaskConical size={16} aria-hidden /> QA 대시보드
+            <FlaskConical size={16} aria-hidden /> QA Dashboard
+          </MagneticButton>
+          <MagneticButton onClick={() => navigate("/journal")}>
+            Technical Notes <ArrowRight size={18} />
           </MagneticButton>
         </Actions>
       </Card>

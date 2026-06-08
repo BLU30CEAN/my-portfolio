@@ -288,7 +288,7 @@ function GrowthJournalPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
         >
-          <PageTitle ref={titleRef}>연구 노트 / QA와 ML 자기 수련</PageTitle>
+          <PageTitle ref={titleRef}>Technical Notes</PageTitle>
           <PageLead>
             <BookOpen
               size={18}
@@ -299,9 +299,9 @@ function GrowthJournalPage() {
               }}
               aria-hidden
             />
-            1번은 Playwright QA 파이프라인, 2번은 GitHub 히트맵 병합입니다. pandas,
-            scikit-learn ML 기초와 anime.js 미니게임도 이어집니다. E2E 결함 이력은{" "}
-            <strong>QA 대시보드(/qa)</strong>에서 조회할 수 있습니다.
+            Playwright 9/9 pass, 4 suite ~30s, multi-account heatmap merge.
+            ML baseline (pandas, scikit-learn) and anime.js mini-games below. Live
+            E2E metrics: <strong>/qa</strong>.
           </PageLead>
 
           {ML_JOURNAL_POSTS.map((post, index) => (

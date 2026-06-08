@@ -133,27 +133,27 @@ const Caption = styled.p`
 const PILLARS = [
   {
     icon: Database,
-    title: "DB 설계와 스키마 운영",
-    text: "PostgreSQL·MySQL 기반 주문·결제·인증 도메인 스키마를 설계하고, 인덱스·커넥션 풀·트랜잭션 경계를 운영 단계에서 조정해 왔습니다.",
-    stack: ["PostgreSQL", "MySQL", "MyBatis", "JPA"],
+    title: "DB / 트랜잭션",
+    text: "PostgreSQL·MySQL 주문/결제 스키마. 인덱스 튜닝, 커넥션 풀, Batch/Quartz 이력 테이블.",
+    stack: ["PostgreSQL", "MySQL", "MyBatis"],
   },
   {
     icon: Server,
-    title: "Java / Spring Boot API",
-    text: "Spring Boot 메인 API에서 JWT 인증, 결제·POS 연동, Swagger 계약 문서화까지 담당했습니다. EC2·Jenkins 파이프라인으로 배포 자동화도 함께 구성했습니다.",
-    stack: ["Java 21", "Spring Boot", "JWT", "Swagger"],
+    title: "Spring Boot API",
+    text: "JWT, NICE/OKPOS 연동, Swagger 계약. EC2 + Jenkins 배포 자동화 95%.",
+    stack: ["Java 21", "Spring Boot", "JWT"],
   },
   {
     icon: Boxes,
-    title: "Python / FastAPI ML 레인",
-    text: "LLM·ML 워크로드를 FastAPI 마이크로서비스로 분리해 비동기 통신·Docker 배포로 운영했습니다. 새 모델 추가 시 API 계약만 맞추면 되도록 레인을 나눴습니다.",
-    stack: ["Python", "FastAPI", "Docker", "OpenAPI"],
+    title: "FastAPI ML 레인",
+    text: "LLM/STT 마이크로서비스 분리. Docker, p95 180ms, 5K req/min 처리.",
+    stack: ["Python", "FastAPI", "Docker"],
   },
   {
     icon: LineChart,
-    title: "관측·백오피스",
-    text: "Datadog APM·로그·메트릭, GA·GTM 전환 퍼널을 한 흐름으로 묶어 에러율·p95 지연·비즈니스 임팩트를 동시에 추적할 수 있는 내부 백오피스를 설계했습니다.",
-    stack: ["Datadog", "GA", "GTM", "Backoffice"],
+    title: "관측 / QA",
+    text: "Datadog APM + GA/GTM 퍼널. Playwright 9/9 smoke, /qa JSON 리포트.",
+    stack: ["Datadog", "Playwright", "GA"],
   },
 ] as const;
 
@@ -162,8 +162,8 @@ const EngineeringSection: React.FC = () => {
     <Section id="engineering" dotCount={10} dotSeed={6} fullHeight glow>
       <SectionTitle
         eyebrow="Engineering"
-        title="프론트만이 아닌, 운영까지 담당하는 엔지니어링"
-        subtitle="React/TypeScript로 사용자 경험을 다듬는 동시에 Java·Python 백엔드, DB, 관측 파이프라인까지 한 제품 안에서 이어 붙일 수 있습니다."
+        title="Full-stack + observability + QA"
+        subtitle="API p95 180ms, 배포 자동화 95%, Playwright 9/9. 한 제품 안에서 프론트/백/DB/관측을 연결합니다."
       />
 
       <Grid>
@@ -174,11 +174,9 @@ const EngineeringSection: React.FC = () => {
           transition={{ duration: 0.55 }}
         >
           <Lead>
-            채용 담당자·팀 리드가 궁금해하는 건 &ldquo;화면을 예쁘게 그릴 수
-            있나&rdquo;보다, <strong>장애가 났을 때 원인을 좁히고</strong>{" "}
-            <strong>데이터로 설명할 수 있나</strong>에 가깝습니다. 저는 프론트
-            인터랙션(anime.js·Framer Motion)과 백엔드·DB·관측을 같은 맥락에서
-            다룹니다.
+            <strong>Spring Boot</strong> API + <strong>FastAPI</strong> ML +
+            <strong> React/RN</strong> client. 운영 KPI는 Datadog/GA,
+            회귀는 Playwright JSON → <strong>/qa</strong>.
           </Lead>
 
           <Pillars>
@@ -220,8 +218,7 @@ const EngineeringSection: React.FC = () => {
               style={{ verticalAlign: "-2px", marginRight: 4 }}
               aria-hidden
             />
-            실제 운영 지표를 바탕으로 한 UI 데모 — anime.js v4로 KPI·스파크라인
-            애니메이션
+            KPI demo UI — anime.js v4 sparkline animation (sample metrics)
           </Caption>
         </DashboardWrap>
       </Grid>
