@@ -103,7 +103,7 @@ const STATS: StatItem[] = [
   { icon: Award, to: 5, suffix: "년", label: "풀스택 실무 경력" },
   { icon: Users, staticValue: "B2B · AI", label: "주력 도메인" },
   { icon: Layers, to: 35, suffix: "+", label: "현업에서 다룬 스택" },
-  { icon: Zap, staticValue: "9/9", label: "Playwright E2E (smoke)" },
+  { icon: Zap, staticValue: "E2E", label: "설계부터 회귀까지" },
 ];
 
 const AboutSection: React.FC = () => {
@@ -142,9 +142,8 @@ const AboutSection: React.FC = () => {
           </p>
           <p>
             낯선 영역을 만나면 추정 대신 공식 문서와 변경 이력에서 출발하고,
-            재현 가능한 작은 실험으로 가설을 좁혀 갑니다. 배포 전에는{" "}
-            <strong>Playwright 9/9</strong> smoke로 회귀를 맞추고, 운영은
-            Datadog/GA로 추적합니다. 화려한 기술보다, 운영자가 안심할 수 있는
+            재현 가능한 작은 실험으로 가설을 좁혀 갑니다. 배포 전에는 E2E
+            smoke로 회귀를 맞추고, 운영은 Datadog/GA로 추적합니다. 화려한 기술보다, 운영자가 안심할 수 있는
             시스템을 만드는 데 시간을 쓰고 싶습니다.
           </p>
         </Story>

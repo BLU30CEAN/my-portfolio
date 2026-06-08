@@ -299,9 +299,9 @@ function GrowthJournalPage() {
               }}
               aria-hidden
             />
-            배움과 실험을 코드와 숫자로 남기는 공간입니다. Playwright E2E,
+            배움과 실험을 코드와 숫자로 남기는 공간입니다. E2E export,
             multi-account heatmap, ML baseline(pandas, scikit-learn)과
-            anime.js 미니게임을 이어 둡니다. 최신 E2E pass rate와 suite
+            anime.js 미니게임을 이어 둡니다. 최신 pass rate와 suite
             duration은 <strong>/qa</strong>에서 확인할 수 있습니다.
           </PageLead>
 

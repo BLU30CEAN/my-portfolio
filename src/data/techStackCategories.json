@@ -163,6 +163,23 @@
     ]
   },
   {
+    "category": "품질 / 테스트",
+    "technologies": [
+      {
+        "name": "Playwright",
+        "image": "https://cdn.simpleicons.org/playwright/2EAD33"
+      },
+      {
+        "name": "Jest",
+        "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jest/jest-plain.svg"
+      },
+      {
+        "name": "Testing Library",
+        "image": "https://cdn.simpleicons.org/testinglibrary/E33332"
+      }
+    ]
+  },
+  {
     "category": "버전 관리",
     "technologies": [
       {

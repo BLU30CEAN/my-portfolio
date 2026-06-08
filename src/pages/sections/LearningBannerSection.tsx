@@ -129,12 +129,12 @@ const Text = styled.p`
 `;
 
 const METRICS = [
-  { value: "9/9, 100%", label: "Playwright E2E pass rate" },
+  { value: "9/9, 100%", label: "E2E pass rate (qa-report.json)" },
   { value: "4 suite, ~30s", label: "smoke regression (6 workers)" },
   { value: "2 GitHub + GitLab", label: "365-day contribution merge" },
 ] as const;
 
-const STACK = ["Playwright", "TypeScript", "JSON export", "TanStack Query"] as const;
+const STACK = ["TypeScript", "TanStack Query", "JSON export", "GitHub API"] as const;
 
 const LearningBannerSection: React.FC = () => {
   const navigate = useNavigate();
@@ -154,7 +154,7 @@ const LearningBannerSection: React.FC = () => {
 
         <Text>
           새 스택을 만날 때마다 포트폴리오 안에 작은 실험으로 남깁니다.{" "}
-          <strong>Playwright E2E</strong>, contribution merge, ML baseline까지
+          <strong>E2E export</strong>, contribution merge, ML baseline까지
           같은 방식으로 쌓아 두었고, 아래 수치와 Technical Notes에서 구현과
           실행 이력을 볼 수 있습니다.
         </Text>
