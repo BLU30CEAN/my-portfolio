@@ -191,7 +191,7 @@ const TechStackSection: React.FC = () => {
       <SectionTitle
         eyebrow="Stack"
         title="현장에서 검증한 기술 스택"
-        subtitle="React/TypeScript 프론트, Java·Python 백엔드, DB, 관측 도구 — 실제 운영 제품에서 트래픽·예외 대응·배포 사이클을 함께 통과해 본 스택만 추렸습니다."
+        subtitle="React/TypeScript 프론트, Java·Python 백엔드, DB, 관측 도구 — 실제 운영에서 트래픽·예외·배포 사이클을 같이 겪은 스택만 골라 뒀어요."
       />
 
       <Stack>

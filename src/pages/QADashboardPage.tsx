@@ -366,9 +366,9 @@ function QADashboardPage() {
 
         <Title>QA 대시보드</Title>
         <Lead>
-          공개 영역은 Pass Rate·건수만 표시합니다. 상세 결함·파일 경로·실행
-          환경은 관리자 비밀번호 해제 후 조회할 수 있습니다. 동일 요약은 Google
-          Sheets에도 기록됩니다.
+          공개 화면에는 pass rate랑 건수만 보여요. 상세 결함, 파일 경로, 실행
+          환경은 관리자 비밀번호를 입력하면 열려요. 같은 요약은 Google Sheets에도
+          쌓여요.
         </Lead>
 
         <UnlockBar data-testid="qa-unlock-form">

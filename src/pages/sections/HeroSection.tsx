@@ -346,14 +346,13 @@ const HeroSection: React.FC<Props> = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.18 }}
           >
-            웹·모바일·AI를 하나의 제품 안에서 연결해 온 5년 차 풀스택
-            엔지니어입니다.{" "}
-            <strong>사용자 시나리오 전체를 먼저 그려낸 뒤</strong>, 해피 패스보다{" "}
-            <strong>엣지 케이스의 안정성</strong>에 더 집중합니다. 그 원칙은
-            B2C 주문 <strong>2,800+/day</strong>, AI p95 <strong>1.2s</strong>,
-            E2E smoke <strong>9/9</strong> 같은 숫자로도 맞춰 왔습니다.
-            모르는 영역은 추정 대신{" "}
-            <strong>공식 문서와 작은 실험</strong>으로 확신을 쌓습니다.
+            안녕하세요. 웹·모바일·AI를 한 제품 안에서 이어 붙여 온 5년 차
+            풀스택이에요. 기능부터 넣기보다{" "}
+            <strong>사용자 시나리오 전체를 먼저 그려요</strong>. 해피 패스보다{" "}
+            <strong>엣지 케이스</strong>를 먼저 챙기는 편이고, 그 습관이 B2C
+            주문 <strong>2,800+/day</strong>, AI p95 <strong>1.2s</strong>, E2E{" "}
+            <strong>9/9</strong> 같은 숫자로도 이어져 왔어요. 잘 모르는 영역은
+            추정하지 않고, <strong>문서 읽고 작은 실험</strong>부터 해봐요.
           </Description>
 
           <motion.div
@@ -424,7 +423,7 @@ const HeroSection: React.FC<Props> = ({
               )}
             </ProfileInner>
             <Badge>
-              <Pulse /> 운영 단계까지 책임지는 풀스택
+              <Pulse /> 운영까지 함께하는 풀스택
             </Badge>
           </ProfileCard>
         </ProfileWrap>

@@ -299,10 +299,10 @@ function GrowthJournalPage() {
               }}
               aria-hidden
             />
-            배움과 실험을 코드와 숫자로 남기는 공간입니다. E2E export,
-            multi-account heatmap, ML baseline(pandas, scikit-learn)과
-            anime.js 미니게임을 이어 둡니다. 최신 pass rate와 suite
-            duration은 <strong>/qa</strong>에서 확인할 수 있습니다.
+            배우고 실험한 걸 코드와 숫자로 남기는 공간이에요. E2E export,
+            multi-account heatmap, ML 연습(pandas, scikit-learn), anime.js
+            미니게임까지 이어 둔 기록이에요. 최신 pass rate는{" "}
+            <strong>/qa</strong>에서 바로 확인할 수 있어요.
           </PageLead>
 
           {ML_JOURNAL_POSTS.map((post, index) => (

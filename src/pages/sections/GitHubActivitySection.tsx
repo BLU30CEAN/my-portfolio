@@ -282,7 +282,7 @@ const GitHubActivitySection: React.FC = () => {
       <SectionTitle
         eyebrow="GitHub"
         title="지속적인 학습과 기록"
-        subtitle="GitHub API runtime + GitLab static export. 365-day grid, account-level breakdown."
+        subtitle="GitHub는 API로, GitLab은 export JSON으로 합쳐요. 계정이 나뉘어 있어도 한눈에 보이게 만들었어요."
       />
 
       <Grid>
@@ -330,8 +330,8 @@ const GitHubActivitySection: React.FC = () => {
         >
           <HeatmapTitle>지난 1년 활동 히트맵 (계정 합산)</HeatmapTitle>
           <HeatmapCaption>
-            GitHub runtime API + GitLab static JSON (`npm run export:gitlab`).
-            365-day merge, 4-level cells, issues/MR/push/comments.
+            GitHub는 런타임 API, GitLab은 `npm run export:gitlab`로 뽑은
+            JSON이에요. issue, MR, push, comment까지 합산해요.
           </HeatmapCaption>
 
           <HeatmapScroll>

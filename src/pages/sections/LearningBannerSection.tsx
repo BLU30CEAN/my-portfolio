@@ -129,9 +129,9 @@ const Text = styled.p`
 `;
 
 const METRICS = [
-  { value: "9/9, 100%", label: "E2E pass rate (qa-report.json)" },
-  { value: "4 suite, ~30s", label: "smoke regression (6 workers)" },
-  { value: "2 GitHub + GitLab", label: "365-day contribution merge" },
+  { value: "9/9, 100%", label: "E2E 통과율 (qa-report.json)" },
+  { value: "4 suite, ~30s", label: "스모크 회귀, 6 workers" },
+  { value: "2 GitHub + GitLab", label: "365일 contribution 합산" },
 ] as const;
 
 const STACK = ["TypeScript", "TanStack Query", "JSON export", "GitHub API"] as const;
@@ -149,14 +149,13 @@ const LearningBannerSection: React.FC = () => {
       >
         <Head>
           <BookOpen size={26} strokeWidth={2} aria-hidden />
-          <Title>연구 노트 / QA Pipeline</Title>
+          <Title>연구 노트 / 실험 기록</Title>
         </Head>
 
         <Text>
-          새 스택을 만날 때마다 포트폴리오 안에 작은 실험으로 남깁니다.{" "}
-          <strong>E2E export</strong>, contribution merge, ML baseline까지
-          같은 방식으로 쌓아 두었고, 아래 수치와 Technical Notes에서 구현과
-          실행 이력을 볼 수 있습니다.
+          새 스택을 만날 때마다 포트폴리오에 작은 실험을 하나씩 남겨요. E2E
+          export, contribution merge, ML 연습까지 같은 방식이에요. 아래 숫자랑
+          Technical Notes에서 자세히 볼 수 있어요.
         </Text>
 
         <MetricGrid>
