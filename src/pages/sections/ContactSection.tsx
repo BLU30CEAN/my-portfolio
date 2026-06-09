@@ -207,7 +207,7 @@ const ContactSection: React.FC<{ email: string }> = ({ email }) => {
       <SectionTitle
         eyebrow="Contact"
         title="함께 만들어 갈 분을 기다리고 있습니다"
-        subtitle="평일엔 24시간, 주말에도 48시간 안에 답변드릴게요."
+        subtitle="평일 24시간, 주말 48시간 이내에 답변드립니다."
       />
 
       <InfoGrid>

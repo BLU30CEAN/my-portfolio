@@ -366,9 +366,9 @@ function QADashboardPage() {
 
         <Title>QA 대시보드</Title>
         <Lead>
-          공개 화면에는 pass rate랑 건수만 보여요. 상세 결함, 파일 경로, 실행
-          환경은 관리자 비밀번호를 입력하면 열려요. 같은 요약은 Google Sheets에도
-          쌓여요.
+          공개 화면에는 pass rate와 건수만 표시합니다. 상세 결함, 파일 경로, 실행
+          환경은 관리자 비밀번호 입력 후 확인할 수 있습니다. 같은 요약은 Google
+          Sheets에도 쌓입니다.
         </Lead>
 
         <UnlockBar data-testid="qa-unlock-form">
@@ -407,7 +407,7 @@ function QADashboardPage() {
               {unlockError && <UnlockError>{unlockError}</UnlockError>}
               {!passwordConfigured && (
                 <UnlockError>
-                  .env 에 REACT_APP_QA_PW 값을 확인하세요
+                  .env의 REACT_APP_QA_PW 값을 확인하세요
                 </UnlockError>
               )}
             </form>

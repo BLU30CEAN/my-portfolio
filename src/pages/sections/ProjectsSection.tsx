@@ -193,7 +193,7 @@ const ProjectsSection: React.FC = () => {
       <SectionTitle
         eyebrow="Projects"
         title="실서비스에서 검증된 작업들"
-        subtitle="React/TypeScript 프론트부터 Java·Python 백엔드, DB, Datadog 관측까지 — 설계부터 배포·모니터링까지 직접 맡아 본 프로젝트예요."
+        subtitle="React/TypeScript 프론트부터 Java·Python 백엔드, DB, Datadog 관측까지 — 설계부터 배포·모니터링까지 직접 맡아 본 프로젝트입니다."
       />
 
       <TabBarWrap>

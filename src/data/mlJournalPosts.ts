@@ -110,7 +110,7 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
       id: "cell-sorter",
       title: "Cell Sorter · Pandas 정렬·결측 처리 인터랙션",
       pitch:
-        "Pandas의 `sort_values`와 `dropna` 오퍼레이션을 시각적으로 재현하는 드래그 앤 드롭 게임입니다. 흩어진 데이터 셀을 오름차순으로 정렬하고, `NaN` 값은 휴지통 영역으로 제거하여 클린 데이터셋을 완성하세요.",
+        "Pandas의 `sort_values`와 `dropna` 오퍼레이션을 시각적으로 재현하는 드래그 앤 드롭 게임입니다. 흩어진 데이터 셀을 오름차순으로 정렬하고, `NaN` 값은 휴지통 영역으로 제거해 클린 데이터셋을 만듭니다.",
       rules: [
         "셀을 드래그해 오름차순으로 슬롯에 정렬합니다",
         "`NaN` 카드는 휴지통(🗑) 영역으로 드래그해 제거합니다",
@@ -146,7 +146,7 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
       id: "decision-boundary",
       title: "Decision Boundary · 실시간 분류 경계선 조정 체험",
       pitch:
-        "Logistic Regression이나 Linear SVM의 결정 경계(decision boundary)를 마우스 인터랙션으로 직접 조정하는 시뮬레이터입니다. 빨강·파랑 두 클래스로 분포된 데이터 포인트를 경계선으로 정확히 분리하고, 실시간으로 정확도를 확인하세요.",
+        "Logistic Regression이나 Linear SVM의 결정 경계(decision boundary)를 마우스 인터랙션으로 직접 조정하는 시뮬레이터입니다. 빨강·파랑 두 클래스로 분포된 데이터 포인트를 경계선으로 분리하고, 실시간으로 정확도를 확인할 수 있습니다.",
       rules: [
         "두 핸들을 드래그해 경계선의 위치와 각도를 조정합니다",
         "선의 위쪽은 파랑, 아래쪽은 빨강으로 자동 분류됩니다",
@@ -182,14 +182,15 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
       id: "loss-lander",
       title: "Loss Navigator · 경사하강 파라미터 최적화 체험",
       pitch:
-        "손실(Loss) 곡면 위에 놓인 공을 전역 최솟값으로 안착시키는 인터랙티브 시뮬레이터입니다. 학습률(learning rate)을 너무 크게 설정하면 발산하고, 너무 작으면 제한 시간 내 수렴하지 못합니다. 실제 gradient descent의 하이퍼파라미터 튜닝 감각을 손으로 익혀보세요.",
+        "손실(Loss) 곡면 위에 놓인 공을 전역 최솟값으로 안착시키는 인터랙티브 시뮬레이터입니다. 학습률(learning rate)을 너무 크게 설정하면 발산하고, 너무 작으면 제한 시간 내 수렴하지 못합니다. gradient descent 하이퍼파라미터 튜닝 감각을 직접 확인할 수 있습니다.",
       rules: [
-        "공의 초기 위치는 곡선 상단 임의 지점에 배치됩니다",
-        "학습률 슬라이더를 실시간으로 조절해 하강 속도를 제어합니다",
-        "전역 최솟값 ±허용 오차 범위 내 안착 시 클리어 (시간 제한 있음)",
+        "곡선 클릭으로 공의 시작 위치를 변경할 수 있습니다",
+        "학습률 preset 또는 슬라이더로 step 크기를 조절합니다",
+        "한 스텝으로 직접 진행하거나, 자동 하강으로 흐름을 확인합니다",
+        "전역 최솟값에 안착하면 클리어, 발산/정체 시 힌트가 표시됩니다",
       ],
       performance:
-        "`svg.createMotionPath`로 공을 손실 곡선 위에 물리적으로 배치하고, `createTimer`로 매 틱마다 gradient × learning_rate 만큼 진행률을 갱신합니다. 발산 조건 감지 시 화면 shake 연출을 추가했습니다.",
+        "손실 곡선 위 공 위치를 SVG로 그리고, gradient × learning rate만큼 한 스텝씩 이동시킵니다. 기울기 방향 화살표와 step/loss 수치를 함께 표시합니다.",
     },
   },
   {
@@ -218,14 +219,14 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
       id: "scramble-decode",
       title: "핵심 메모 · 한 줄씩 확인하기",
       pitch:
-        "학습 노트에서 실제로 남겨 둔 핵심 문장을 가려 두었다가, 클릭하면 scrambleText 애니메이션과 함께 원문을 확인하는 인터랙션입니다. 난잡한 기호 대신 · 마스크로 가독성을 유지하고, 네 줄을 모두 열면 보너스 한마디가 나타납니다.",
+        "학습 노트 핵심 문장을 blur로 가려 두었다가, 클릭하면 선명해지며 원문을 확인하는 인터랙션입니다. 네 줄을 모두 열면 보너스 한마디가 표시됩니다.",
       rules: [
-        "가려진 라인(·)을 클릭하면 원문이 순서대로 드러납니다",
-        "확인한 라인은 잠기며, 재클릭해도 다시 재생되지 않습니다",
-        "네 줄 모두 확인하면 보너스 메시지가 나타납니다",
+        "흐릿한 줄을 클릭하면 blur가 풀리며 원문이 표시됩니다",
+        "확인한 줄은 잠금 해제 상태로 유지됩니다",
+        "네 줄 모두 확인하면 보너스 메시지가 표시됩니다",
       ],
       performance:
-        "잠금 상태는 구두점·공백을 유지한 · 마스크로 표시하고, `scrambleText` charset은 `·▪░▒`만 사용해 깨진 문자열처럼 보이지 않게 했습니다.",
+        "React state로 blur/filter를 제어해 클릭 즉시 원문이 드러나게 했습니다. DOM textContent 조작 대신 CSS transition으로 안정적으로 동작합니다.",
     },
   },
 ];

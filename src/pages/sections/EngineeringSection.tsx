@@ -134,25 +134,25 @@ const PILLARS = [
   {
     icon: Database,
     title: "DB / 트랜잭션",
-    text: "주문/결제 스키마 설계하고, 인덱스·커넥션 풀은 운영하면서 계속 손봐요.",
+    text: "주문/결제 스키마를 설계하고, 인덱스·커넥션 풀은 운영하면서 계속 다듬었습니다.",
     stack: ["PostgreSQL", "MySQL", "MyBatis"],
   },
   {
     icon: Server,
     title: "Spring Boot API",
-    text: "JWT, NICE/OKPOS 연동, Swagger 계약 정리. EC2 + Jenkins로 배포 자동화 95%까지 맞춰 봤어요.",
+    text: "JWT, NICE/OKPOS 연동, Swagger 계약 정리. EC2 + Jenkins로 배포 자동화 95%까지 맞춰 보았습니다.",
     stack: ["Java 21", "Spring Boot", "JWT"],
   },
   {
     icon: Boxes,
     title: "FastAPI ML 레인",
-    text: "LLM/STT는 FastAPI 레인으로 분리해요. Docker 배포, p95 180ms, 5K req/min 정도 운영해 봤어요.",
+    text: "LLM/STT는 FastAPI 레인으로 분리했습니다. Docker 배포, p95 180ms, 5K req/min 수준으로 운영해 보았습니다.",
     stack: ["Python", "FastAPI", "Docker"],
   },
   {
     icon: LineChart,
     title: "관측 / QA",
-    text: "Datadog APM이랑 GA/GTM 퍼널을 같이 봐요. E2E export JSON은 /qa 대시보드랑 연결해 두었어요.",
+    text: "Datadog APM과 GA/GTM 퍼널을 함께 봅니다. E2E export JSON은 /qa 대시보드와 연결해 두었습니다.",
     stack: ["Datadog", "GA", "Jest"],
   },
 ] as const;
@@ -163,7 +163,7 @@ const EngineeringSection: React.FC = () => {
       <SectionTitle
         eyebrow="Engineering"
         title="프론트만이 아닌, 운영까지 담당하는 엔지니어링"
-        subtitle="React/TypeScript로 화면을 다듬고, Java/Python 백엔드, DB, 관측, E2E 회귀까지 한 제품 안에서 이어 붙여요."
+        subtitle="React/TypeScript로 화면을 다듬고, Java/Python 백엔드, DB, 관측, E2E 회귀까지 한 제품 안에서 이어 붙입니다."
       />
 
       <Grid>
@@ -175,10 +175,10 @@ const EngineeringSection: React.FC = () => {
         >
           <Lead>
             예쁜 화면도 중요하지만, 장애 났을 때 원인을 좁히는 것도 같은
-            일이라고 봐요. anime.js, Framer Motion 같은 프론트부터 DB,
+            일이라고 봅니다. anime.js, Framer Motion 같은 프론트부터 DB,
             관측까지 한 흐름으로 다루고, API p95 <strong>180ms</strong>, 배포
             자동화 <strong>95%</strong>, E2E pass rate <strong>100%</strong> 정도로
-            운영 지표도 맞춰 왔어요.
+            운영 지표도 맞춰 왔습니다.
           </Lead>
 
           <Pillars>
@@ -220,7 +220,7 @@ const EngineeringSection: React.FC = () => {
               style={{ verticalAlign: "-2px", marginRight: 4 }}
               aria-hidden
             />
-            qa-report, GitHub API, GitLab export — 포트폴리오가 실제로 쓰는 데이터예요
+            qa-report, GitHub API, GitLab export — 포트폴리오가 실제로 쓰는 데이터입니다
           </Caption>
         </DashboardWrap>
       </Grid>

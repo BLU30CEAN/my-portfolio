@@ -346,13 +346,14 @@ const HeroSection: React.FC<Props> = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.18 }}
           >
-            안녕하세요. 웹·모바일·AI를 한 제품 안에서 이어 붙여 온 5년 차
-            풀스택이에요. 기능부터 넣기보다{" "}
-            <strong>사용자 시나리오 전체를 먼저 그려요</strong>. 해피 패스보다{" "}
-            <strong>엣지 케이스</strong>를 먼저 챙기는 편이고, 그 습관이 B2C
+            웹·모바일·AI를 한 제품 안에서 이어 붙여 온 5년 차 풀스택
+            개발자입니다. 기능 구현보다{" "}
+            <strong>사용자 시나리오 전체를 먼저 그리고</strong>, 해피 패스보다{" "}
+            <strong>엣지 케이스</strong>를 먼저 챙기는 편입니다. 그 습관이 B2C
             주문 <strong>2,800+/day</strong>, AI p95 <strong>1.2s</strong>, E2E{" "}
-            <strong>9/9</strong> 같은 숫자로도 이어져 왔어요. 잘 모르는 영역은
-            추정하지 않고, <strong>문서 읽고 작은 실험</strong>부터 해봐요.
+            <strong>9/9</strong> 같은 숫자로 이어졌습니다. 잘 모르는 영역은
+            추정하지 않고, <strong>문서를 읽고 작은 실험</strong>부터
+            진행합니다.
           </Description>
 
           <motion.div

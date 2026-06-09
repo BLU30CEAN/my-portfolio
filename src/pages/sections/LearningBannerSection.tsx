@@ -153,9 +153,9 @@ const LearningBannerSection: React.FC = () => {
         </Head>
 
         <Text>
-          새 스택을 만날 때마다 포트폴리오에 작은 실험을 하나씩 남겨요. E2E
-          export, contribution merge, ML 연습까지 같은 방식이에요. 아래 숫자랑
-          Technical Notes에서 자세히 볼 수 있어요.
+          새 스택을 만날 때마다 포트폴리오에 작은 실험을 하나씩 남깁니다. E2E
+          export, contribution merge, ML 연습까지 같은 방식입니다. 아래 숫자와
+          Technical Notes에서 자세히 볼 수 있습니다.
         </Text>
 
         <MetricGrid>
