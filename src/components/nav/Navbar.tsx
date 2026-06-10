@@ -242,10 +242,7 @@ const Navbar: React.FC<Props> = ({
 
   const goHome = () => {
     setOpen(false);
-    navigate("/");
-    window.setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 40);
+    navigate("/", { state: { scrollTo: "home" } });
   };
 
   return (

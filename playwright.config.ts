@@ -34,6 +34,7 @@ export default defineConfig({
       ...process.env,
       PORT,
       BROWSER: "none",
+      PUBLIC_URL: "",
     },
   },
 });

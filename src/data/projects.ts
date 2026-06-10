@@ -167,7 +167,7 @@ export const PROJECTS: ProjectEntry[] = [
       "Keyboard Input",
     ],
     actions: [
-      { label: "게임하러 가기", href: "#/kwb", kind: "external" },
+      { label: "게임하러 가기", href: "/kwb", kind: "external" },
       {
         label: "코드 살펴보기",
         href: "https://github.com/BLU30CEAN/korean-baseball",

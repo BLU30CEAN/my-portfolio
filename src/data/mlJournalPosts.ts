@@ -9,7 +9,7 @@ export const ML_JOURNAL_HERO_MEDIA_ENABLED = false;
 export type MiniGameId =
   | "cell-sorter"
   | "decision-boundary"
-  | "loss-lander"
+  // | "loss-lander" — gradient-descent 노트 비노출 (시뮬레이터 loss/gradient 식 수정 전)
   | "scramble-decode";
 
 export interface MlJournalSection {
@@ -47,7 +47,7 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
       {
         heading: "구현",
         body:
-          "CRA + HashRouter SPA에 Playwright 4 suite / 9 spec. `npm run test:e2e:export` → `public/data/qa-report.json` → `/qa` React dashboard. Home, Nav, Journal, QA route smoke coverage.",
+          "CRA + BrowserRouter SPA에 Playwright 4 suite / 9 spec. `npm run test:e2e:export` → `public/data/qa-report.json` → `/qa` React dashboard. Home, Nav, Journal, QA route smoke coverage.",
       },
       {
         heading: "지표",
@@ -57,7 +57,7 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
       {
         heading: "스택",
         body:
-          "Playwright, TypeScript, webServer env.PORT=3100, HashRouter `/#/path` goto pattern, JSON export script, no-cors visit webhook excluded from E2E assert.",
+          "Playwright, TypeScript, webServer env.PORT=3100, BrowserRouter + GitHub Pages SPA fallback, JSON export script, no-cors visit webhook excluded from E2E assert.",
       },
     ],
   },
@@ -156,6 +156,8 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
         "`createDraggable` 두 개로 선분의 양 끝점을 제어하고, 매 프레임 `utils.lerp`로 정확도 카운터를 부드럽게 보간합니다. SVG 내 점·선 색상은 즉시 반영됩니다.",
     },
   },
+  /*
+  // gradient-descent — Loss Navigator 시뮬레이터 계산식 미검증, 노출 보류
   {
     id: "gradient-descent",
     title: "Gradient Descent를 직접 굴려 보며 익히기",
@@ -193,6 +195,7 @@ export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
         "손실 곡선 위 공 위치를 SVG로 그리고, gradient × learning rate만큼 한 스텝씩 이동시킵니다. 기울기 방향 화살표와 step/loss 수치를 함께 표시합니다.",
     },
   },
+  */
   {
     id: "data-decoder",
     title: "흐려진 노트를 한 줄씩 풀어 가는 인터랙션",

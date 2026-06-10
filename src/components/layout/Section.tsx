@@ -24,6 +24,7 @@ const Wrap = styled.section<{ $fullHeight: boolean; $glow: boolean }>`
   padding: clamp(4rem, 9vw, 7rem) 1.5rem;
   overflow: hidden;
   box-sizing: border-box;
+  scroll-margin-top: 88px;
 
   ${(p) =>
     p.$fullHeight &&

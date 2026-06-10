@@ -51,7 +51,6 @@ function currentPath(location: {
 
 /**
  * 앱 최초 진입 시 세션당 1회 Google Sheets 방문 로그 전송.
- * HashRouter 기준 pathname + hash 포함.
  */
 export function useVisitTracker() {
   const location = useLocation();

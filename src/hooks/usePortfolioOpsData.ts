@@ -5,15 +5,7 @@ import { useQAReport } from "./useQAReport";
 type GitLabArchive = {
   total: number;
   exportedAt: string;
-};
-
-export type OpsFeedStatus = "loading" | "healthy" | "degraded" | "offline";
-
-export type OpsFeed = {
-  id: string;
-  name: string;
-  detail: string;
-  status: OpsFeedStatus;
+  contributions?: Array<{ date: string; count: number }>;
 };
 
 export type OpsEvent = {
@@ -35,6 +27,31 @@ function formatRelative(iso: string): string {
   const days = Math.floor(hours / 24);
   return `${days}d ago`;
 }
+
+function eventTimestamp(iso: string): number {
+  const ts = new Date(iso).getTime();
+  return Number.isNaN(ts) ? 0 : ts;
+}
+
+function pushEvent(
+  rows: Array<OpsEvent & { at: number }>,
+  level: OpsEvent["level"],
+  message: string,
+  iso: string,
+) {
+  const at = eventTimestamp(iso);
+  if (!at) return;
+  rows.push({ level, message, ago: formatRelative(iso), at });
+}
+
+export type OpsFeedStatus = "loading" | "healthy" | "degraded" | "offline";
+
+export type OpsFeed = {
+  id: string;
+  name: string;
+  detail: string;
+  status: OpsFeedStatus;
+};
 
 function formatDuration(ms: number): string {
   if (ms < 1000) return `${Math.round(ms)}ms`;
@@ -122,36 +139,84 @@ export function usePortfolioOpsData() {
   }, [qa, github, gitlab, gitlabError]);
 
   const events = useMemo<OpsEvent[]>(() => {
-    const rows: OpsEvent[] = [];
+    const rows: Array<OpsEvent & { at: number }> = [];
 
     if (qa.data?.history?.length) {
-      for (const run of qa.data.history.slice(0, 3)) {
-        rows.push({
-          level: run.failed > 0 ? "warn" : "ok",
-          message: `E2E ${run.passed}/${run.total} passed (${run.passRate}%)`,
-          ago: formatRelative(run.runAt),
-        });
+      for (const run of qa.data.history) {
+        pushEvent(
+          rows,
+          run.failed > 0 ? "warn" : "ok",
+          `E2E ${run.passed}/${run.total} passed (${run.passRate}%)`,
+          run.runAt,
+        );
       }
     }
 
     if (qa.data?.generatedAt) {
-      rows.push({
-        level: "info",
-        message: `Report export — ${qa.data.runner} / ${qa.data.environment}`,
-        ago: formatRelative(qa.data.generatedAt),
-      });
+      pushEvent(
+        rows,
+        "info",
+        `Report export — ${qa.data.runner} / ${qa.data.environment}`,
+        qa.data.generatedAt,
+      );
+    }
+
+    for (const defect of qa.data?.defects ?? []) {
+      if (defect.status === "open") {
+        pushEvent(
+          rows,
+          defect.severity === "critical" ? "warn" : "info",
+          `Defect open — ${defect.suite} / ${defect.title}`,
+          defect.lastSeen,
+        );
+      } else if (defect.resolvedAt) {
+        pushEvent(
+          rows,
+          "ok",
+          `Defect resolved — ${defect.suite} / ${defect.title}`,
+          defect.resolvedAt,
+        );
+      }
+    }
+
+    const latestGh = [...(github.data?.contributions ?? [])]
+      .filter((day) => day.count > 0)
+      .sort((a, b) => b.date.localeCompare(a.date))[0];
+    if (latestGh) {
+      pushEvent(
+        rows,
+        "info",
+        `GitHub activity — ${latestGh.count} contrib on ${latestGh.date}`,
+        `${latestGh.date}T23:59:59.000Z`,
+      );
     }
 
     if (gitlab?.exportedAt) {
-      rows.push({
-        level: "info",
-        message: `GitLab archive refresh — ${gitlab.total} events`,
-        ago: formatRelative(gitlab.exportedAt),
-      });
+      pushEvent(
+        rows,
+        "info",
+        `GitLab archive refresh — ${gitlab.total} events`,
+        gitlab.exportedAt,
+      );
     }
 
-    return rows.slice(0, 4);
-  }, [qa.data, gitlab]);
+    const latestGl = [...(gitlab?.contributions ?? [])]
+      .filter((day) => day.count > 0)
+      .sort((a, b) => b.date.localeCompare(a.date))[0];
+    if (latestGl) {
+      pushEvent(
+        rows,
+        "info",
+        `GitLab activity — ${latestGl.count} events on ${latestGl.date}`,
+        `${latestGl.date}T23:59:59.000Z`,
+      );
+    }
+
+    return rows
+      .sort((a, b) => b.at - a.at)
+      .slice(0, 6)
+      .map(({ at: _at, ...event }) => event);
+  }, [qa.data, github.data, gitlab]);
 
   const trend = useMemo(() => {
     const history = qa.data?.history ?? [];

@@ -16,6 +16,7 @@ import {
 import { useQAReport } from "../hooks/useQAReport";
 import { useQAUnlock } from "../hooks/useQAUnlock";
 import { maskReportForView } from "../utils/qaMasking";
+import { useRouteSectionScroll } from "../hooks/useRouteSectionScroll";
 import type { DefectSeverity, DefectStatus } from "../types/qaReport";
 
 const PageWrap = styled.div`
@@ -126,7 +127,8 @@ const Split = styled.div`
   }
 `;
 
-const Panel = styled.div`
+const Panel = styled.section`
+  scroll-margin-top: 88px;
   border-radius: ${(p) => p.theme.radii.lg};
   border: 1px solid ${(p) => p.theme.colors.border};
   background: ${(p) => p.theme.colors.surface};
@@ -324,6 +326,8 @@ function QADashboardPage() {
     useQAUnlock();
   const [pw, setPw] = useState("");
 
+  useRouteSectionScroll();
+
   const viewData = useMemo(
     () => (data ? maskReportForView(data, unlocked) : null),
     [data, unlocked],
@@ -371,7 +375,7 @@ function QADashboardPage() {
           Sheets에도 쌓입니다.
         </Lead>
 
-        <UnlockBar data-testid="qa-unlock-form">
+        <UnlockBar id="qa-unlock-form" data-testid="qa-unlock-form">
           {unlocked ? (
             <>
               <UnlockHint>관리자 모드 — 상세 데이터 표시 중</UnlockHint>
@@ -407,7 +411,8 @@ function QADashboardPage() {
               {unlockError && <UnlockError>{unlockError}</UnlockError>}
               {!passwordConfigured && (
                 <UnlockError>
-                  .env의 REACT_APP_QA_PW 값을 확인하세요
+                  빌드에 REACT_APP_QA_PW가 없습니다. 로컬 .env 설정 후{" "}
+                  <Mono>npm run deploy</Mono>가 필요합니다.
                 </UnlockError>
               )}
             </form>
@@ -469,7 +474,7 @@ function QADashboardPage() {
             </KpiGrid>
 
             <Split>
-              <Panel data-testid="qa-suite-table">
+              <Panel id="qa-suite-table" data-testid="qa-suite-table">
                 <PanelHead>
                   <ClipboardList
                     size={14}
@@ -510,7 +515,7 @@ function QADashboardPage() {
                 </Table>
               </Panel>
 
-              <Panel data-testid="qa-run-history">
+              <Panel id="qa-run-history" data-testid="qa-run-history">
                 <PanelHead>
                   <Clock
                     size={14}
@@ -539,7 +544,7 @@ function QADashboardPage() {
               </Panel>
             </Split>
 
-            <Panel data-testid="qa-defect-log">
+            <Panel id="qa-defect-log" data-testid="qa-defect-log">
               <PanelHead>
                 <FlaskConical
                   size={14}

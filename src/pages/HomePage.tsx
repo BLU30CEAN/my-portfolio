@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import React from "react";
 
 import HeroSection from "./sections/HeroSection";
 import AboutSection from "./sections/AboutSection";
@@ -10,13 +9,10 @@ import GitHubActivitySection from "./sections/GitHubActivitySection";
 import LearningBannerSection from "./sections/LearningBannerSection";
 import ReferencesSection from "./sections/ReferencesSection";
 import ContactSection from "./sections/ContactSection";
-import {
-  scrollToHomeSection,
-  type HomeScrollState,
-} from "../utils/homeNavigation";
+import { useRouteSectionScroll } from "../hooks/useRouteSectionScroll";
+import { scrollToHomeSection } from "../utils/homeNavigation";
 
 const HomePage: React.FC = () => {
-  const location = useLocation();
   const displayName = process.env.REACT_APP_PERSONAL_NAME || "EJ";
   const email =
     process.env.REACT_APP_PERSONAL_EMAIL || "ej.an.company@gmail.com";
@@ -25,10 +21,7 @@ const HomePage: React.FC = () => {
 
   const scrollToProjects = () => scrollToHomeSection("projects");
 
-  useEffect(() => {
-    const target = (location.state as HomeScrollState | null)?.scrollTo;
-    if (target) scrollToHomeSection(target);
-  }, [location.state]);
+  useRouteSectionScroll({ home: true });
 
   return (
     <>

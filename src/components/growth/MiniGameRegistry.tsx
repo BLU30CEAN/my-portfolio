@@ -2,13 +2,13 @@ import React from "react";
 import type { MiniGameId } from "../../data/mlJournalPosts";
 import CellSorterGame from "./games/CellSorterGame";
 import DecisionBoundaryGame from "./games/DecisionBoundaryGame";
-import LossLanderGame from "./games/LossLanderGame";
+// import LossLanderGame from "./games/LossLanderGame";
 import ScrambleDecodeGame from "./games/ScrambleDecodeGame";
 
 const REGISTRY: Record<MiniGameId, React.ComponentType> = {
   "cell-sorter": CellSorterGame,
   "decision-boundary": DecisionBoundaryGame,
-  "loss-lander": LossLanderGame,
+  // "loss-lander": LossLanderGame, — gradient-descent 노트 비노출
   "scramble-decode": ScrambleDecodeGame,
 };
 

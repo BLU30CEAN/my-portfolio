@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-/** 레거시 `/#/projects` → 홈 Projects 섹션 */
+/** 레거시 `/#/projects` 또는 `/projects` → 홈 Projects 섹션 */
 function ProjectsRedirect() {
   const navigate = useNavigate();
 

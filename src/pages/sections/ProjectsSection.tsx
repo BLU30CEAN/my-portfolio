@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Briefcase, Gamepad2, ExternalLink, Github, Ban } from "lucide-react";
 import Section from "../../components/layout/Section";
@@ -253,6 +254,10 @@ const ProjectsSection: React.FC = () => {
                   <Actions>
                     {p.actions.map((a) => {
                       const disabled = a.kind === "disabled";
+                      const internal =
+                        !disabled &&
+                        a.href.startsWith("/") &&
+                        !a.href.startsWith("//");
                       const isGithub = a.href.includes("github.com");
                       const icon = disabled ? (
                         <Ban size={14} />
@@ -261,6 +266,19 @@ const ProjectsSection: React.FC = () => {
                       ) : (
                         <ExternalLink size={14} />
                       );
+                      if (internal) {
+                        return (
+                          <ActionBtn
+                            key={a.label}
+                            as={Link}
+                            to={a.href}
+                            $disabled={false}
+                          >
+                            {icon}
+                            {a.label}
+                          </ActionBtn>
+                        );
+                      }
                       return (
                         <ActionBtn
                           key={a.label}

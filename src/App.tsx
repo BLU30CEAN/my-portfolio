@@ -1,6 +1,6 @@
 import React, { Suspense, lazy, useCallback, useState } from "react";
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Routes,
   Route,
   useLocation,
@@ -17,6 +17,12 @@ import ScrollToTop from "./components/nav/ScrollToTop";
 import { useActiveSection } from "./hooks/useActiveSection";
 import { useScrollFlags } from "./hooks/useScrollFlags";
 import { useVisitTracker } from "./hooks/useVisitTracker";
+import { useLegacyHashRedirect } from "./hooks/useLegacyHashRedirect";
+import {
+  navigateToHomeSection,
+  scrollToHomeSection,
+} from "./utils/homeNavigation";
+import { ROUTER_BASENAME } from "./utils/routerBasename";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
@@ -87,6 +93,7 @@ function AppShell() {
   const location = useLocation();
   const isHome = location.pathname === "/";
   useVisitTracker();
+  useLegacyHashRedirect();
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const { scrolled, showTop } = useScrollFlags();
@@ -103,15 +110,10 @@ function AppShell() {
 
   const goSection = useCallback(
     (id: string) => {
-      const scroll = () =>
-        document
-          .getElementById(id)
-          ?.scrollIntoView({ behavior: "smooth", block: "start" });
-      if (!isHome) {
-        navigate("/");
-        window.setTimeout(scroll, 80);
+      if (isHome) {
+        scrollToHomeSection(id);
       } else {
-        scroll();
+        navigateToHomeSection(navigate, id);
       }
     },
     [isHome, navigate],
@@ -174,7 +176,7 @@ function App() {
     <CustomThemeProvider>
       <GlobalStyle />
       <ToastProvider>
-        <Router>
+        <Router basename={ROUTER_BASENAME}>
           <AppShell />
         </Router>
       </ToastProvider>

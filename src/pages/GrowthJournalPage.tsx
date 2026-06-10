@@ -11,6 +11,7 @@ import {
 } from "../data/mlJournalPosts";
 import MiniGameCard from "../components/growth/MiniGameCard";
 import MiniGameRenderer from "../components/growth/MiniGameRegistry";
+import { useRouteSectionScroll } from "../hooks/useRouteSectionScroll";
 
 const PageWrap = styled.div`
   min-height: 100vh;
@@ -69,6 +70,7 @@ const PageLead = styled.p`
 `;
 
 const Article = styled(motion.article)`
+  scroll-margin-top: 88px;
   padding-bottom: 3.5rem;
   margin-bottom: 3rem;
   border-bottom: 1px solid ${(props) => props.theme.colors.border};
@@ -224,6 +226,8 @@ function GrowthJournalPage() {
   const navigate = useNavigate();
   const rootRef = useRef<HTMLDivElement | null>(null);
   const titleRef = useRef<HTMLHeadingElement | null>(null);
+
+  useRouteSectionScroll();
 
   // page-level anime.js intro: splitText on title char-by-char, scramble on each tag
   useEffect(() => {

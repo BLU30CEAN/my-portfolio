@@ -619,11 +619,13 @@ const OpsDashboard: React.FC = () => {
             <SubTitle>Recent events</SubTitle>
             {ops.events.length === 0 ? (
               <EmptyHint>
-                Run <code>npm run test:e2e:export</code> to populate QA history.
+                실데이터가 아직 없습니다.{" "}
+                <code>npm run test:e2e:export</code> 실행 후 qa-report.json이
+                생성되면 E2E 이력이 표시됩니다.
               </EmptyHint>
             ) : (
-              ops.events.map((event) => (
-                <AlertRow key={`${event.message}-${event.ago}`} data-row>
+              ops.events.map((event, index) => (
+                <AlertRow key={`${event.message}-${event.ago}-${index}`} data-row>
                   <AlertDot $level={event.level} />
                   <span>{event.message}</span>
                   <AlertAgo>{event.ago}</AlertAgo>
