@@ -136,7 +136,7 @@ const LinkBtn = styled.button<{ $active: boolean }>`
   }
 `;
 
-const LinkUnderline = styled(motion.span)`
+const LinkUnderline = styled.span<{ $show: boolean }>`
   position: absolute;
   left: 0;
   right: 0;
@@ -144,6 +144,13 @@ const LinkUnderline = styled(motion.span)`
   height: 2px;
   border-radius: 2px;
   background: ${(p) => p.theme.colors.gradient};
+  transform: scaleX(${(p) => (p.$show ? 1 : 0)});
+  opacity: ${(p) => (p.$show ? 1 : 0)};
+  transform-origin: center;
+  transition:
+    transform ${(p) => p.theme.motion.durFast} ${(p) => p.theme.motion.easeOut},
+    opacity ${(p) => p.theme.motion.durFast} ${(p) => p.theme.motion.easeOut};
+  pointer-events: none;
 `;
 
 const MobileToggle = styled.button`
@@ -269,16 +276,7 @@ const Navbar: React.FC<Props> = ({
                 aria-current={active ? "page" : undefined}
               >
                 {item.label}
-                {active && (
-                  <LinkUnderline
-                    layoutId="nav-underline"
-                    transition={{
-                      type: "spring",
-                      stiffness: 380,
-                      damping: 30,
-                    }}
-                  />
-                )}
+                <LinkUnderline $show={active} aria-hidden />
               </LinkBtn>
             );
           })}

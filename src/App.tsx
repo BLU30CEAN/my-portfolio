@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useCallback, useState } from "react";
+import React, { Suspense, lazy, useCallback, useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -96,8 +96,19 @@ function AppShell() {
   useLegacyHashRedirect();
 
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [sectionOverride, setSectionOverride] = useState<string | null>(null);
   const { scrolled, showTop } = useScrollFlags();
   const activeSection = useActiveSection(HOME_SECTION_IDS, isHome);
+
+  useEffect(() => {
+    if (!isHome) setSectionOverride(null);
+  }, [isHome]);
+
+  useEffect(() => {
+    if (sectionOverride && activeSection === sectionOverride) {
+      setSectionOverride(null);
+    }
+  }, [sectionOverride, activeSection]);
 
   // 현재 활성 nav 항목 id 계산
   const activeNavId = !isHome
@@ -106,10 +117,11 @@ function AppShell() {
       : location.pathname === "/qa"
         ? "qa"
         : ""
-    : activeSection;
+    : sectionOverride ?? activeSection;
 
   const goSection = useCallback(
     (id: string) => {
+      setSectionOverride(id);
       if (isHome) {
         scrollToHomeSection(id);
       } else {
