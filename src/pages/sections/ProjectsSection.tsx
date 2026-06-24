@@ -254,8 +254,11 @@ const ProjectsSection: React.FC = () => {
                   <Actions>
                     {p.actions.map((a) => {
                       const disabled = a.kind === "disabled";
+                      const asset = a.kind === "asset";
                       const internal =
                         !disabled &&
+                        !asset &&
+                        a.kind !== "external" &&
                         a.href.startsWith("/") &&
                         !a.href.startsWith("//");
                       const isGithub = a.href.includes("github.com");
@@ -283,8 +286,16 @@ const ProjectsSection: React.FC = () => {
                         <ActionBtn
                           key={a.label}
                           href={disabled ? undefined : a.href}
-                          target={disabled ? undefined : "_blank"}
-                          rel="noopener noreferrer"
+                          target={
+                            disabled || asset || a.kind !== "external"
+                              ? undefined
+                              : "_blank"
+                          }
+                          rel={
+                            disabled || asset || a.kind !== "external"
+                              ? undefined
+                              : "noopener noreferrer"
+                          }
                           $disabled={disabled}
                           aria-disabled={disabled}
                           onClick={(e) => {

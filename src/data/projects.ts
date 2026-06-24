@@ -3,8 +3,8 @@ export type ProjectTab = "professional" | "personal";
 export type ProjectAction = {
   label: string;
   href: string;
-  /** 외부 새 탭 / 내부 라우트 / 비활성 표시 */
-  kind?: "external" | "disabled";
+  /** 외부 새 탭 / public 정적 자산(같은 탭) / 내부 라우트 / 비활성 표시 */
+  kind?: "external" | "asset" | "disabled";
 };
 
 export type ProjectEntry = {
@@ -26,13 +26,18 @@ export const PROJECTS: ProjectEntry[] = [
     tab: "professional",
     title: "앱인앱 주문채널",
     description:
-      "React(TypeScript) 기반 앱인앱 주문채널 프론트엔드와 Android Native 앱의 WebView 연동을 직접 이끌었습니다. Spring Boot·PostgreSQL 주문 API, AWS EC2·Jenkins 배포 자동화, JWT 인증, NICE Payments·OKPOS 연동, Datadog·GA·GTM 분석 환경까지 한 흐름으로 정돈했습니다.",
+      "Spring Boot·PostgreSQL 주문/결제 E2E API 설계, NICE Payments·OKPOS PG 연동(승인·취소·콜백), JWT 인증, Datadog·GA·GTM 운영 모니터링까지 담당했습니다. React/TypeScript 프론트와 Android WebView 연동, AWS EC2·Jenkins 배포 자동화도 같은 채널 안에서 맞췄습니다.",
     tech: [
-      "React",
-      "TypeScript",
       "Spring Boot",
       "PostgreSQL",
+      "JWT",
+      "Swagger",
+      "NICE Payments",
+      "OKPOS",
+      "Jenkins",
       "AWS",
+      "React",
+      "TypeScript",
       "DataDog",
       "GTM",
       "GA",
@@ -49,7 +54,7 @@ export const PROJECTS: ProjectEntry[] = [
     title: "LLM 오케스트레이션 API",
     description:
       "Spring Boot 메인 API와 Python FastAPI 기반 ML 서비스를 별도 레인으로 분리한 마이크로서비스 구조를 직접 설계했습니다. Swagger 문서화, 비동기 통신, Docker 배포를 통해 새로운 모델·기능을 안정적으로 얹어 나갈 수 있는 백엔드 통합 환경을 마련했습니다.",
-    tech: ["Java", "Spring Boot", "Python", "FastAPI", "PostgreSQL", "Docker"],
+    tech: ["Java", "Spring Boot", "Python", "FastAPI", "PostgreSQL", "Docker", "Swagger", "Spring Batch"],
     metrics: [
       { icon: "zap", label: "처리 속도", value: "180ms", color: "#667eea" },
       { icon: "target", label: "가용성", value: "99.9%", color: "#43e97b" },
@@ -88,8 +93,8 @@ export const PROJECTS: ProjectEntry[] = [
     tab: "professional",
     title: "결제 시스템 연동",
     description:
-      "NICE Payments와 OKPOS 연동으로 주문·결제 흐름을 매끄럽게 이었습니다. 로그인 시 불필요한 DB 조회를 줄이고 JWT Access·Refresh Token 인증을 도입해 보안성과 응답 속도를 동시에 끌어 올렸습니다.",
-    tech: ["Java", "Spring Boot", "JWT", "Payments"],
+      "NICE Payments·OKPOS PG/VAN 연동으로 주문/결제 상태 전이, 승인·취소·정산·콜백 처리를 구현했습니다. JWT Access/Refresh Token 인증, PostgreSQL 정합성 확인, Datadog·API 로그 기반 RCA까지 같은 트랜잭션 흐름으로 맞췄습니다.",
+    tech: ["Java", "Spring Boot", "PostgreSQL", "JWT", "NICE Payments", "OKPOS", "Swagger", "Datadog"],
   },
   {
     tab: "professional",
@@ -184,8 +189,8 @@ export const PROJECTS: ProjectEntry[] = [
     actions: [
       {
         label: "체험하러 가기",
-        href: "https://blu30cean.github.io/pocket-poker",
-        kind: "external",
+        href: `${process.env.PUBLIC_URL || ""}/pocket-poker/`,
+        kind: "asset",
       },
       {
         label: "코드 살펴보기",
