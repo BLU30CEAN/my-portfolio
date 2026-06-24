@@ -135,13 +135,13 @@ const PILLARS = [
     icon: Database,
     title: "DB / 트랜잭션",
     text: "주문/결제 스키마를 설계하고, 인덱스·커넥션 풀은 운영하면서 계속 다듬었습니다.",
-    stack: ["PostgreSQL", "MySQL", "MyBatis"],
+    stack: ["PostgreSQL", "MySQL", "MyBatis", "Spring Batch"],
   },
   {
     icon: Server,
     title: "Spring Boot API",
-    text: "JWT, NICE/OKPOS 연동, Swagger 계약 정리. EC2 + Jenkins로 배포 자동화 95%까지 맞춰 보았습니다.",
-    stack: ["Java 21", "Spring Boot", "JWT"],
+    text: "주문/결제 E2E API, JWT, NICE/OKPOS PG 연동, Swagger API 계약. EC2 + Jenkins 배포 자동화까지 맡았습니다.",
+    stack: ["Java 21", "Spring Boot", "JWT", "Swagger"],
   },
   {
     icon: Boxes,
@@ -153,7 +153,7 @@ const PILLARS = [
     icon: LineChart,
     title: "관측 / QA",
     text: "Datadog APM과 GA/GTM 퍼널을 함께 봅니다. E2E export JSON은 /qa 대시보드와 연결해 두었습니다.",
-    stack: ["Datadog", "GA", "Jest"],
+    stack: ["Datadog", "GA", "Playwright"],
   },
 ] as const;
 

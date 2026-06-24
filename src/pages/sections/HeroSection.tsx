@@ -245,21 +245,22 @@ type Props = {
 };
 
 const HERO_CHIPS = [
-  "React / TypeScript",
   "Java / Spring Boot",
+  "PostgreSQL / JWT",
+  "NICE PG / OKPOS",
   "Python / FastAPI",
-  "PostgreSQL",
   "Datadog",
-  "WebRTC",
+  "React / TypeScript",
 ];
 
 const TECH_STACK_LINES = [
-  { raw: 'const frontend = ["React", "TypeScript", "anime.js"];', delay: 400 },
-  { raw: 'const backend = ["Spring Boot", "FastAPI", "PostgreSQL"];', delay: 400 },
+  { raw: 'const backend = ["Spring Boot", "FastAPI", "PostgreSQL", "MyBatis"];', delay: 400 },
+  { raw: 'const payment = ["NICE PG", "OKPOS", "JWT", "Swagger"];', delay: 400 },
   { raw: 'const observability = ["Datadog", "GA", "GTM"];', delay: 400 },
+  { raw: 'const frontend = ["React", "TypeScript", "React Native"];', delay: 400 },
   { raw: 'const testing = ["Playwright", "Jest", "Testing Library"];', delay: 400 },
   { raw: 'const ai = ["OpenAI", "LLM Orchestration", "WebRTC"];', delay: 400 },
-  { raw: '// 운영 단계까지 책임지는 E2E 경험', delay: 0 },
+  { raw: '// 주문/결제 E2E API부터 운영 RCA까지', delay: 0 },
 ];
 
 const HeroSection: React.FC<Props> = ({

@@ -78,6 +78,22 @@
         "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
       },
       {
+        "name": "Spring Batch",
+        "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+      },
+      {
+        "name": "MyBatis",
+        "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mybatis/mybatis-original.svg"
+      },
+      {
+        "name": "JWT",
+        "image": "https://cdn.simpleicons.org/jsonwebtokens/000000"
+      },
+      {
+        "name": "Swagger",
+        "image": "https://cdn.simpleicons.org/swagger/85EA2D"
+      },
+      {
         "name": "Maven",
         "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/maven/maven-original.svg"
       },
@@ -88,6 +104,27 @@
       {
         "name": "Python",
         "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+      }
+    ]
+  },
+  {
+    "category": "결제 · 외부 연동",
+    "technologies": [
+      {
+        "name": "NICE Payments",
+        "image": "https://cdn.simpleicons.org/nfc/002E5A"
+      },
+      {
+        "name": "OKPOS",
+        "image": "https://cdn.simpleicons.org/pointofsale/2563EB"
+      },
+      {
+        "name": "REST API",
+        "image": "https://cdn.simpleicons.org/openapiinitiative/6BA539"
+      },
+      {
+        "name": "WebSocket",
+        "image": "https://cdn.simpleicons.org/socketdotio/010101"
       }
     ]
   },
