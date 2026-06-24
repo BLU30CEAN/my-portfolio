@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>pocket-poker · GTO를 도구로</title>
+<meta name="description" content="Phase 1 — EV 미니 계산기. GTO 솔버 출력이 아니라 거친 근사 도구.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%83%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="design-tokens.css">
+<link rel="stylesheet" href="styles.css">
+</head><body data-theme="dark">
+<main class="shell">
+  <header class="cmd-bar"><span class="prompt">$</span> pocket-poker --status=experimental</header>
+
+  <section class="hero">
+    <div class="brand-row">
+      <span class="brand-dot"></span>
+      <span class="brand-text">BLU30CEAN / pocket-poker</span>
+      <span class="bc-chip bc-tag-experiment">experimental · v0.1</span>
+    </div>
+    <h1>🃏 GTO를 게임이 아니라 <em>도구</em>로.</h1>
+    <p class="lede">
+      포지션·핸드·팟·상대 수를 넣으면 거친 EV 근사가 돌아간다.<br>
+      솔버 출력이 아니라 일상에서 굴리는 직관 보강 장치.
+    </p>
+  </section>
+
+  <section class="calc bc-card">
+    <h2>EV 미니 계산기</h2>
+    <form id="ev-form" class="grid">
+      <label>포지션
+        <select name="position">
+          <option value="EP">EP (UTG)</option>
+          <option value="MP">MP</option>
+          <option value="CO">CO</option>
+          <option value="BTN" selected>BTN</option>
+          <option value="SB">SB</option>
+          <option value="BB">BB</option>
+        </select>
+      </label>
+      <label>상대 수
+        <input type="number" name="opponents" min="1" max="8" value="2">
+      </label>
+      <label>핸드
+        <input type="text" name="hand" value="AKo" placeholder="예: AKo, QQ, 76s">
+      </label>
+      <label>팟 (BB)
+        <input type="number" name="pot" min="1" max="500" value="15">
+      </label>
+    </form>
+
+    <div class="result" id="result" aria-live="polite">
+      <div class="result-row"><span>승률</span><b id="win">—</b></div>
+      <div class="result-row"><span>EV</span><b id="ev">—</b></div>
+      <div class="result-row"><span>추천</span><b id="rec">—</b></div>
+      <div class="result-row"><span>리스크</span><b id="risk">—</b></div>
+    </div>
+    <p class="muted">
+      ⓘ 본 결과는 거친 근사다. PioSolver / GTO Wizard 같은 솔버 출력이 아니다.
+      Phase 2 에서 pre-flop 차트 + post-flop street planner 로 확장한다.
+    </p>
+  </section>
+
+  <section class="roadmap">
+    <h2>roadmap</h2>
+    <ul>
+      <li><span class="bc-chip bc-tag-playful">phase 1</span> static EV calc <small>(현재)</small></li>
+      <li><span class="bc-chip">phase 2</span> Expo Web · pre-flop charts</li>
+      <li><span class="bc-chip">phase 3</span> post-flop street planner</li>
+    </ul>
+  </section>
+
+  <footer class="foot">
+    <span>EJ · 실험으로 증명하는 사람</span>
+    <a href="https://github.com/BLU30CEAN/pocket-poker" target="_blank" rel="noopener">github</a>
+  </footer>
+</main>
+
+<script src="app.js"></script>
+</body></html>
