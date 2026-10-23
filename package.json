@@ -35,6 +35,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "verify:tech-icons": "node scripts/verify-tech-stack-icons.mjs",
+    "docker:up": "docker compose up -d --build",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f api",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },

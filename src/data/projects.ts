@@ -92,6 +92,23 @@ export const PROJECTS: ProjectEntry[] = [
   },
   {
     tab: "personal",
+    title: "Admin Studio (포트폴리오)",
+    description:
+      "개인 실험용 관리자 페이지 스튜디오. A/B 템플릿·단계별 파이프라인·CSV/Excel PostgreSQL 적재 허브를 CRA + FastAPI + Docker로 묶었다. Express 레거시(server/)와 API(api/)를 sibling으로 두는 경량 모노레포.",
+    tech: [
+      "React",
+      "FastAPI",
+      "PostgreSQL",
+      "Docker",
+      "CSV",
+      "Excel",
+    ],
+    actions: [
+      { label: "스튜디오 열기", href: "#/admin-studio", kind: "external" },
+    ],
+  },
+  {
+    tab: "personal",
     title: "Find Carrot Game",
     description:
       "React와 TypeScript로 만든 인터랙티브 미니게임입니다. 사용자 경험을 우선에 둔 UI·UX 설계, 단단한 게임 로직, 상태 관리, 애니메이션 연출을 한 화면에 담아 보았습니다.",
