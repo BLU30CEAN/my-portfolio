@@ -61,6 +61,36 @@ export const DEV_REFERENCE_ENTRIES: readonly DevReferenceEntry[] = [
     note: "Python 서비스·OpenAPI 노출 패턴.",
   },
   {
+    tag: "Agent",
+    title: "React Flow Documentation",
+    href: "https://reactflow.dev/learn",
+    note: "에이전트 플로우 캔버스·노드·엣지·레이아웃 설계 기준.",
+  },
+  {
+    tag: "LLM",
+    title: "vLLM Documentation",
+    href: "https://docs.vllm.ai/en/latest/",
+    note: "OpenAI 호환 추론 서버·배치·스루풋 튜닝 레퍼런스.",
+  },
+  {
+    tag: "Agent",
+    title: "LangChain Documentation",
+    href: "https://python.langchain.com/docs/introduction/",
+    note: "체인·도구 연동·MCP 실험 트랙 근거.",
+  },
+  {
+    tag: "Obs",
+    title: "Langfuse Documentation",
+    href: "https://langfuse.com/docs",
+    note: "트레이스·평가·데이터셋 관측(내부 연동 기준).",
+  },
+  {
+    tag: "Protocol",
+    title: "Model Context Protocol",
+    href: "https://modelcontextprotocol.io/introduction",
+    note: "MCP 서버·클라이언트·도구 계약.",
+  },
+  {
     tag: "DB",
     title: "PostgreSQL Documentation",
     href: "https://www.postgresql.org/docs/current/",
