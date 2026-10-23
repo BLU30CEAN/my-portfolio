@@ -46,6 +46,20 @@ export type ImportResult = {
   preview_columns: string[];
 };
 
+export type ImportBatch = {
+  id: string;
+  file_name: string;
+  mode: string;
+  row_count: number;
+  inserted: number;
+  updated: number;
+  skipped: number;
+  errors: string[];
+  created_at: string;
+};
+
+export const ADMIN_STUDIO_SAMPLE_CSV = `${process.env.PUBLIC_URL || ""}/admin-studio/samples/catalog-seed.csv`;
+
 async function request<T>(
   path: string,
   init: RequestInit = {},
@@ -134,4 +148,6 @@ export const adminStudioApi = {
       body: fd,
     }, true);
   },
+  listImports: (entityId: string) =>
+    request<ImportBatch[]>(`/entities/${entityId}/imports`),
 };

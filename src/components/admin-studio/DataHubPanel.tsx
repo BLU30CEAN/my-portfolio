@@ -3,13 +3,17 @@ import styled from "styled-components";
 import { Loader2, Upload, Plus, Trash2, RefreshCw } from "lucide-react";
 import {
   adminStudioApi,
+  ADMIN_STUDIO_SAMPLE_CSV,
   type AdminEntity,
   type AdminRecord,
+  type ImportBatch,
   type ImportResult,
   getAdminApiKey,
   setAdminApiKey,
 } from "../../lib/adminStudioApi";
 import { useToast } from "../ui/Toast";
+import SidebarCatalogDemo from "./SidebarCatalogDemo";
+import type { AdminTemplateId } from "../../data/adminTemplates";
 
 const Shell = styled.div`
   display: flex;
@@ -135,9 +139,10 @@ type HubTab = "schema" | "import" | "browse" | "register" | "audit";
 
 type Props = {
   enabledTabs: HubTab[];
+  layoutHint?: AdminTemplateId;
 };
 
-const DataHubPanel: React.FC<Props> = ({ enabledTabs }) => {
+const DataHubPanel: React.FC<Props> = ({ enabledTabs, layoutHint }) => {
   const toast = useToast();
   const [tab, setTab] = useState<HubTab>(enabledTabs[0] ?? "browse");
   const [entities, setEntities] = useState<AdminEntity[]>([]);
@@ -155,6 +160,7 @@ const DataHubPanel: React.FC<Props> = ({ enabledTabs }) => {
   const [newName, setNewName] = useState("");
   const [regKey, setRegKey] = useState("");
   const [regJson, setRegJson] = useState('{"name":"","value":""}');
+  const [importHistory, setImportHistory] = useState<ImportBatch[]>([]);
 
   const activeEntity = useMemo(
     () => entities.find((e) => e.id === entityId),
@@ -167,9 +173,26 @@ const DataHubPanel: React.FC<Props> = ({ enabledTabs }) => {
     try {
       const list = await adminStudioApi.listEntities();
       setEntities(list);
-      if (!entityId && list[0]) setEntityId(list[0].id);
+      if (!entityId && list.length) {
+        const demo = list.find((e) => e.slug === "demo-catalog");
+        setEntityId(demo?.id ?? list[0].id);
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : "API 연결 실패");
+    } finally {
+      setLoading(false);
+    }
+  }, [entityId]);
+
+  const loadImportHistory = useCallback(async () => {
+    if (!entityId) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const batches = await adminStudioApi.listImports(entityId);
+      setImportHistory(batches);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "적재 이력 조회 실패");
     } finally {
       setLoading(false);
     }
@@ -195,7 +218,8 @@ const DataHubPanel: React.FC<Props> = ({ enabledTabs }) => {
 
   useEffect(() => {
     if (tab === "browse" || tab === "register") loadRecords();
-  }, [tab, loadRecords]);
+    if (tab === "audit") loadImportHistory();
+  }, [tab, loadRecords, loadImportHistory]);
 
   useEffect(() => {
     if (!enabledTabs.includes(tab)) setTab(enabledTabs[0] ?? "browse");
@@ -227,6 +251,7 @@ const DataHubPanel: React.FC<Props> = ({ enabledTabs }) => {
         `적재 완료 · 추가 ${result.inserted} · 수정 ${result.updated}`,
       );
       await loadRecords();
+      if (enabledTabs.includes("audit")) await loadImportHistory();
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "가져오기 실패");
     }
@@ -256,6 +281,11 @@ const DataHubPanel: React.FC<Props> = ({ enabledTabs }) => {
 
   return (
     <Shell>
+      {layoutHint === "sidebar-catalog" ? (
+        <div style={{ marginBottom: "0.5rem" }}>
+          <SidebarCatalogDemo />
+        </div>
+      ) : null}
       <Toolbar>
         <TabRow role="tablist" aria-label="Data Hub">
           {enabledTabs.map((t) => (
@@ -387,26 +417,43 @@ const DataHubPanel: React.FC<Props> = ({ enabledTabs }) => {
                   </Btn>
                 ))}
               </div>
-              <label>
-                <Btn as="span" type="button">
-                  <Upload size={14} /> CSV / Excel 선택
-                </Btn>
-                <input
-                  type="file"
-                  accept=".csv,.xlsx,.xlsm"
-                  hidden
-                  onChange={(e) => {
-                    const f = e.target.files?.[0];
-                    if (f) onImport(f);
-                    e.target.value = "";
-                  }}
-                />
-              </label>
-              {importResult && (
-                <pre style={{ marginTop: 12, fontSize: 12 }}>
-                  {JSON.stringify(importResult, null, 2)}
-                </pre>
-              )}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
+                <label>
+                  <Btn as="span" type="button">
+                    <Upload size={14} /> CSV / Excel 선택
+                  </Btn>
+                  <input
+                    type="file"
+                    accept=".csv,.xlsx,.xlsm"
+                    hidden
+                    onChange={(e) => {
+                      const f = e.target.files?.[0];
+                      if (f) onImport(f);
+                      e.target.value = "";
+                    }}
+                  />
+                </label>
+                <a
+                  href={ADMIN_STUDIO_SAMPLE_CSV}
+                  download="catalog-seed.csv"
+                  style={{ fontSize: "0.85rem" }}
+                >
+                  시드 CSV 내려받기
+                </a>
+                <span style={{ fontSize: "0.78rem", opacity: 0.75 }}>
+                  upsert · 키 컬럼 <code>sku</code> · 엔티티{" "}
+                  <code>demo-catalog</code>
+                </span>
+              </div>
+              {importResult ? (
+                <p style={{ marginTop: 12, fontSize: "0.85rem" }} role="status">
+                  {importResult.file_name} — 추가 {importResult.inserted} · 수정{" "}
+                  {importResult.updated} · 건너뜀 {importResult.skipped}
+                  {importResult.errors.length
+                    ? ` · 오류 ${importResult.errors.length}건`
+                    : ""}
+                </p>
+              ) : null}
             </div>
           )}
 
@@ -472,11 +519,43 @@ const DataHubPanel: React.FC<Props> = ({ enabledTabs }) => {
           )}
 
           {tab === "audit" && (
-            <p style={{ fontSize: "0.88rem" }}>
-              마지막 가져오기 결과는 「가져오기」 탭 하단 JSON으로 확인합니다.
-              FastAPI <code>/entities/:id/imports</code> 로 이력 API도 열려
-              있습니다.
-            </p>
+            <>
+              {importHistory.length === 0 ? (
+                <p style={{ fontSize: "0.88rem" }} role="status">
+                  적재 이력이 없습니다. 시드 CSV를 가져오거나 샘플 파일을
+                  upsert해 보세요.
+                </p>
+              ) : (
+                <Table>
+                  <thead>
+                    <tr>
+                      <th>일시</th>
+                      <th>파일</th>
+                      <th>mode</th>
+                      <th>행</th>
+                      <th>추가</th>
+                      <th>수정</th>
+                      <th>건너뜀</th>
+                      <th>오류</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {importHistory.map((b) => (
+                      <tr key={b.id}>
+                        <td>{new Date(b.created_at).toLocaleString("ko-KR")}</td>
+                        <td>{b.file_name}</td>
+                        <td>{b.mode}</td>
+                        <td>{b.row_count}</td>
+                        <td>{b.inserted}</td>
+                        <td>{b.updated}</td>
+                        <td>{b.skipped}</td>
+                        <td>{b.errors?.length ?? 0}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
+            </>
           )}
         </ScrollBody>
       </Panel>

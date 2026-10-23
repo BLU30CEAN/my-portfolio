@@ -5,6 +5,7 @@ import { Layers, Wand2, Database } from "lucide-react";
 import Section from "../components/layout/Section";
 import SectionTitle from "../components/ui/SectionTitle";
 import TemplatePreview from "../components/admin-studio/TemplatePreview";
+import SidebarCatalogDemo from "../components/admin-studio/SidebarCatalogDemo";
 import DataHubPanel from "../components/admin-studio/DataHubPanel";
 import {
   ADMIN_TEMPLATES,
@@ -39,6 +40,12 @@ const Grid2 = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.25rem;
+`;
+
+const LiveDemoWrap = styled.div`
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid ${(p) => p.theme.colors.border};
 `;
 
 const WizardCard = styled.div`
@@ -160,6 +167,11 @@ const AdminStudioPage: React.FC = () => {
               </button>
             ))}
           </Grid2>
+          {pickedTemplate === "sidebar-catalog" ? (
+            <LiveDemoWrap>
+              <SidebarCatalogDemo />
+            </LiveDemoWrap>
+          ) : null}
         </motion.div>
       )}
 
@@ -258,7 +270,10 @@ const AdminStudioPage: React.FC = () => {
             — Docker: <code>docker compose up -d --build</code> 후 API{" "}
             <code>:8000</code>
           </p>
-          <DataHubPanel enabledTabs={hubTabs} />
+          <DataHubPanel
+            enabledTabs={hubTabs}
+            layoutHint={pickedTemplate}
+          />
         </motion.div>
       )}
     </Section>
