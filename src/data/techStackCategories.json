@@ -17,6 +17,10 @@
       {
         "name": "Tailwind CSS",
         "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg"
+      },
+      {
+        "name": "React Flow",
+        "image": "https://cdn.simpleicons.org/xyflow/1C1E26"
       }
     ]
   },
@@ -88,6 +92,35 @@
       {
         "name": "Python",
         "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+      },
+      {
+        "name": "Pydantic",
+        "image": "https://cdn.simpleicons.org/pydantic/E92063"
+      }
+    ]
+  },
+  {
+    "category": "LLMOps · 에이전트",
+    "technologies": [
+      {
+        "name": "LangChain",
+        "image": "https://cdn.simpleicons.org/langchain/1C3C3C"
+      },
+      {
+        "name": "MCP",
+        "image": "https://cdn.simpleicons.org/modelcontextprotocol/000000"
+      },
+      {
+        "name": "vLLM",
+        "image": "https://cdn.simpleicons.org/vllm/FF6F00"
+      },
+      {
+        "name": "RAG",
+        "image": "https://cdn.simpleicons.org/huggingface/FFD21E"
+      },
+      {
+        "name": "Langfuse",
+        "image": "https://cdn.simpleicons.org/langfuse/000000"
       }
     ]
   },
