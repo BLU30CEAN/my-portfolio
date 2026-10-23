@@ -12,7 +12,7 @@ import {
   setAdminApiKey,
 } from "../../lib/adminStudioApi";
 import { useToast } from "../ui/Toast";
-import SidebarCatalogDemo from "./SidebarCatalogDemo";
+import LiveTemplateDemo from "./LiveTemplateDemo";
 import type { AdminTemplateId } from "../../data/adminTemplates";
 
 const Shell = styled.div`
@@ -281,9 +281,9 @@ const DataHubPanel: React.FC<Props> = ({ enabledTabs, layoutHint }) => {
 
   return (
     <Shell>
-      {layoutHint === "sidebar-catalog" ? (
-        <div style={{ marginBottom: "0.5rem" }}>
-          <SidebarCatalogDemo />
+      {layoutHint ? (
+        <div style={{ marginBottom: "0.75rem" }}>
+          <LiveTemplateDemo template={layoutHint} />
         </div>
       ) : null}
       <Toolbar>

@@ -5,7 +5,7 @@ import { Layers, Wand2, Database } from "lucide-react";
 import Section from "../components/layout/Section";
 import SectionTitle from "../components/ui/SectionTitle";
 import TemplatePreview from "../components/admin-studio/TemplatePreview";
-import SidebarCatalogDemo from "../components/admin-studio/SidebarCatalogDemo";
+import LiveTemplateDemo from "../components/admin-studio/LiveTemplateDemo";
 import DataHubPanel from "../components/admin-studio/DataHubPanel";
 import {
   ADMIN_TEMPLATES,
@@ -167,11 +167,9 @@ const AdminStudioPage: React.FC = () => {
               </button>
             ))}
           </Grid2>
-          {pickedTemplate === "sidebar-catalog" ? (
-            <LiveDemoWrap>
-              <SidebarCatalogDemo />
-            </LiveDemoWrap>
-          ) : null}
+          <LiveDemoWrap>
+            <LiveTemplateDemo template={pickedTemplate} />
+          </LiveDemoWrap>
         </motion.div>
       )}
 
