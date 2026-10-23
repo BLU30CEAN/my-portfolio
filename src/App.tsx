@@ -23,6 +23,7 @@ const ProjectsPage = lazy(() => import("./pages/ProjectsPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const WordBaseballPage = lazy(() => import("./pages/WordBaseballPage"));
 const GrowthJournalPage = lazy(() => import("./pages/GrowthJournalPage"));
+const AdminStudioPage = lazy(() => import("./pages/AdminStudioPage"));
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -67,6 +68,7 @@ const NAV_ITEMS: NavItem[] = [
   { id: "references", label: "References", section: "references" },
   { id: "projects", label: "Projects", section: "projects" },
   { id: "journal", label: "학습 노트", route: "/journal" },
+  { id: "admin-studio", label: "Admin Studio", route: "/admin-studio" },
   { id: "contact", label: "Contact", section: "contact" },
 ];
 
@@ -92,7 +94,9 @@ function AppShell() {
   const activeNavId = !isHome
     ? location.pathname === "/journal"
       ? "journal"
-      : ""
+      : location.pathname === "/admin-studio"
+        ? "admin-studio"
+        : ""
     : activeSection;
 
   const goSection = useCallback(
@@ -151,6 +155,7 @@ function AppShell() {
                 <Route path="/kwb" element={<WordBaseballPage />} />
                 <Route path="/word-baseball" element={<WordBaseballPage />} />
                 <Route path="/contact" element={<ContactPage />} />
+                <Route path="/admin-studio" element={<AdminStudioPage />} />
               </Routes>
             </motion.div>
           </AnimatePresence>
