@@ -18,6 +18,23 @@ export type ProjectEntry = {
 export const PROJECTS: ProjectEntry[] = [
   {
     tab: "professional",
+    title: "공공 LLM·LLMOps 관리 콘솔",
+    description:
+      "경찰·민원 채널을 위한 공통기반 LLM 플랫폼에서 Next.js 16 관리 콘솔과 FastAPI 실행층을 맞닿게 설계했다. React Flow 기반 에이전트 플로우 캔버스, DAG 배치·평가, RAG·가드레일, RBAC·감사, HITL 3분할 UX, vLLM OpenAI 호환 추론, Langfuse 관측, MCP·LangChain 오케스트레이션 실험, Docker·망분리 배포 런북까지 한 저장소에서 운영 수준으로 다듬었다.",
+    tech: [
+      "Next.js",
+      "React Flow",
+      "FastAPI",
+      "PostgreSQL",
+      "RAG",
+      "vLLM",
+      "LangChain",
+      "MCP",
+      "Docker",
+    ],
+  },
+  {
+    tab: "professional",
     title: "AI 인터랙티브 메타휴먼 아바타 플랫폼",
     description:
       "HeyGen·LiveAvatar 같은 실시간 AI 아바타 API와 연동해 STT → LLM(GPT-4o-mini·Claude 등) → ElevenLabs TTS·립싱크까지 이어지는 흐름을 오케스트레이션했습니다. UX는 채팅·음성과 같은 결의 이벤트 흐름으로 다듬고, 미디어는 화상통화와 맞닿은 WebRTC·WebSocket 오디오 패턴으로 구성했습니다.",
