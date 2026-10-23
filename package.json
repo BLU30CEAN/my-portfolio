@@ -2,6 +2,9 @@
   "name": "my-portfolio",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "server"
+  ],
   "proxy": "http://localhost:5000",
   "homepage": "https://blu30cean.github.io/my-portfolio",
   "dependencies": {
@@ -38,6 +41,8 @@
     "docker:up": "docker compose up -d --build",
     "docker:down": "docker compose down",
     "docker:logs": "docker compose logs -f api",
+    "docker:legacy": "docker compose --profile legacy up -d --build node-api",
+    "dev:all": "npm run docker:up && npm start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },

@@ -64,9 +64,10 @@
 - PostgreSQL, DataDog, GTM, GA
 
 ### Admin Studio (개인 실험 · 모노레포 sibling)
-- `src/` CRA · `api/` FastAPI · `server/` Express · `docker compose` (PostgreSQL + API)
-- `npm run docker:up` → FE `npm start` → `/#/admin-studio`
-- CSV/Excel upsert · 엔티티 CRUD · `X-Admin-Key` (see `env.example`)
+- `src/` CRA · `api/` FastAPI · `server/` Express (npm workspace) · `docker compose`
+- `npm run docker:up` → `npm start` → `/#/admin-studio` (A HITL 3분할 · B Inspector 라이브 데모)
+- Data Hub: CSV upsert · 적재 이력 테이블 · `demo-catalog` 시드
+- Express 레거시: `npm run docker:legacy` · `env.example`
 
 ## 📧 연락처
 
