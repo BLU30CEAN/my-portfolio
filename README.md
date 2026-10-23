@@ -63,6 +63,11 @@
 ### 데이터베이스/모니터링
 - PostgreSQL, DataDog, GTM, GA
 
+### Admin Studio (개인 실험 · 모노레포 sibling)
+- `src/` CRA · `api/` FastAPI · `server/` Express · `docker compose` (PostgreSQL + API)
+- `npm run docker:up` → FE `npm start` → `/#/admin-studio`
+- CSV/Excel upsert · 엔티티 CRUD · `X-Admin-Key` (see `env.example`)
+
 ## 📧 연락처
 
 - **Email**: ej.an.company@gmail.com
