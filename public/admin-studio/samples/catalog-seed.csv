@@ -1,0 +1,6 @@
+sku,name,category,status,note
+SKU-001,샘플 상품 A,전자,active,시드 데이터
+SKU-002,샘플 상품 B,생활,active,upsert 키=sku
+SKU-003,샘플 상품 C,도서,draft,Admin Studio 데모
+SKU-004,샘플 상품 D,전자,active,
+SKU-005,샘플 상품 E,생활,archived,재등록 테스트용

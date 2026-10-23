@@ -6,12 +6,17 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.db import Base, engine
 from app.routes.entities import router as entities_router
+from app.services.seed import seed_demo_catalog_if_empty
 
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+    try:
+        await seed_demo_catalog_if_empty()
+    except Exception as exc:  # noqa: BLE001 — 로컬 데모 DB 없을 때 기동은 유지
+        print(f"[admin-studio] seed skipped: {exc}")
     yield
     await engine.dispose()
 
