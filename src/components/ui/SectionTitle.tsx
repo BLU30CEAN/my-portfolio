@@ -45,7 +45,7 @@ const Sub = styled(motion.p)`
 type Props = {
   eyebrow?: string;
   title: string;
-  subtitle?: string;
+  subtitle?: React.ReactNode;
   align?: "center" | "start";
 };
 
