@@ -120,7 +120,7 @@
       },
       {
         "name": "Langfuse",
-        "image": "https://cdn.simpleicons.org/langfuse/000000"
+        "image": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHJ4PSI4IiBmaWxsPSIjMTE4RkQ3Ii8+PHBhdGggZD0iTTE0IDI4VjIwSDE4VjI4SDE0Wk0yMiAyOFYxNkgzMlYyMEgyNlYyOEgyMloiIGZpbGw9IndoaXRlIi8+PC9zdmc+"
       }
     ]
   },
