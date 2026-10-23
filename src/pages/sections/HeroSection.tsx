@@ -287,7 +287,8 @@ const HeroSection: React.FC<Props> = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.12 }}
           >
-            Full-Stack · <span className="muted">AI Service Engineer</span>
+            Full-Stack ·{" "}
+            <span className="muted">AI · LLMOps Engineer</span>
           </Role>
 
           <Description
@@ -295,13 +296,15 @@ const HeroSection: React.FC<Props> = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.18 }}
           >
-            웹·모바일·AI를 하나의 제품 안에서 연결해 온 5년 차 풀스택
-            엔지니어입니다. React·TypeScript·Spring Boot·FastAPI를 손에 익은
-            도구로 삼아{" "}
-            <strong>앱·웹 연동, 실시간 스트리밍, 배포 자동화</strong>까지 하나의
-            흐름으로 설계하고, 운영 단계의 안정성까지 책임집니다. 새 기능을
-            얹기 전에 <strong>예외가 발생할 수 있는 경로</strong>를 먼저 그려 보고,
-            모르는 영역은 추정 대신 <strong>공식 문서와 작은 실험</strong>에서
+            웹·모바일·AI·LLMOps를 하나의 제품 안에서 연결해 온 5년 차 풀스택
+            엔지니어입니다. React·Next.js·TypeScript·Spring Boot·FastAPI 위에{" "}
+            <strong>
+              에이전트 플로우, RAG·가드레일, 배치·평가, RBAC 관리 콘솔
+            </strong>
+            까지 설계해 왔고, vLLM·MCP·실시간 스트리밍·배포 자동화도 같은
+            책임 범위로 묶습니다. 새 기능을 얹기 전에{" "}
+            <strong>예외가 발생할 수 있는 경로</strong>를 먼저 그려 보고, 모르는
+            영역은 추정 대신 <strong>공식 문서와 작은 실험</strong>에서
             출발하는 편이 결국 더 빠르다고 믿습니다.
           </Description>
 
