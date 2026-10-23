@@ -160,6 +160,7 @@ const DataHubPanel: React.FC<Props> = ({ enabledTabs, layoutHint }) => {
   const [newName, setNewName] = useState("");
   const [regKey, setRegKey] = useState("");
   const [regJson, setRegJson] = useState('{"name":"","value":""}');
+  const [editRecordId, setEditRecordId] = useState<string | null>(null);
   const [importHistory, setImportHistory] = useState<ImportBatch[]>([]);
 
   const activeEntity = useMemo(
@@ -257,19 +258,40 @@ const DataHubPanel: React.FC<Props> = ({ enabledTabs, layoutHint }) => {
     }
   };
 
+  const resetRegisterForm = () => {
+    setEditRecordId(null);
+    setRegKey("");
+    setRegJson('{"sku":"","name":"","category":"","status":""}');
+  };
+
+  const loadRecordIntoRegister = (r: AdminRecord) => {
+    setEditRecordId(r.id);
+    setRegKey(r.external_key);
+    setRegJson(JSON.stringify(r.data, null, 2));
+    setTab("register");
+  };
+
   const onRegister = async () => {
     if (!entityId) return;
     try {
       const data = JSON.parse(regJson) as Record<string, string>;
-      await adminStudioApi.createRecord(entityId, {
-        external_key: regKey,
-        data,
-      });
-      toast.success("단건 등록했습니다.");
-      setRegKey("");
+      if (editRecordId) {
+        await adminStudioApi.updateRecord(entityId, editRecordId, {
+          external_key: regKey,
+          data,
+        });
+        toast.success("레코드를 수정했습니다.");
+      } else {
+        await adminStudioApi.createRecord(entityId, {
+          external_key: regKey,
+          data,
+        });
+        toast.success("단건 등록했습니다.");
+      }
+      resetRegisterForm();
       await loadRecords();
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "등록 실패");
+      toast.error(e instanceof Error ? e.message : "저장 실패");
     }
   };
 
@@ -475,7 +497,19 @@ const DataHubPanel: React.FC<Props> = ({ enabledTabs, layoutHint }) => {
                   </tr>
                 ) : (
                   records.map((r) => (
-                    <tr key={r.id}>
+                    <tr
+                      key={r.id}
+                      tabIndex={0}
+                      role="button"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => loadRecordIntoRegister(r)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          loadRecordIntoRegister(r);
+                        }
+                      }}
+                    >
                       <td>{r.external_key}</td>
                       {columns.map((c) => (
                         <td key={c}>{r.data[c] ?? ""}</td>
@@ -484,8 +518,10 @@ const DataHubPanel: React.FC<Props> = ({ enabledTabs, layoutHint }) => {
                         <Btn
                           type="button"
                           aria-label="삭제"
-                          onClick={async () => {
+                          onClick={async (e) => {
+                            e.stopPropagation();
                             await adminStudioApi.deleteRecord(entityId, r.id);
+                            if (editRecordId === r.id) resetRegisterForm();
                             await loadRecords();
                           }}
                         >
@@ -501,6 +537,11 @@ const DataHubPanel: React.FC<Props> = ({ enabledTabs, layoutHint }) => {
 
           {tab === "register" && (
             <div style={{ display: "grid", gap: 8, maxWidth: 480 }}>
+              <p style={{ fontSize: "0.82rem", margin: 0, opacity: 0.85 }}>
+                {editRecordId
+                  ? "수정 모드 — 조회 탭에서 행을 눌러도 불러올 수 있습니다."
+                  : "신규 등록 — JSON 필드는 엔티티 column_schema와 맞추세요."}
+              </p>
               <Input
                 placeholder="external_key"
                 value={regKey}
@@ -511,10 +552,18 @@ const DataHubPanel: React.FC<Props> = ({ enabledTabs, layoutHint }) => {
                 onChange={(e) => setRegJson(e.target.value)}
                 rows={6}
                 style={{ fontFamily: "monospace", fontSize: 12 }}
+                aria-label="레코드 JSON"
               />
-              <Btn type="button" onClick={onRegister}>
-                <Plus size={14} /> 등록
-              </Btn>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                <Btn type="button" onClick={onRegister}>
+                  <Plus size={14} /> {editRecordId ? "수정 저장" : "등록"}
+                </Btn>
+                {editRecordId ? (
+                  <Btn type="button" onClick={resetRegisterForm}>
+                    신규 등록
+                  </Btn>
+                ) : null}
+              </div>
             </div>
           )}
 

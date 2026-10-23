@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { Layers, Wand2, Database } from "lucide-react";
@@ -13,6 +13,7 @@ import {
   type AdminTemplateId,
 } from "../data/adminTemplates";
 import { useAdminWizardStore } from "../store/adminWizardStore";
+import { adminHealth } from "../lib/adminStudioApi";
 
 const StudioTabBar = styled.div`
   display: flex;
@@ -83,7 +84,28 @@ const NavRow = styled.div`
 
 type StudioMode = "templates" | "wizard" | "data";
 
+const ApiPill = styled.span<{ $ok: boolean | null }>`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: 0.5rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border: 1px solid ${(p) => p.theme.colors.border};
+  background: ${(p) =>
+    p.$ok === null
+      ? p.theme.colors.surfaceMuted
+      : p.$ok
+        ? p.theme.colors.primarySoft
+        : p.theme.colors.surface};
+  color: ${(p) =>
+    p.$ok === false ? p.theme.colors.danger : p.theme.colors.textSecondary};
+`;
+
 const AdminStudioPage: React.FC = () => {
+  const [apiOk, setApiOk] = useState<boolean | null>(null);
   const [mode, setMode] = useState<StudioMode>("templates");
   const [pickedTemplate, setPickedTemplate] = useState<AdminTemplateId>(
     "three-column-ops",
@@ -100,6 +122,12 @@ const AdminStudioPage: React.FC = () => {
   const step = WIZARD_STEPS[stepIndex];
   const recommended = recommendedTemplate();
 
+  useEffect(() => {
+    adminHealth()
+      .then((r) => setApiOk(Boolean(r.ok)))
+      .catch(() => setApiOk(false));
+  }, [mode]);
+
   const hubTabs = useMemo(() => {
     const tabs = answers.tabs.length ? answers.tabs : ["schema", "import", "browse"];
     return tabs as ("schema" | "import" | "browse" | "register" | "audit")[];
@@ -110,7 +138,14 @@ const AdminStudioPage: React.FC = () => {
       <SectionTitle
         eyebrow="Admin Studio"
         title="관리자 페이지 실험실"
-        subtitle="개인 포트폴리오용 — A/B 템플릿, 단계별 파이프라인, CSV·Excel DB 허브. FastAPI + PostgreSQL + Docker."
+        subtitle={
+          <>
+            개인 포트폴리오 — A/B 라이브 데모, CSV·Excel Data Hub, FastAPI + Docker.
+            <ApiPill $ok={apiOk} role="status">
+              API {apiOk === null ? "…" : apiOk ? ":8000 OK" : "오프라인"}
+            </ApiPill>
+          </>
+        }
       />
 
       <StudioTabBar role="tablist" aria-label="Admin Studio modes">
