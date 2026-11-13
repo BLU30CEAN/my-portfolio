@@ -112,7 +112,7 @@ const DesktopLinks = styled.div`
   gap: 1.4rem;
   align-items: center;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1100px) {
     display: none;
   }
 `;
@@ -162,7 +162,7 @@ const MobileToggle = styled.button`
     border-color: ${(p) => p.theme.colors.primary};
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1100px) {
     display: inline-flex;
   }
 `;

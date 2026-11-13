@@ -24,6 +24,7 @@ const ContactPage = lazy(() => import("./pages/ContactPage"));
 const WordBaseballPage = lazy(() => import("./pages/WordBaseballPage"));
 const GrowthJournalPage = lazy(() => import("./pages/GrowthJournalPage"));
 const AdminStudioPage = lazy(() => import("./pages/AdminStudioPage"));
+const LlmopsLabPage = lazy(() => import("./pages/LlmopsLabPage"));
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -69,6 +70,7 @@ const NAV_ITEMS: NavItem[] = [
   { id: "projects", label: "Projects", section: "projects" },
   { id: "journal", label: "학습 노트", route: "/journal" },
   { id: "admin-studio", label: "Admin Studio", route: "/admin-studio" },
+  { id: "llmops-lab", label: "LLMOps 랩", route: "/llmops-lab" },
   { id: "contact", label: "Contact", section: "contact" },
 ];
 
@@ -96,7 +98,9 @@ function AppShell() {
       ? "journal"
       : location.pathname === "/admin-studio"
         ? "admin-studio"
-        : ""
+        : location.pathname === "/llmops-lab"
+          ? "llmops-lab"
+          : ""
     : activeSection;
 
   const goSection = useCallback(
@@ -137,7 +141,7 @@ function AppShell() {
 
       <Main id="main-content">
         <Suspense
-          fallback={<RouteFallback>잠시만 기다려 주세요…</RouteFallback>}
+          fallback={<RouteFallback>잠시만 기다려 주세요.</RouteFallback>}
         >
           <AnimatePresence mode="wait">
             <motion.div
@@ -156,6 +160,7 @@ function AppShell() {
                 <Route path="/word-baseball" element={<WordBaseballPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/admin-studio" element={<AdminStudioPage />} />
+                <Route path="/llmops-lab" element={<LlmopsLabPage />} />
               </Routes>
             </motion.div>
           </AnimatePresence>
