@@ -18,26 +18,29 @@ export type ProjectEntry = {
 export const PROJECTS: ProjectEntry[] = [
   {
     tab: "professional",
-    title: "공공 LLM·LLMOps 관리 콘솔",
+    title: "모두의 경찰관 LLMOps 플랫폼",
     description:
-      "경찰·민원 채널을 위한 공통기반 LLM 플랫폼에서 Next.js 16 관리 콘솔과 FastAPI 실행층을 맞닿게 설계했다. React Flow 기반 에이전트 플로우 캔버스, DAG 배치·평가, RAG·가드레일, RBAC·감사, HITL 3분할 UX, vLLM OpenAI 호환 추론, Langfuse 관측, MCP·LangChain 오케스트레이션 실험, Docker·망분리 배포 런북까지 한 저장소에서 운영 수준으로 다듬었다.",
+      "공공AX 경찰 민원 AI 서비스에서 Next.js 16 관리 콘솔과 FastAPI 실행 엔진을 전담 개발했다. React Flow DAG 캔버스(프롬프트/가드레일/RAG/LLM 블록, Inspector), 모델 카탈로그 CRUD, 헤더 기반 배치 평가, RBAC 프리셋, 온보딩 코치마크를 콘솔에 넣었고, 백엔드는 LangGraph 실행, Langfuse trace/span, RAG 모니터링, vLLM metrics 프록시를 붙였다. 포트폴리오 LLMOps 랩에서 같은 동선을 눌러 볼 수 있다.",
     tech: [
       "Next.js",
       "React Flow",
       "FastAPI",
-      "PostgreSQL",
-      "RAG",
+      "LangGraph",
+      "Langfuse",
       "vLLM",
-      "LangChain",
-      "MCP",
+      "RAG",
+      "RBAC",
       "Docker",
+    ],
+    actions: [
+      { label: "LLMOps 랩 열기", href: "#/llmops-lab", kind: "external" },
     ],
   },
   {
     tab: "professional",
     title: "AI 인터랙티브 메타휴먼 아바타 플랫폼",
     description:
-      "HeyGen·LiveAvatar 같은 실시간 AI 아바타 API와 연동해 STT → LLM(GPT-4o-mini·Claude 등) → ElevenLabs TTS·립싱크까지 이어지는 흐름을 오케스트레이션했습니다. UX는 채팅·음성과 같은 결의 이벤트 흐름으로 다듬고, 미디어는 화상통화와 맞닿은 WebRTC·WebSocket 오디오 패턴으로 구성했습니다.",
+      "HeyGen, LiveAvatar 같은 실시간 AI 아바타 API와 연동해 Whisper STT, GPT-4o-mini(Claude 3.5), ElevenLabs TTS, 립싱크를 잇는 흐름을 오케스트레이션했습니다. UX는 채팅, 음성과 같은 결의 이벤트 흐름으로 다듬고, 미디어는 화상통화와 맞닿은 WebRTC, WebSocket 오디오 패턴으로 구성했습니다.",
     tech: [
       "HeyGen",
       "LiveAvatar",
@@ -51,7 +54,7 @@ export const PROJECTS: ProjectEntry[] = [
     tab: "professional",
     title: "앱인앱 주문채널",
     description:
-      "React(TypeScript) 기반 앱인앱 주문채널 프론트엔드와 Android Native 앱의 WebView 연동을 직접 이끌었습니다. Spring Boot·PostgreSQL 주문 API, AWS EC2·Jenkins 배포 자동화, JWT 인증, NICE Payments·OKPOS 연동, Datadog·GA·GTM 분석 환경까지 한 흐름으로 정돈했습니다.",
+      "React(TypeScript) 기반 앱인앱 주문채널 프론트엔드와 Android Native 앱의 WebView 연동을 직접 이끌었습니다. Spring Boot, PostgreSQL 주문 API, AWS EC2, Jenkins 배포 자동화, JWT 인증, NICE Payments, OKPOS 연동, Datadog, GA, GTM 분석 환경까지 한 흐름으로 정돈했습니다.",
     tech: [
       "React",
       "TypeScript",

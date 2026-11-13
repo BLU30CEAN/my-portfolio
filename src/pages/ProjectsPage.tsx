@@ -326,6 +326,45 @@ function ProjectsPage() {
 
   const projects = [
     {
+      id: 8,
+      title: "모두의 경찰관 LLMOps 플랫폼",
+      description:
+        "공공AX 경찰 민원 AI 서비스에서 Next.js 16 관리 콘솔과 FastAPI 실행 엔진을 전담 개발했습니다. React Flow DAG 캔버스, 가드레일, 헤더 기반 배치 평가, RBAC 프리셋, Langfuse 트레이싱을 한 저장소에서 운영 수준으로 다듬었습니다.",
+      category: "backend",
+      icon: Brain,
+      bgColor: "linear-gradient(135deg, #0b1a2a 0%, #1b6bff 100%)",
+      tech: [
+        "Next.js",
+        "React Flow",
+        "FastAPI",
+        "LangGraph",
+        "Langfuse",
+        "vLLM",
+        "RAG",
+        "RBAC",
+      ],
+      stats: [
+        { icon: Users, label: "콘솔 컴포넌트", value: "플로우 71+" },
+        { icon: Award, label: "실행층", value: "DAG / 배치 평가" },
+      ],
+      features: [
+        "React Flow 에이전트 플로우 캔버스, Inspector",
+        "입력/출력 가드레일 정책 UI",
+        "CSV/JSONL 헤더 기반 Q/A 컬럼 매핑 배치 평가",
+        "플랫폼 관리자/운영자/사용자 RBAC 프리셋",
+        "Langfuse trace/span, RAG 모니터링",
+        "vLLM OpenAI 호환 추론 프록시",
+        "온보딩 코치마크",
+      ],
+      achievements: [
+        "관리 콘솔과 실행 엔진을 같은 계약으로 맞춤",
+        "가드레일 차단 시 하위 LLM 미실행 경로를 명시",
+        "배치 회귀를 pass rate로 확인",
+        "포트폴리오 LLMOps 랩에서 동일 동선 재현",
+      ],
+      liveUrl: "#/llmops-lab",
+    },
+    {
       id: 1,
       title: "Find Carrot Game",
       description:
@@ -480,7 +519,7 @@ function ProjectsPage() {
       id: 4,
       title: "AI 인터랙티브 메타휴먼 아바타 플랫폼",
       description:
-        "HeyGen·LiveAvatar 같은 메타휴먼 실시간 API와 연동해 STT → LLM(GPT-4o-mini·Claude 등) → ElevenLabs TTS·립싱크까지 이어지는 흐름을 오케스트레이션했습니다. 채팅·음성·화상통화(WebRTC)·WebSocket 패턴을 하나의 제품 안에서 통합한 사례입니다.",
+        "HeyGen, LiveAvatar 같은 메타휴먼 실시간 API와 연동해 Whisper STT, GPT-4o-mini(Claude 3.5), ElevenLabs TTS, 립싱크를 잇는 흐름을 오케스트레이션했습니다. 채팅, 음성, 화상통화(WebRTC), WebSocket 패턴을 하나의 제품 안에서 통합한 사례입니다.",
       category: "web",
       icon: Brain,
       bgColor: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
@@ -602,7 +641,7 @@ function ProjectsPage() {
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          AI·모바일·백엔드·클라우드까지, 실무 현장에서 직접 책임지고 다뤄 본
+          AI, 모바일, 백엔드, 클라우드까지, 실무 현장에서 직접 책임지고 다뤄 본
           프로젝트들을 한곳에 모았습니다.
         </SectionSubtitle>
 

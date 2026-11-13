@@ -246,8 +246,8 @@ function AboutPage() {
   const achievements = [
     { icon: Users, title: "주요 프로젝트", value: "5개" },
     { icon: TrendingUp, title: "실시간 지연시간", value: "500ms 이하" },
-    { icon: Zap, title: "상태·서버캐시", value: "TanStack Query · Zustand" },
-    { icon: Award, title: "배포/문서화", value: "Docker · Swagger" },
+    { icon: Zap, title: "상태/서버캐시", value: "TanStack Query, Zustand" },
+    { icon: Award, title: "배포/문서화", value: "Docker, Swagger" },
   ];
 
   const skills = [
@@ -257,8 +257,9 @@ function AboutPage() {
       skills: [
         "React & TypeScript",
         "Next.js (App Router 예: word-baseball)",
-        "React Native · Expo EAS",
-        "Tailwind CSS · Radix(shadcn 패턴)",
+        "React Native, Expo EAS",
+        "Tailwind CSS, Radix(shadcn 패턴)",
+        "React Flow (에이전트 플로우 캔버스)",
         "Zustand",
         "TanStack Query",
         "i18next",
@@ -268,13 +269,13 @@ function AboutPage() {
       category: "Backend & AI",
       icon: Brain,
       skills: [
-        "Java 21 · Spring Boot 4 · Maven",
-        "MyBatis (XML Mapper) · MySQL",
-        "Spring Security · Batch · Quartz",
-        "Thymeleaf · Log4j2 · Actuator",
-        "Python · FastAPI · Uvicorn",
+        "Java 21, Spring Boot 4, Maven",
+        "MyBatis (XML Mapper), MySQL",
+        "Spring Security, Batch, Quartz",
+        "Python, FastAPI, LangGraph, Langfuse",
+        "vLLM, RAG, MCP, RBAC",
         "OpenAI / ElevenLabs / LiveAvatar / LiveKit",
-        "pydub · multipart · JWT (백엔드 템플릿 패턴)",
+        "pydub, multipart, JWT",
       ],
     },
     {
@@ -282,11 +283,11 @@ function AboutPage() {
       icon: Smartphone,
       skills: [
         "React Native 0.83 / React 19",
-        "LiveKit (Room · Track)",
+        "LiveKit (Room, Track)",
         "WebSocket Custom Mode",
         "RN WebView",
-        "Firebase (FCM) · Notifee",
-        "오디오 녹음 · 스트리밍 패턴",
+        "Firebase (FCM), Notifee",
+        "오디오 녹음, 스트리밍 패턴",
         "SSE/REST와 TanStack 동기화",
       ],
     },
@@ -305,22 +306,28 @@ function AboutPage() {
 
   const timeline = [
     {
-      date: "2025.04 - 2026.04",
-      title: "유탑소프트 · Convergence Lab",
+      date: "2026.07 - 재직중",
+      title: "씨에스리  AI엔지니어링팀",
       description:
-        "React Native 앱에서 TanStack Query·Zustand·LiveKit·LiveAvatar 세션과 WebSocket, Firebase(FCM), WebView 오디오 파이프라인을 담당했습니다. 포털 레인에서는 Spring Boot 4(Java 21)·MyBatis·Batch/Quartz·Thymeleaf, FastAPI 보조 레인에서는 multipart STT와 pydub PCM 처리를 함께 다뤘습니다.",
+        "공공AX '모두의 경찰관'에서 Next.js 16 LLMOps 콘솔과 FastAPI 에이전트 플로우 실행 엔진을 전담 개발했습니다. React Flow DAG 캔버스, 가드레일, 배치 평가, RBAC 프리셋, Langfuse 트레이싱, RAG 모니터링, Docker/NCloud 환경 분리를 같은 저장소에서 운영 수준으로 다듬었습니다.",
+    },
+    {
+      date: "2025.04 - 2026.06",
+      title: "유탑소프트  Convergence Lab",
+      description:
+        "React Native 앱에서 TanStack Query, Zustand, LiveKit, LiveAvatar 세션과 WebSocket, Firebase(FCM), WebView 오디오 파이프라인을 맡았습니다. 포털 레인에서는 Spring Boot 4(Java 21), MyBatis, Batch/Quartz, Thymeleaf, FastAPI 보조 레인에서는 multipart STT와 pydub PCM 처리를 함께 다뤘습니다.",
     },
     {
       date: "2024.04 - 2025.04",
       title: "앱인앱 주문채널 신규 구축",
       description:
-        "React(TypeScript) 프론트엔드와 Spring Boot·PostgreSQL API를 설계하고, AWS EC2·Jenkins 배포 자동화, JWT 인증, NICE Payments·OKPOS 결제 연동을 직접 구현했습니다.",
+        "React(TypeScript) 프론트엔드와 Spring Boot, PostgreSQL API를 설계하고, AWS EC2, Jenkins 배포 자동화, JWT 인증, NICE Payments, OKPOS 결제 연동을 직접 구현했습니다.",
     },
     {
       date: "2023.01 - 2024.03",
       title: "홈페이지 및 모바일 앱 운영",
       description:
-        "고객·임직원·협력사 3종 앱을 유지·보수하며 기능 개선과 JIRA·Confluence 요청에 대응했고, 서비스 중단 없는 운영 안정성을 함께 책임졌습니다.",
+        "고객, 임직원, 협력사 3종 앱을 유지보수하며 기능 개선과 JIRA, Confluence 요청에 대응했고, 서비스 중단 없는 운영 안정성을 함께 책임졌습니다.",
     },
     {
       date: "2022.08 - 2022.12",
@@ -332,7 +339,7 @@ function AboutPage() {
       date: "2021.05 - 2022.04",
       title: "결제 앱 솔루션 개발",
       description:
-        "Java·JSP·Android 네이티브 앱을 기반으로 NICE PG·VAN 결제 연동을 구현했습니다.",
+        "Java, JSP, Android 네이티브 앱을 기반으로 NICE PG, VAN 결제 연동을 구현했습니다.",
     },
   ];
 
@@ -355,9 +362,10 @@ function AboutPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            지난 5년 동안 AI 서비스, 모바일·웹 연동, 결제·주문 시스템을 한
+            지난 5년 동안 AI 서비스, 모바일/웹 연동, 결제/주문 시스템을 한
             사람의 책임 안에서 끝까지 다뤄 온 풀스택 개발자입니다. 최근에는
-            메타휴먼(HeyGen·LiveAvatar)과 LLM 실시간 연동, Android Native·
+            공공AX '모두의 경찰관' LLMOps 콘솔과 FastAPI 실행 엔진, 그 앞 단계에서
+            메타휴먼(HeyGen, LiveAvatar)과 LLM 실시간 연동, Android Native,
             React(TypeScript) WebView 통합을 맡아 요구 정의에서 설계, 운영
             모니터링까지 하나의 흐름으로 정돈해 왔습니다.
           </SectionSubtitle>
@@ -381,23 +389,58 @@ function AboutPage() {
           >
             <ProjectHeader>
               <ProjectIcon>
+                <Code size={28} />
+              </ProjectIcon>
+              <ProjectInfo>
+                <ProjectTitle>모두의 경찰관 LLMOps 플랫폼</ProjectTitle>
+                <ProjectPeriod>2026.07 - 재직중</ProjectPeriod>
+              </ProjectInfo>
+            </ProjectHeader>
+
+            <ProjectDescription>
+              공공AX 경찰 민원 AI 서비스에서 Next.js 16 관리 콘솔과 FastAPI
+              실행 엔진을 전담 개발했습니다. React Flow DAG 캔버스, 입출력
+              가드레일, 헤더 기반 배치 평가, RBAC 프리셋, 온보딩 코치마크,
+              Langfuse 트레이싱, RAG 모니터링을 한 저장소에서 운영 수준으로
+              다듬었습니다. 포트폴리오 LLMOps 랩에서 같은 동선을 재현합니다.
+            </ProjectDescription>
+
+            <TechStack>
+              <TechTag>Next.js 16</TechTag>
+              <TechTag>React Flow</TechTag>
+              <TechTag>FastAPI</TechTag>
+              <TechTag>LangGraph</TechTag>
+              <TechTag>Langfuse</TechTag>
+              <TechTag>vLLM</TechTag>
+              <TechTag>RAG</TechTag>
+              <TechTag>RBAC</TechTag>
+            </TechStack>
+          </ProjectCard>
+
+          <ProjectCard
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <ProjectHeader>
+              <ProjectIcon>
                 <Brain size={28} />
               </ProjectIcon>
               <ProjectInfo>
                 <ProjectTitle>
                   AI 인터랙티브 메타휴먼 아바타 플랫폼
                 </ProjectTitle>
-                <ProjectPeriod>2025.04 - 2026.04</ProjectPeriod>
+                <ProjectPeriod>2025.04 - 2026.06</ProjectPeriod>
               </ProjectInfo>
             </ProjectHeader>
 
             <ProjectDescription>
-              HeyGen·LiveAvatar 같은 실시간 AI 아바타 API와 연동해 STT →
-              LLM(GPT-4o-mini·Claude 등) → ElevenLabs TTS·립싱크까지
-              오케스트레이션을 직접 설계했습니다. 채팅·음성에 가까운 상태
-              흐름에 화상통화 영역의 WebRTC·WebSocket 오디오 패턴을 얹고,
-              꼼꼼한 예외 처리와 재시도 전략으로 운영 단계의 안정성을 끌어
-              올렸습니다.
+              HeyGen, LiveAvatar 같은 실시간 AI 아바타 API와 연동해 Whisper STT,
+              GPT-4o-mini(Claude 3.5), ElevenLabs TTS, 립싱크를 잇는 파이프라인을
+              설계했습니다. 채팅, 음성에 가까운 상태 흐름에 화상통화 영역의
+              WebRTC, WebSocket 오디오 패턴을 얹고, 예외 처리와 재시도 전략으로
+              운영 단계의 안정성을 끌어 올렸습니다.
             </ProjectDescription>
 
             <TechStack>

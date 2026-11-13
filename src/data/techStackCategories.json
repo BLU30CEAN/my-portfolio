@@ -25,7 +25,7 @@
     ]
   },
   {
-    "category": "모바일 (React Native · kchao)",
+    "category": "모바일 (React Native, kchao)",
     "technologies": [
       {
         "name": "React Native",
@@ -71,7 +71,7 @@
     ]
   },
   {
-    "category": "백엔드 · API",
+    "category": "백엔드 / API",
     "technologies": [
       {
         "name": "Java 21",
@@ -100,10 +100,14 @@
     ]
   },
   {
-    "category": "LLMOps · 에이전트",
+    "category": "LLMOps / 에이전트",
     "technologies": [
       {
         "name": "LangChain",
+        "image": "https://cdn.simpleicons.org/langchain/1C3C3C"
+      },
+      {
+        "name": "LangGraph",
         "image": "https://cdn.simpleicons.org/langchain/1C3C3C"
       },
       {
@@ -125,7 +129,7 @@
     ]
   },
   {
-    "category": "데이터베이스 · 관측",
+    "category": "데이터베이스 / 관측",
     "technologies": [
       {
         "name": "MySQL",
@@ -150,7 +154,7 @@
     ]
   },
   {
-    "category": "AI · 실시간 미디어",
+    "category": "AI / 실시간 미디어",
     "technologies": [
       {
         "name": "OpenAI API",
@@ -171,7 +175,7 @@
     ]
   },
   {
-    "category": "배포 · 인프라",
+    "category": "배포 / 인프라",
     "technologies": [
       {
         "name": "AWS",

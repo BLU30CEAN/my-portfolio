@@ -99,7 +99,7 @@ type StatItem = {
 
 const STATS: StatItem[] = [
   { icon: Award, to: 5, suffix: "년", label: "풀스택 실무 경력" },
-  { icon: Users, staticValue: "공공 · LLMOps", label: "주력 도메인" },
+  { icon: Users, staticValue: "공공 LLMOps", label: "주력 도메인" },
   { icon: Layers, to: 45, suffix: "+", label: "현업에서 다룬 스택" },
   { icon: Zap, staticValue: "E2E", label: "설계부터 운영까지" },
 ];
@@ -110,7 +110,7 @@ const AboutSection: React.FC = () => {
       <SectionTitle
         eyebrow="About"
         title="예외 경로부터 먼저 설계합니다"
-        subtitle="새 기능을 더하기 전에 운영자가 떠안을 부담을 먼저 그려 보는 습관 — 5년 동안 한 가지 원칙으로 다듬어 왔습니다."
+        subtitle="새 기능을 더하기 전에 운영자가 떠안을 부담을 먼저 그려 보는 습관. 5년 동안 한 가지 원칙으로 다듬어 왔습니다."
       />
 
       <Grid>
@@ -127,14 +127,14 @@ const AboutSection: React.FC = () => {
           </p>
           <p>
             지난 5년은 그 감각을 <strong>운영 단계까지 책임지는 흐름</strong>
-            으로 넓혀 온 시간이었습니다. 결제·앱·웹 연동, LLM·메타휴먼 실시간
-            연동, WebRTC·WebSocket 스트리밍에 더해 최근에는{" "}
+            으로 넓혀 온 시간이었습니다. 결제, 앱, 웹 연동, LLM, 메타휴먼 실시간
+            연동, WebRTC, WebSocket 스트리밍에 더해 최근에는{" "}
             <strong>
-              React Flow 에이전트 설계, FastAPI 플로우 실행·배치·평가, RAG·
+              React Flow 에이전트 설계, FastAPI 플로우 실행과 배치 평가, RAG,
               가드레일, HITL 관리 콘솔, 망분리 Docker 배포
             </strong>
             까지 공공 LLM 플랫폼에서 깊게 다뤘습니다. 운영 부담이 큰 도메인을
-            거치며 한 가지 원칙을 다듬어 왔습니다 —{" "}
+            거치며 한 가지 원칙을 다듬어 왔습니다.{" "}
             <strong>
               새 기능을 붙이기에 앞서, 예외 상황의 경로부터 먼저 설계한다.
             </strong>

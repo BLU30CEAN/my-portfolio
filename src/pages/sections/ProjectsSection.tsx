@@ -192,7 +192,7 @@ const ProjectsSection: React.FC = () => {
       <SectionTitle
         eyebrow="Projects"
         title="실서비스에서 검증된 작업들"
-        subtitle="운영 트래픽·결제·실시간 미디어까지, 설계에서 배포·모니터링 단계를 끝까지 책임져 본 프로젝트를 모았습니다."
+        subtitle="운영 트래픽, 결제, 실시간 미디어까지, 설계에서 배포와 모니터링 단계를 끝까지 책임져 본 프로젝트를 모았습니다."
       />
 
       <TabBarWrap>
