@@ -287,8 +287,8 @@ const HeroSection: React.FC<Props> = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.12 }}
           >
-            Full-Stack /{" "}
-            <span className="muted">AI / LLMOps Engineer</span>
+            FastAPI Backend /{" "}
+            <span className="muted">생성형 AI 구축</span>
           </Role>
 
           <Description
@@ -296,16 +296,12 @@ const HeroSection: React.FC<Props> = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.18 }}
           >
-            웹, 모바일, AI, LLMOps를 한 제품 안에서 연결해 온 5년 차 풀스택
-            엔지니어입니다. React, Next.js, TypeScript, Spring Boot, FastAPI 위에{" "}
-            <strong>
-              에이전트 플로우, RAG, 가드레일, 배치 평가, RBAC 관리 콘솔
-            </strong>
-            까지 설계해 왔고, vLLM, MCP, 실시간 스트리밍, 배포 자동화도 같은
-            책임 범위로 묶습니다. 새 기능을 얹기 전에{" "}
-            <strong>예외가 발생할 수 있는 경로</strong>를 먼저 그려 보고, 모르는
-            영역은 추정 대신 <strong>공식 문서와 작은 실험</strong>에서
-            출발하는 편이 결국 더 빠르다고 믿습니다.
+            FastAPI, Spring Boot로 생성형 AI를 고객 환경에 올리는 백엔드
+            개발자입니다. 결제 성공 후 주문이 비던 일을 로그와 DB로 같은 키로
+            맞춰 본 뒤로,{" "}
+            <strong>장애가 나면 어느 구간을 먼저 볼지</strong>를 설계에
+            넣습니다. 온프레에서는 추론(vLLM)과 에이전트 조합(DAG)을 나누고,{" "}
+            <strong>가드레일이 막으면 하위 LLM을 호출하지 않습니다.</strong>
           </Description>
 
           <Actions
@@ -363,7 +359,7 @@ const HeroSection: React.FC<Props> = ({
               )}
             </ProfileInner>
             <Badge>
-              <Pulse /> 운영 단계까지 책임지는 풀스택
+              <Pulse /> 온프레에서 끊기지 않게
             </Badge>
           </ProfileCard>
         </ProfileWrap>
