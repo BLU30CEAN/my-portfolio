@@ -329,7 +329,7 @@ function ProjectsPage() {
       id: 8,
       title: "모두의 경찰관 LLMOps 플랫폼",
       description:
-        "공공AX 경찰 민원 AI 서비스에서 Next.js 16 관리 콘솔과 FastAPI 실행 엔진을 전담 개발했습니다. React Flow DAG 캔버스, 가드레일, 헤더 기반 배치 평가, RBAC 프리셋, Langfuse 트레이싱을 한 저장소에서 운영 수준으로 다듬었습니다.",
+        "공공 온프레미스 전제. 추론은 vLLM, 에이전트는 DAG. 가드레일 차단 시 하위 LLM 미호출. FastAPI 실행 엔진, RAG, 배치 평가, Docker 환경 분리, 설치 런북을 직접 짰습니다.",
       category: "backend",
       icon: Brain,
       bgColor: "linear-gradient(135deg, #0b1a2a 0%, #1b6bff 100%)",
@@ -641,8 +641,8 @@ function ProjectsPage() {
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          AI, 모바일, 백엔드, 클라우드까지, 실무 현장에서 직접 책임지고 다뤄 본
-          프로젝트들을 한곳에 모았습니다.
+          온프레 LLM, AI 파이프라인, 주문/결제 RCA. 직접 설계하고 장애를 닫은
+          작업을 한곳에 모았습니다.
         </SectionSubtitle>
 
         <FilterButtons>

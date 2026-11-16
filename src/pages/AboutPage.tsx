@@ -362,12 +362,10 @@ function AboutPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            지난 5년 동안 AI 서비스, 모바일/웹 연동, 결제/주문 시스템을 한
-            사람의 책임 안에서 끝까지 다뤄 온 풀스택 개발자입니다. 최근에는
-            공공AX '모두의 경찰관' LLMOps 콘솔과 FastAPI 실행 엔진, 그 앞 단계에서
-            메타휴먼(HeyGen, LiveAvatar)과 LLM 실시간 연동, Android Native,
-            React(TypeScript) WebView 통합을 맡아 요구 정의에서 설계, 운영
-            모니터링까지 하나의 흐름으로 정돈해 왔습니다.
+            FastAPI, Spring Boot로 생성형 AI와 주문/결제를 고객 환경에서 돌린
+            백엔드 개발자입니다. 장애가 나면 로그와 DB를 같은 키로 맞추고,
+            온프레에서는 추론 서빙과 에이전트 조합을 나눠 다음 구축이 같은
+            런북을 타게 만듭니다.
           </SectionSubtitle>
         </Section>
 
@@ -398,11 +396,10 @@ function AboutPage() {
             </ProjectHeader>
 
             <ProjectDescription>
-              공공AX 경찰 민원 AI 서비스에서 Next.js 16 관리 콘솔과 FastAPI
-              실행 엔진을 전담 개발했습니다. React Flow DAG 캔버스, 입출력
-              가드레일, 헤더 기반 배치 평가, RBAC 프리셋, 온보딩 코치마크,
-              Langfuse 트레이싱, RAG 모니터링을 한 저장소에서 운영 수준으로
-              다듬었습니다. 포트폴리오 LLMOps 랩에서 같은 동선을 재현합니다.
+              온프레미스 전제. 추론은 vLLM, 에이전트는 DAG. 가드레일 차단 시
+              하위 LLM 미호출. FastAPI 실행 엔진, RAG, 배치 평가, Docker 환경
+              분리, 설치 런북을 직접 짰습니다. LLMOps 랩에서 같은 판단을
+              재현합니다.
             </ProjectDescription>
 
             <TechStack>

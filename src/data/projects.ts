@@ -20,16 +20,13 @@ export const PROJECTS: ProjectEntry[] = [
     tab: "professional",
     title: "모두의 경찰관 LLMOps 플랫폼",
     description:
-      "공공AX 경찰 민원 AI 서비스에서 Next.js 16 관리 콘솔과 FastAPI 실행 엔진을 전담 개발했다. React Flow DAG 캔버스(프롬프트/가드레일/RAG/LLM 블록, Inspector), 모델 카탈로그 CRUD, 헤더 기반 배치 평가, RBAC 프리셋, 온보딩 코치마크를 콘솔에 넣었고, 백엔드는 LangGraph 실행, Langfuse trace/span, RAG 모니터링, vLLM metrics 프록시를 붙였다. 포트폴리오 LLMOps 랩에서 같은 동선을 눌러 볼 수 있다.",
+      "공공 온프레미스 전제. 추론은 vLLM, 에이전트는 DAG로 나눴다. 가드레일이 막으면 하위 LLM을 호출하지 않는다. FastAPI 실행 엔진, RAG, 배치 평가, Docker 환경 분리, 설치 런북을 직접 짰다. LLMOps 랩에서 그 판단을 눌러 볼 수 있다.",
     tech: [
-      "Next.js",
-      "React Flow",
       "FastAPI",
-      "LangGraph",
-      "Langfuse",
       "vLLM",
       "RAG",
-      "RBAC",
+      "LangGraph",
+      "Langfuse",
       "Docker",
     ],
     actions: [
@@ -69,7 +66,7 @@ export const PROJECTS: ProjectEntry[] = [
     tab: "professional",
     title: "LLM 오케스트레이션 API",
     description:
-      "Spring Boot 메인 API와 Python FastAPI 기반 ML 서비스를 별도 레인으로 분리한 마이크로서비스 구조를 직접 설계했습니다. Swagger 문서화, 비동기 통신, Docker 배포를 통해 새로운 모델·기능을 안정적으로 얹어 나갈 수 있는 백엔드 통합 환경을 마련했습니다.",
+      "LLM 호출 지연이 메인 API를 잡지 않게 Spring Boot와 FastAPI ML 레인을 나눴습니다. Swagger 계약, Docker 배포로 모델을 메인 트래픽과 분리해 올렸습니다.",
     tech: ["Java", "Spring Boot", "Python", "FastAPI"],
   },
   {
@@ -83,7 +80,7 @@ export const PROJECTS: ProjectEntry[] = [
     tab: "professional",
     title: "결제 시스템 연동",
     description:
-      "NICE Payments와 OKPOS 연동으로 주문·결제 흐름을 매끄럽게 이었습니다. 로그인 시 불필요한 DB 조회를 줄이고 JWT Access·Refresh Token 인증을 도입해 보안성과 응답 속도를 동시에 끌어 올렸습니다.",
+      "NICE Payments, OKPOS로 주문/결제 E2E를 이었고, 결제 성공 후 주문이 비던 이슈를 Datadog, API 로그, DB 대조로 기한 내 닫았습니다. JWT Access/Refresh로 로그인 시 불필요한 DB 조회를 줄였습니다.",
     tech: ["Java", "Spring Boot", "JWT", "Payments"],
   },
   {

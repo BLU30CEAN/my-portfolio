@@ -191,8 +191,8 @@ const ProjectsSection: React.FC = () => {
     <Section id="projects" dotCount={8} dotSeed={4} fullHeight glow>
       <SectionTitle
         eyebrow="Projects"
-        title="실서비스에서 검증된 작업들"
-        subtitle="운영 트래픽, 결제, 실시간 미디어까지, 설계에서 배포와 모니터링 단계를 끝까지 책임져 본 프로젝트를 모았습니다."
+        title="직접 설계하고 장애를 닫은 작업"
+        subtitle="온프레 LLM, AI 파이프라인 MSA, 주문/결제 RCA. 기술 목록보다 어떤 판단을 남겼는지를 적었습니다."
       />
 
       <TabBarWrap>

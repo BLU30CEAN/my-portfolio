@@ -144,7 +144,7 @@ const LlmopsLabPage: React.FC = () => {
       <SectionTitle
         eyebrow="LLMOps Lab"
         title="모두의 경찰관에서 만든 실행 경로"
-        subtitle="에이전트 플로우 캔버스, 입출력 가드레일, 헤더 기반 배치 평가, RBAC 프리셋을 한 화면에서 눌러 볼 수 있습니다. 데모 데이터이며 운영 API는 연결하지 않습니다."
+        subtitle="가드레일을 켜면 하위 LLM이 멈춥니다. 역할을 바꾸면 배치가 숨습니다. 운영에서 한 판단을 데모 데이터로 재현합니다. 운영 API는 연결하지 않습니다."
       />
 
       <Layout>
