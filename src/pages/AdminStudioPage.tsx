@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Layers, Wand2, Database } from "lucide-react";
 import Section from "../components/layout/Section";
 import SectionTitle from "../components/ui/SectionTitle";
+import LabCrumb from "../components/nav/LabCrumb";
 import TemplatePreview from "../components/admin-studio/TemplatePreview";
 import LiveTemplateDemo from "../components/admin-studio/LiveTemplateDemo";
 import DataHubPanel from "../components/admin-studio/DataHubPanel";
@@ -28,7 +29,7 @@ const StudioTab = styled.button<{ $active: boolean }>`
   align-items: center;
   gap: 0.4rem;
   border: 1px solid ${(p) => p.theme.colors.border};
-  border-radius: 999px;
+  border-radius: ${(p) => p.theme.radii.md};
   padding: 0.55rem 1rem;
   font-weight: 600;
   font-size: 0.9rem;
@@ -134,15 +135,16 @@ const AdminStudioPage: React.FC = () => {
   }, [answers.tabs]);
 
   return (
-    <Section id="admin-studio" dotCount={8} dotSeed={4} glow>
+    <Section id="admin-studio">
+      <LabCrumb here="Admin Studio" />
       <SectionTitle
-        eyebrow="Admin Studio"
-        title="관리자 페이지 실험실"
+        title="관리자 페이지 실험"
         subtitle={
           <>
-            개인 포트폴리오 — A/B 라이브 데모, CSV·Excel Data Hub, FastAPI + Docker.
+            개인 포트폴리오 데모입니다. A/B 템플릿, CSV/Excel Data Hub, FastAPI,
+            Docker.
             <ApiPill $ok={apiOk} role="status">
-              API {apiOk === null ? "…" : apiOk ? ":8000 OK" : "오프라인"}
+              API {apiOk === null ? "확인 중" : apiOk ? ":8000 OK" : "오프라인"}
             </ApiPill>
           </>
         }

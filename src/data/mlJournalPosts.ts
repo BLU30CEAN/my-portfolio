@@ -38,6 +38,34 @@ export interface MlJournalPost {
 
 export const ML_JOURNAL_POSTS: readonly MlJournalPost[] = [
   {
+    id: "llmops-eval",
+    title: "민원 초안을 배치로 평가한 기록",
+    period: "2025.11 · LLMOps",
+    tags: ["LLMOps", "eval", "HITL", "Ollama"],
+    sections: [
+      {
+        heading: "무엇을 돌렸나",
+        body:
+          "로컬 Ollama `qwen2.5:1.5b`로 민원 초안을 만들고, 같은 JSONL을 배치 평가에 넣었습니다. 파이프라인은 입력 가드레일 → FAQ 검색 → chat completions(`max_tokens` 220) → 출력 가드레일입니다. 주민번호·카드번호가 있으면 LLM을 호출하지 않습니다. 초안은 담당자 확정 전까지 1차 결과입니다.",
+      },
+      {
+        heading: "train / eval을 나눈 이유",
+        body:
+          "train 4건은 HITL에서 확정하거나 수정한 문장입니다. 다음 지침 버전의 few-shot 후보로 남겨 두었습니다. eval 6건은 held-out입니다. 헤더는 `question`, `expected_output`, `model_output`, `pass`이고 컬럼 매핑으로 고릅니다. 야간 단속 시각처럼 모델이 시각을 지어내면 fail입니다. 가드레일 skip은 기대값이 차단일 때 pass입니다.",
+      },
+      {
+        heading: "막힌 지점",
+        body:
+          "`max_tokens`를 안 두면 1.5B가 사과문을 길게 이어 슬롯을 붙잡았습니다. `OLLAMA_NUM_PARALLEL=1`이라 한 건이 멈추면 다음 큐도 못 갑니다. 출력 가드레일이 `과태료를 취소합니다` 류를 잡는 동안, 우회 사과문(`취소해 주실 수 있나요`에 맞장구)은 키워드 overlap만으로는 약했습니다. 그래서 HITL 수정본(T-03)을 train에 넣었습니다.",
+      },
+      {
+        heading: "다음에 쌓을 것",
+        body:
+          "수정 페어(초안 → 담당자 문장)가 더 있어야 SFT·DPO 후보가 됩니다. 같은 eval을 지침 v1/v2, `qwen2.5:1.5b`와 `llama3.2:1b`로 다시 돌려 모델 스냅샷을 남기면 로컬 서빙 선택이 숫자로 남습니다. 콘솔 배치 탭에서 이 JSONL을 다시 실행할 수 있습니다.",
+      },
+    ],
+  },
+  {
     id: "pandas-basics",
     title: "Pandas로 데이터의 결을 읽어 내기",
     period: "자기 학습 노트 · 기본기 다지기",

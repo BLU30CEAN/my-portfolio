@@ -14,6 +14,7 @@ import { ToastProvider } from "./components/ui/Toast";
 import Navbar, { NavItem } from "./components/nav/Navbar";
 import ScrollProgress from "./components/nav/ScrollProgress";
 import ScrollToTop from "./components/nav/ScrollToTop";
+import SiteFooter from "./components/nav/SiteFooter";
 import { useActiveSection } from "./hooks/useActiveSection";
 import { useScrollFlags } from "./hooks/useScrollFlags";
 
@@ -25,11 +26,15 @@ const WordBaseballPage = lazy(() => import("./pages/WordBaseballPage"));
 const GrowthJournalPage = lazy(() => import("./pages/GrowthJournalPage"));
 const AdminStudioPage = lazy(() => import("./pages/AdminStudioPage"));
 const LlmopsLabPage = lazy(() => import("./pages/LlmopsLabPage"));
+const LabHubPage = lazy(() => import("./pages/LabHubPage"));
+const OrderDeskPage = lazy(() => import("./pages/work/OrderDeskPage"));
+const AvatarDeskPage = lazy(() => import("./pages/work/AvatarDeskPage"));
 
 const GlobalStyle = createGlobalStyle`
   body {
     background: ${(p) => p.theme.colors.background};
     color: ${(p) => p.theme.colors.text};
+    font-family: ${(p) => p.theme.typography.fontFamily};
     /* 테마 토글 시 색이 휙 바뀌지 않게 부드럽게 */
     transition:
       background-color ${(p) => p.theme.motion.dur} ${(p) => p.theme.motion.easeOut},
@@ -47,7 +52,7 @@ const Main = styled.main`
   padding-top: 72px;
   min-height: calc(100vh - 72px);
 
-  @media (max-width: 768px) {
+  @media (max-width: 960px) {
     padding-top: 64px;
     min-height: calc(100vh - 64px);
   }
@@ -63,15 +68,12 @@ const RouteFallback = styled.div`
 `;
 
 const NAV_ITEMS: NavItem[] = [
-  { id: "home", label: "Home", section: "home" },
-  { id: "about", label: "About", section: "about" },
-  { id: "tech", label: "Stack", section: "tech" },
-  { id: "references", label: "References", section: "references" },
-  { id: "projects", label: "Projects", section: "projects" },
-  { id: "journal", label: "학습 노트", route: "/journal" },
-  { id: "admin-studio", label: "Admin Studio", route: "/admin-studio" },
-  { id: "llmops-lab", label: "LLMOps 랩", route: "/llmops-lab" },
-  { id: "contact", label: "Contact", section: "contact" },
+  { id: "about", label: "소개", section: "about" },
+  { id: "tech", label: "스택", section: "tech" },
+  { id: "references", label: "문서", section: "references" },
+  { id: "projects", label: "프로젝트", section: "projects" },
+  { id: "lab", label: "실험", route: "/lab" },
+  { id: "contact", label: "연락처", section: "contact" },
 ];
 
 const HOME_SECTION_IDS = [
@@ -81,6 +83,17 @@ const HOME_SECTION_IDS = [
   "references",
   "projects",
   "contact",
+];
+
+const LAB_PATHS = [
+  "/lab",
+  "/llmops-lab",
+  "/admin-studio",
+  "/journal",
+  "/kwb",
+  "/word-baseball",
+  "/work/order",
+  "/work/avatar",
 ];
 
 function AppShell() {
@@ -94,13 +107,9 @@ function AppShell() {
 
   // 현재 활성 nav 항목 id 계산
   const activeNavId = !isHome
-    ? location.pathname === "/journal"
-      ? "journal"
-      : location.pathname === "/admin-studio"
-        ? "admin-studio"
-        : location.pathname === "/llmops-lab"
-          ? "llmops-lab"
-          : ""
+    ? LAB_PATHS.includes(location.pathname)
+      ? "lab"
+      : ""
     : activeSection;
 
   const goSection = useCallback(
@@ -143,7 +152,7 @@ function AppShell() {
         <Suspense
           fallback={<RouteFallback>잠시만 기다려 주세요.</RouteFallback>}
         >
-          <AnimatePresence mode="wait">
+          <AnimatePresence>
             <motion.div
               key={location.pathname}
               initial={{ opacity: 0, y: 12 }}
@@ -159,14 +168,18 @@ function AppShell() {
                 <Route path="/kwb" element={<WordBaseballPage />} />
                 <Route path="/word-baseball" element={<WordBaseballPage />} />
                 <Route path="/contact" element={<ContactPage />} />
+                <Route path="/lab" element={<LabHubPage />} />
                 <Route path="/admin-studio" element={<AdminStudioPage />} />
                 <Route path="/llmops-lab" element={<LlmopsLabPage />} />
+                <Route path="/work/order" element={<OrderDeskPage />} />
+                <Route path="/work/avatar" element={<AvatarDeskPage />} />
               </Routes>
             </motion.div>
           </AnimatePresence>
         </Suspense>
       </Main>
 
+      <SiteFooter />
       <ScrollToTop visible={showTop} onClick={scrollToTop} />
     </Shell>
   );

@@ -19,18 +19,19 @@ type Props = {
 const Wrap = styled.section<{ $fullHeight: boolean; $glow: boolean }>`
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: clamp(4rem, 9vw, 7rem) 1.5rem;
+  padding: clamp(2.25rem, 5vw, 4rem) 1.5rem;
   overflow: hidden;
   box-sizing: border-box;
+  scroll-margin-top: 88px;
 
   ${(p) =>
     p.$fullHeight &&
     `
-    min-height: 100vh;
+    min-height: calc(100vh - 72px);
     @supports (height: 100dvh) {
-      min-height: 100dvh;
+      min-height: calc(100dvh - 72px);
     }
   `}
 
@@ -68,7 +69,7 @@ const Section: React.FC<Props> = ({
   dotCount = 0,
   dotSeed = 1,
   fullHeight = false,
-  glow = true,
+  glow = false,
   className,
 }) => {
   return (

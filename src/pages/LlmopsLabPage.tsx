@@ -1,10 +1,13 @@
 import React, { useMemo, useState } from "react";
 import styled from "styled-components";
-import { GitBranch, ShieldAlert, Table2, Users } from "lucide-react";
+import { GitBranch, ShieldAlert, Table2, Users, Boxes, Activity } from "lucide-react";
 import Section from "../components/layout/Section";
 import SectionTitle from "../components/ui/SectionTitle";
+import LabCrumb from "../components/nav/LabCrumb";
 import FlowCanvasDemo from "../components/llmops-lab/FlowCanvasDemo";
 import BatchEvalDemo from "../components/llmops-lab/BatchEvalDemo";
+import CatalogPane from "../components/llmops-lab/CatalogPane";
+import MonitorPane from "../components/llmops-lab/MonitorPane";
 import CoachTour from "../components/llmops-lab/CoachTour";
 import {
   FLOW_NODES,
@@ -115,11 +118,42 @@ const BatchWrap = styled.div`
   margin-top: 1.1rem;
 `;
 
+const Tabs = styled.div`
+  display: flex;
+  gap: 0.35rem;
+  margin: 1.15rem 0 0.75rem;
+`;
+
+const Tab = styled.button<{ $on: boolean }>`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid
+    ${(p) => (p.$on ? p.theme.colors.primary : p.theme.colors.border)};
+  background: ${(p) =>
+    p.$on ? p.theme.colors.primarySoft : p.theme.colors.surface};
+  color: ${(p) => p.theme.colors.text};
+
+  &:focus-visible {
+    outline: 2px solid ${(p) => p.theme.colors.ring};
+    outline-offset: 2px;
+  }
+`;
+
+type OpsTab = "batch" | "catalog" | "monitor";
+
 const LlmopsLabPage: React.FC = () => {
   const toast = useToast();
   const [roleId, setRoleId] = useState<RbacRoleId>("platform");
   const [selectedId, setSelectedId] = useState("start");
   const [blocked, setBlocked] = useState(false);
+  const [opsTab, setOpsTab] = useState<OpsTab>("batch");
 
   const role = useMemo(
     () => RBAC_ROLES.find((r) => r.id === roleId) ?? RBAC_ROLES[0],
@@ -139,12 +173,12 @@ const LlmopsLabPage: React.FC = () => {
   };
 
   return (
-    <Section id="llmops-lab" dotCount={8} dotSeed={5} glow>
+    <Section id="llmops-lab">
       <CoachTour />
+      <LabCrumb here="LLMOps" />
       <SectionTitle
-        eyebrow="LLMOps Lab"
-        title="모두의 경찰관에서 만든 실행 경로"
-        subtitle="가드레일을 켜면 하위 LLM이 멈춥니다. 역할을 바꾸면 배치가 숨습니다. 운영에서 한 판단을 데모 데이터로 재현합니다. 운영 API는 연결하지 않습니다."
+        title="모두의 경찰관 실행 경로"
+        subtitle="가운데가 에이전트 빌더입니다. 아래 탭에서 배치 평가, 모델 카탈로그, HITL 관제를 고릅니다."
       />
 
       <Layout>
@@ -224,15 +258,52 @@ const LlmopsLabPage: React.FC = () => {
         </Pane>
       </Layout>
 
+      <Tabs role="tablist" aria-label="LLMOps 운영">
+        <Tab
+          type="button"
+          role="tab"
+          $on={opsTab === "batch"}
+          aria-selected={opsTab === "batch"}
+          onClick={() => setOpsTab("batch")}
+        >
+          <Table2 size={12} /> 배치 평가
+        </Tab>
+        <Tab
+          type="button"
+          role="tab"
+          $on={opsTab === "catalog"}
+          aria-selected={opsTab === "catalog"}
+          onClick={() => setOpsTab("catalog")}
+        >
+          <Boxes size={12} /> 카탈로그
+        </Tab>
+        <Tab
+          type="button"
+          role="tab"
+          $on={opsTab === "monitor"}
+          aria-selected={opsTab === "monitor"}
+          onClick={() => setOpsTab("monitor")}
+        >
+          <Activity size={12} /> 관제
+        </Tab>
+      </Tabs>
+
       <BatchWrap>
-        <Head as="div" style={{ border: "none", paddingLeft: 0 }}>
-          <Table2 size={14} /> 배치 평가
-        </Head>
-        {role.can.batch ? (
-          <BatchEvalDemo />
-        ) : (
-          <Empty>이 역할은 배치 평가에 접근할 수 없습니다. 운영자 이상으로 바꿔 보세요.</Empty>
-        )}
+        {opsTab === "batch" ? (
+          role.can.batch ? (
+            <BatchEvalDemo forceSkip={blocked} />
+          ) : (
+            <Empty>이 역할은 배치 평가에 접근할 수 없습니다. 운영자 이상으로 바꿔 보세요.</Empty>
+          )
+        ) : null}
+        {opsTab === "catalog" ? (
+          role.can.catalog ? (
+            <CatalogPane />
+          ) : (
+            <Empty>모델 카탈로그는 플랫폼 관리자만 봅니다. 역할을 바꿔 보세요.</Empty>
+          )
+        ) : null}
+        {opsTab === "monitor" ? <MonitorPane /> : null}
       </BatchWrap>
     </Section>
   );

@@ -36,7 +36,7 @@ export const useAdminWizardStore = create<State>()(
           const tabs = new Set(s.answers.tabs);
           if (tabs.has(tabId)) tabs.delete(tabId);
           else tabs.add(tabId);
-          return { answers: { ...s.answers, tabs: [...tabs] } };
+          return { answers: { ...s.answers, tabs: Array.from(tabs) } };
         }),
       next: () => set((s) => ({ stepIndex: Math.min(s.stepIndex + 1, 3) })),
       prev: () => set((s) => ({ stepIndex: Math.max(s.stepIndex - 1, 0) })),

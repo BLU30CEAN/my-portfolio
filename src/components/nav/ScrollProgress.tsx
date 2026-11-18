@@ -9,7 +9,7 @@ const Bar = styled(motion.div)`
   right: 0;
   height: 3px;
   transform-origin: 0% 50%;
-  background: ${(p) => p.theme.colors.gradient};
+  background: ${(p) => p.theme.colors.accent};
   z-index: 1100;
   pointer-events: none;
   will-change: transform;

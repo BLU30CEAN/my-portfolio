@@ -20,7 +20,7 @@ export const PROJECTS: ProjectEntry[] = [
     tab: "professional",
     title: "모두의 경찰관 LLMOps 플랫폼",
     description:
-      "공공 온프레미스 전제. 추론은 vLLM, 에이전트는 DAG로 나눴다. 가드레일이 막으면 하위 LLM을 호출하지 않는다. FastAPI 실행 엔진, RAG, 배치 평가, Docker 환경 분리, 설치 런북을 직접 짰다. LLMOps 랩에서 그 판단을 눌러 볼 수 있다.",
+      "추론은 vLLM, 에이전트는 DAG로 나눴다. 가드레일이 막으면 LLM API를 호출하지 않는다. FastAPI 실행 엔진, RAG, 배치 평가, Docker Compose, 설치 런북. 실험 페이지에서 그 판단을 눌러 볼 수 있다.",
     tech: [
       "FastAPI",
       "vLLM",
@@ -46,12 +46,15 @@ export const PROJECTS: ProjectEntry[] = [
       "LiveKit",
       "WebRTC",
     ],
+    actions: [
+      { label: "이벤트 흐름 열기", href: "#/work/avatar", kind: "external" },
+    ],
   },
   {
     tab: "professional",
     title: "앱인앱 주문채널",
     description:
-      "React(TypeScript) 기반 앱인앱 주문채널 프론트엔드와 Android Native 앱의 WebView 연동을 직접 이끌었습니다. Spring Boot, PostgreSQL 주문 API, AWS EC2, Jenkins 배포 자동화, JWT 인증, NICE Payments, OKPOS 연동, Datadog, GA, GTM 분석 환경까지 한 흐름으로 정돈했습니다.",
+      "React(TypeScript) 기반 앱인앱 주문채널 프론트엔드와 Android Native 앱의 WebView 연동을 직접 이끌었습니다. Spring Boot, PostgreSQL 주문 API, AWS EC2, Jenkins 배포 자동화, JWT 인증, PG·매장 POS 연동, Datadog, GA, GTM 분석 환경까지 한 흐름으로 정돈했습니다.",
     tech: [
       "React",
       "TypeScript",
@@ -60,6 +63,9 @@ export const PROJECTS: ProjectEntry[] = [
       "DataDog",
       "GTM",
       "GA",
+    ],
+    actions: [
+      { label: "주문 데스크 열기", href: "#/work/order", kind: "external" },
     ],
   },
   {
@@ -80,8 +86,11 @@ export const PROJECTS: ProjectEntry[] = [
     tab: "professional",
     title: "결제 시스템 연동",
     description:
-      "NICE Payments, OKPOS로 주문/결제 E2E를 이었고, 결제 성공 후 주문이 비던 이슈를 Datadog, API 로그, DB 대조로 기한 내 닫았습니다. JWT Access/Refresh로 로그인 시 불필요한 DB 조회를 줄였습니다.",
+      "PG와 매장 POS로 주문/결제 E2E를 이었고, 결제 성공 후 주문이 비던 이슈를 Datadog, API 로그, DB 대조로 기한 내 닫았습니다. JWT Access/Refresh로 로그인 시 불필요한 DB 조회를 줄였습니다.",
     tech: ["Java", "Spring Boot", "JWT", "Payments"],
+    actions: [
+      { label: "주문 데스크 열기", href: "#/work/order", kind: "external" },
+    ],
   },
   {
     tab: "professional",

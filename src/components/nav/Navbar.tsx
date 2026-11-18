@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ThemeToggle from "../ThemeToggle";
 
 export type NavItem = {
@@ -33,16 +33,13 @@ const NavWrap = styled.nav<{ $isScrolled: boolean }>`
   right: 0;
   z-index: 1000;
   background: ${(p) =>
-    p.$isScrolled
-      ? `color-mix(in srgb, ${p.theme.colors.background} 85%, transparent)`
-      : `color-mix(in srgb, ${p.theme.colors.background} 60%, transparent)`};
-  backdrop-filter: saturate(180%) blur(18px);
-  -webkit-backdrop-filter: saturate(180%) blur(18px);
+    `color-mix(in srgb, ${p.theme.colors.background} 88%, transparent)`};
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid
-    ${(p) => (p.$isScrolled ? p.theme.colors.borderStrong : "transparent")};
-  transition: background ${(p) => p.theme.motion.dur}
-      ${(p) => p.theme.motion.easeOut},
-    border-color ${(p) => p.theme.motion.dur} ${(p) => p.theme.motion.easeOut};
+    ${(p) => (p.$isScrolled ? p.theme.colors.border : "transparent")};
+  transition: border-color ${(p) => p.theme.motion.dur}
+    ${(p) => p.theme.motion.easeOut};
 `;
 
 const Inner = styled.div`
@@ -63,56 +60,39 @@ const Inner = styled.div`
 const Logo = styled(motion.button)`
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.55rem;
   background: transparent;
-  border: 1px solid ${(p) => p.theme.colors.border};
-  border-radius: ${(p) => p.theme.radii.md};
-  padding: 0.5rem 0.85rem;
+  border: none;
+  padding: 0;
   cursor: pointer;
   font-family: inherit;
   color: ${(p) => p.theme.colors.text};
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  transition: border-color ${(p) => p.theme.motion.durFast}
-      ${(p) => p.theme.motion.easeOut},
-    background ${(p) => p.theme.motion.durFast}
-      ${(p) => p.theme.motion.easeOut};
-
-  &:hover {
-    border-color: ${(p) => p.theme.colors.primary};
-    background: ${(p) => p.theme.colors.primarySoft};
-  }
 `;
 
 const LogoMark = styled.span`
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  background: ${(p) => p.theme.colors.gradient};
   display: inline-flex;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: ${(p) => p.theme.colors.primary};
+  color: ${(p) => (p.theme.mode === "dark" ? "#111318" : "#fff")};
   align-items: center;
   justify-content: center;
-  color: #fff;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: -0.04em;
 `;
 
 const LogoText = styled.span`
-  background: ${(p) => p.theme.colors.gradient};
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
 `;
 
 const DesktopLinks = styled.div`
   display: flex;
-  gap: 1.4rem;
+  gap: 1.15rem;
   align-items: center;
 
-  @media (max-width: 1100px) {
+  @media (max-width: 960px) {
     display: none;
   }
 `;
@@ -122,10 +102,10 @@ const LinkBtn = styled.button<{ $active: boolean }>`
   border: none;
   background: transparent;
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   font-weight: ${(p) => (p.$active ? 600 : 500)};
   color: ${(p) =>
-    p.$active ? p.theme.colors.primary : p.theme.colors.text};
+    p.$active ? p.theme.colors.accent : p.theme.colors.text};
   padding: 0.4rem 0.2rem;
   cursor: pointer;
   transition: color ${(p) => p.theme.motion.durFast}
@@ -142,8 +122,7 @@ const LinkUnderline = styled(motion.span)`
   right: 0;
   bottom: -6px;
   height: 2px;
-  border-radius: 2px;
-  background: ${(p) => p.theme.colors.gradient};
+  background: ${(p) => p.theme.colors.accent};
 `;
 
 const MobileToggle = styled.button`
@@ -162,7 +141,7 @@ const MobileToggle = styled.button`
     border-color: ${(p) => p.theme.colors.primary};
   }
 
-  @media (max-width: 1100px) {
+  @media (max-width: 960px) {
     display: inline-flex;
   }
 `;
@@ -194,7 +173,7 @@ const MobileLink = styled.button<{ $active: boolean }>`
   font-size: 1.05rem;
   font-weight: ${(p) => (p.$active ? 700 : 500)};
   color: ${(p) =>
-    p.$active ? p.theme.colors.primary : p.theme.colors.text};
+    p.$active ? p.theme.colors.accent : p.theme.colors.text};
   cursor: pointer;
 `;
 
@@ -207,7 +186,6 @@ const Navbar: React.FC<Props> = ({
   onSection,
 }) => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   // ESC 로 모바일 메뉴 닫기
   useEffect(() => {
@@ -323,8 +301,6 @@ const Navbar: React.FC<Props> = ({
             <div style={{ marginTop: "0.5rem" }}>
               <ThemeToggle />
             </div>
-            {/* unused location to satisfy linter / future use */}
-            <span hidden>{location.pathname}</span>
           </MobilePanel>
         )}
       </AnimatePresence>

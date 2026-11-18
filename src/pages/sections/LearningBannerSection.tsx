@@ -84,7 +84,7 @@ const LearningBannerSection: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <Section dotCount={6} dotSeed={7} glow>
+    <Section id="learning">
       <Card
         initial={{ opacity: 0, y: 18 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -93,16 +93,15 @@ const LearningBannerSection: React.FC = () => {
       >
         <Head>
           <BookOpen size={26} strokeWidth={2} aria-hidden />
-          <Title>학습 노트 · ML 자기 수련 기록</Title>
+          <Title>학습 노트</Title>
         </Head>
         <Text>
-          <strong>pandas·scikit-learn</strong>을 직접 만지며 정리한 실습 노트,
-          막혔던 지점과 그 매듭을 풀어 간 과정을 별도 페이지에 모아 두었습니다.
-          글로만 끝내지 않고, 같은 개념을 손으로 한 번 더 다뤄 볼 수 있는{" "}
-          <strong>인터랙티브 미니게임</strong>도 함께 두었습니다.
+          민원 초안 배치 평가(train/eval JSONL, HITL 라벨)와 pandas,
+          scikit-learn 노트를 같이 둡니다. 막힌 지점과 풀이 과정을 나눠 두었고,
+          기초 개념은 미니게임으로도 해볼 수 있습니다.
         </Text>
         <MagneticButton onClick={() => navigate("/journal")}>
-          학습 노트 살펴보기 <ArrowRight size={18} />
+          노트 보기 <ArrowRight size={18} />
         </MagneticButton>
       </Card>
     </Section>

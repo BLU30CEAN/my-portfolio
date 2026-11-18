@@ -9,7 +9,7 @@ const Button = styled(motion.button)`
   bottom: 1.5rem;
   width: 52px;
   height: 52px;
-  border-radius: 999px;
+  border-radius: ${(p) => p.theme.radii.md};
   border: 1px solid ${(p) => p.theme.colors.borderStrong};
   background: ${(p) => p.theme.colors.backgroundElevated};
   color: ${(p) => p.theme.colors.primary};

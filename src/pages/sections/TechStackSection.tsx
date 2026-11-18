@@ -23,11 +23,10 @@ const Stack = styled.div`
 const Category = styled.div``;
 
 const CatHeader = styled(motion.h3)`
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: ${(p) => p.theme.colors.textMuted};
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: ${(p) => p.theme.colors.text};
   margin: 0 0 1rem;
   display: inline-flex;
   align-items: center;
@@ -37,8 +36,7 @@ const CatHeader = styled(motion.h3)`
     content: "";
     width: 22px;
     height: 2px;
-    background: ${(p) => p.theme.colors.gradient};
-    border-radius: 2px;
+    background: ${(p) => p.theme.colors.primary};
   }
 `;
 
@@ -157,11 +155,10 @@ function SafeImg({ src, name }: { src: string; name: string }) {
 
 const TechStackSection: React.FC = () => {
   return (
-    <Section id="tech" dotCount={8} dotSeed={3} fullHeight glow>
+    <Section id="tech">
       <SectionTitle
-        eyebrow="Stack"
-        title="현장에서 검증한 기술 스택"
-        subtitle="실제 운영 중인 제품에서 트래픽·예외 대응·배포 사이클을 한 번이라도 함께 통과해 본 도구만 추렸습니다."
+        title="기술 스택"
+        subtitle="웹, 모바일, 백엔드, LLMOps, 인프라"
       />
 
       <Stack>

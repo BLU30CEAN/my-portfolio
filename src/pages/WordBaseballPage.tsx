@@ -137,13 +137,11 @@ const HeroCopy = styled.div`
 `;
 
 const Title = styled.h1`
+  font-family: ${(props) => props.theme.typography.fontDisplay};
   font-size: clamp(2rem, 4vw, 3.25rem);
   line-height: 1.05;
   margin-bottom: 0.75rem;
-  background: ${(props) => props.theme.colors.gradient};
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: ${(props) => props.theme.colors.text};
 `;
 
 const Description = styled.p`

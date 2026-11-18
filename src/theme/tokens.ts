@@ -39,9 +39,9 @@ export type ShadowTokens = {
 const radii = {
   xs: "6px",
   sm: "10px",
-  md: "14px",
-  lg: "20px",
-  xl: "28px",
+  md: "12px",
+  lg: "16px",
+  xl: "22px",
   pill: "999px",
 } as const;
 
@@ -78,85 +78,83 @@ const breakpoints = {
 
 const typography = {
   fontFamily:
-    "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif",
+    "Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+  fontDisplay:
+    "Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
   fontMono:
     "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-  fluidH1: "clamp(2.5rem, 6vw + 0.5rem, 5.5rem)",
-  fluidH2: "clamp(1.85rem, 4vw + 0.4rem, 3rem)",
-  fluidH3: "clamp(1.25rem, 2vw + 0.4rem, 1.65rem)",
-  fluidBody: "clamp(0.95rem, 0.4vw + 0.85rem, 1.075rem)",
+  fluidH1: "clamp(2.2rem, 4.8vw + 0.4rem, 3.6rem)",
+  fluidH2: "clamp(1.45rem, 2.2vw + 0.4rem, 2rem)",
+  fluidH3: "clamp(1.05rem, 1.2vw + 0.4rem, 1.25rem)",
+  fluidBody: "clamp(0.95rem, 0.25vw + 0.9rem, 1.05rem)",
 } as const;
 
 const lightColors: ColorTokens = {
-  background: "#f4f8fd",
+  background: "#f5f7fa",
   backgroundElevated: "#ffffff",
   surface: "#ffffff",
-  surfaceMuted: "#eef3fa",
-  text: "#0b1a2a",
-  textSecondary: "#3b5168",
-  textMuted: "#6a7e94",
-  primary: "#0a6dd6",
-  primarySoft: "rgba(10, 109, 214, 0.12)",
-  accent: "#19c2ff",
-  success: "#1f9d55",
-  danger: "#e1473d",
-  border: "#dbe6f2",
-  borderStrong: "#b8cce0",
-  ring: "rgba(10, 109, 214, 0.35)",
-  selection: "rgba(10, 109, 214, 0.22)",
+  surfaceMuted: "#eef1f5",
+  text: "#1c2430",
+  textSecondary: "#4d5b6b",
+  textMuted: "#7a8796",
+  primary: "#0d7377",
+  primarySoft: "rgba(13, 115, 119, 0.12)",
+  accent: "#0d7377",
+  success: "#0d7377",
+  danger: "#b42318",
+  border: "#e4e9ef",
+  borderStrong: "#c9d3de",
+  ring: "rgba(13, 115, 119, 0.32)",
+  selection: "rgba(13, 115, 119, 0.16)",
   scrollTrack: "transparent",
-  scrollThumb: "rgba(10, 109, 214, 0.35)",
-  gradient:
-    "linear-gradient(135deg, #0a6dd6 0%, #19c2ff 55%, #6cf0ff 100%)",
-  gradientSecondary:
-    "linear-gradient(135deg, #ff6b6b 0%, #ff9966 100%)",
-  meshA: "rgba(25, 194, 255, 0.30)",
-  meshB: "rgba(10, 109, 214, 0.18)",
-  meshC: "rgba(255, 105, 180, 0.12)",
+  scrollThumb: "rgba(13, 115, 119, 0.32)",
+  gradient: "linear-gradient(135deg, #0d7377 0%, #14919b 100%)",
+  gradientSecondary: "linear-gradient(135deg, #0d7377 0%, #14919b 100%)",
+  meshA: "rgba(13, 115, 119, 0.08)",
+  meshB: "rgba(28, 36, 48, 0.04)",
+  meshC: "rgba(13, 115, 119, 0.04)",
 };
 
 const darkColors: ColorTokens = {
-  background: "#04101f",
-  backgroundElevated: "#08182a",
-  surface: "#0c2238",
-  surfaceMuted: "#0f2840",
-  text: "#eaf3ff",
-  textSecondary: "#a8c4e0",
-  textMuted: "#7b96b3",
-  primary: "#3cb6ff",
-  primarySoft: "rgba(60, 182, 255, 0.16)",
-  accent: "#7cf0ff",
-  success: "#3ddc97",
-  danger: "#ff6a5c",
+  background: "#111318",
+  backgroundElevated: "#181a20",
+  surface: "#1a1c22",
+  surfaceMuted: "#22252c",
+  text: "#f3f4f6",
+  textSecondary: "#c4c8d0",
+  textMuted: "#8b909a",
+  primary: "#5eead4",
+  primarySoft: "rgba(94, 234, 212, 0.14)",
+  accent: "#2dd4bf",
+  success: "#2dd4bf",
+  danger: "#f07167",
   border: "rgba(255, 255, 255, 0.08)",
-  borderStrong: "rgba(255, 255, 255, 0.18)",
-  ring: "rgba(60, 182, 255, 0.45)",
-  selection: "rgba(60, 182, 255, 0.30)",
+  borderStrong: "rgba(255, 255, 255, 0.16)",
+  ring: "rgba(45, 212, 191, 0.40)",
+  selection: "rgba(45, 212, 191, 0.22)",
   scrollTrack: "transparent",
-  scrollThumb: "rgba(124, 240, 255, 0.30)",
-  gradient:
-    "linear-gradient(135deg, #3cb6ff 0%, #7cf0ff 60%, #b5ffea 100%)",
-  gradientSecondary:
-    "linear-gradient(135deg, #ff8a73 0%, #ffc371 100%)",
-  meshA: "rgba(60, 182, 255, 0.32)",
-  meshB: "rgba(124, 240, 255, 0.18)",
-  meshC: "rgba(255, 128, 200, 0.14)",
+  scrollThumb: "rgba(243, 244, 246, 0.28)",
+  gradient: "linear-gradient(135deg, #2dd4bf 0%, #5eead4 100%)",
+  gradientSecondary: "linear-gradient(135deg, #2dd4bf 0%, #5eead4 100%)",
+  meshA: "rgba(255, 255, 255, 0.04)",
+  meshB: "rgba(45, 212, 191, 0.08)",
+  meshC: "rgba(0, 0, 0, 0.2)",
 };
 
 const lightShadows: ShadowTokens = {
-  card: "0 1px 2px rgba(11, 26, 42, 0.04), 0 8px 24px rgba(11, 26, 42, 0.06)",
+  card: "0 1px 2px rgba(28, 36, 48, 0.04), 0 10px 28px rgba(28, 36, 48, 0.06)",
   cardHover:
-    "0 2px 6px rgba(11, 26, 42, 0.06), 0 16px 40px rgba(10, 109, 214, 0.12)",
-  button: "0 8px 20px rgba(10, 109, 214, 0.28)",
-  glow: "0 0 0 4px rgba(10, 109, 214, 0.18)",
+    "0 2px 8px rgba(28, 36, 48, 0.06), 0 16px 32px rgba(13, 115, 119, 0.10)",
+  button: "0 8px 18px rgba(13, 115, 119, 0.22)",
+  glow: "0 0 0 3px rgba(13, 115, 119, 0.20)",
 };
 
 const darkShadows: ShadowTokens = {
-  card: "0 1px 2px rgba(0, 0, 0, 0.25), 0 8px 24px rgba(0, 0, 0, 0.35)",
+  card: "0 1px 2px rgba(0, 0, 0, 0.25), 0 10px 28px rgba(0, 0, 0, 0.28)",
   cardHover:
-    "0 4px 12px rgba(0, 0, 0, 0.4), 0 18px 40px rgba(60, 182, 255, 0.18)",
-  button: "0 10px 24px rgba(60, 182, 255, 0.35)",
-  glow: "0 0 0 4px rgba(60, 182, 255, 0.32)",
+    "0 4px 12px rgba(0, 0, 0, 0.35), 0 16px 32px rgba(45, 212, 191, 0.12)",
+  button: "0 8px 18px rgba(45, 212, 191, 0.22)",
+  glow: "0 0 0 3px rgba(45, 212, 191, 0.28)",
 };
 
 export type ThemeMode = "light" | "dark";
@@ -194,10 +192,6 @@ export const darkTheme: AppTheme = {
   typography,
 };
 
-/**
- * 테마 → CSS 변수 매핑.
- * <html data-theme="..."> 와 body 양쪽에 주입해 styled가 아닌 일반 CSS에서도 사용 가능하게 한다.
- */
 export function themeToCssVars(theme: AppTheme): Record<string, string> {
   const c = theme.colors;
   const s = theme.shadows;

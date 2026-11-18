@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import { ArrowLeft, BookOpen, ImageOff } from "lucide-react";
+import { ImageOff } from "lucide-react";
 import { animate, stagger, text, createScope, type Scope } from "animejs";
 import {
   ML_JOURNAL_HERO_MEDIA_ENABLED,
@@ -11,6 +10,7 @@ import {
 } from "../data/mlJournalPosts";
 import MiniGameCard from "../components/growth/MiniGameCard";
 import MiniGameRenderer from "../components/growth/MiniGameRegistry";
+import LabCrumb from "../components/nav/LabCrumb";
 
 const PageWrap = styled.div`
   min-height: 100vh;
@@ -24,40 +24,14 @@ const Inner = styled.div`
   margin: 0 auto;
 `;
 
-const BackBar = styled.div`
-  margin-bottom: 2rem;
-`;
-
-const BackBtn = styled(motion.button)`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.55rem 1rem;
-  border-radius: 12px;
-  border: 1px solid ${(props) => props.theme.colors.border};
-  background: ${(props) => props.theme.colors.surface};
-  color: ${(props) => props.theme.colors.text};
-  font-size: 0.92rem;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: inherit;
-
-  &:hover {
-    border-color: ${(props) => props.theme.colors.primary};
-    color: ${(props) => props.theme.colors.primary};
-  }
-`;
-
 const PageTitle = styled.h1`
+  font-family: ${(props) => props.theme.typography.fontDisplay};
   font-size: clamp(1.85rem, 4.5vw, 2.35rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.2;
   margin-bottom: 0.65rem;
-  background: ${(props) => props.theme.colors.gradient};
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: ${(props) => props.theme.colors.text};
 `;
 
 const PageLead = styled.p`
@@ -221,7 +195,6 @@ function HeroMedia({ post }: { post: MlJournalPost }) {
 }
 
 function GrowthJournalPage() {
-  const navigate = useNavigate();
   const rootRef = useRef<HTMLDivElement | null>(null);
   const titleRef = useRef<HTMLHeadingElement | null>(null);
 
@@ -272,38 +245,18 @@ function GrowthJournalPage() {
   return (
     <PageWrap>
       <Inner ref={rootRef}>
-        <BackBar>
-          <BackBtn
-            type="button"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => navigate("/")}
-          >
-            <ArrowLeft size={18} aria-hidden /> 메인으로 돌아가기
-          </BackBtn>
-        </BackBar>
+        <LabCrumb here="학습 노트" />
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
         >
-          <PageTitle ref={titleRef}>학습 노트 · 스스로 다지는 ML 기초</PageTitle>
+          <PageTitle ref={titleRef}>학습 노트</PageTitle>
           <PageLead>
-            <BookOpen
-              size={18}
-              style={{
-                verticalAlign: "-0.2em",
-                marginRight: "0.35rem",
-                opacity: 0.85,
-              }}
-              aria-hidden
-            />
-            pandas·scikit-learn처럼 ML 기초 영역은
-            <strong> 실무 과제와는 별도로, 자기 학습 노트에 근거를 남겨 두는 자리</strong>
-            로 두었습니다. 각 글에는 anime.js v4 로 만든
-            <strong> 인터랙티브 미니게임</strong>을 함께 두어, 같은 개념을 손으로 한 번
-            더 다뤄 보며 머리에 새길 수 있게 했습니다.
+            민원 초안 배치 평가 기록과 pandas, scikit-learn 노트를 같이 둡니다.
+            기초 글에는 미니게임이 있어 같은 개념을 손으로 한 번 더 해볼 수
+            있습니다.
           </PageLead>
 
           {ML_JOURNAL_POSTS.map((post, index) => (

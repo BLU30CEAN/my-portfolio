@@ -279,7 +279,7 @@ const SidebarCatalogDemo: React.FC = () => {
   const columns = useMemo(() => {
     const keys = new Set<string>(["sku", "name", "category", "status"]);
     rows.forEach((r) => Object.keys(r.data).forEach((k) => keys.add(k)));
-    return [...keys].filter((k) => k !== "note").slice(0, 5);
+    return Array.from(keys).filter((k) => k !== "note").slice(0, 5);
   }, [rows]);
 
   const onSave = async () => {

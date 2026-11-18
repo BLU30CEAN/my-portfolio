@@ -6,20 +6,6 @@ import Section from "../../components/layout/Section";
 import SectionTitle from "../../components/ui/SectionTitle";
 import { DEV_REFERENCE_ENTRIES } from "../../data/references";
 
-const Lead = styled.p`
-  text-align: center;
-  color: ${(p) => p.theme.colors.textSecondary};
-  font-size: 0.95rem;
-  line-height: 1.7;
-  max-width: 56ch;
-  margin: -1.25rem auto 2.5rem;
-
-  a {
-    color: ${(p) => p.theme.colors.primary};
-    font-weight: 600;
-  }
-`;
-
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
@@ -102,11 +88,10 @@ const Note = styled.p`
 `;
 
 const Footer = styled.p`
-  text-align: center;
   color: ${(p) => p.theme.colors.textMuted};
   font-size: 0.85rem;
   line-height: 1.65;
-  margin: 2rem auto 0;
+  margin: 2rem 0 0;
   max-width: 56ch;
 
   a {
@@ -117,18 +102,11 @@ const Footer = styled.p`
 
 const ReferencesSection: React.FC = () => {
   return (
-    <Section id="references" dotCount={6} dotSeed={5} glow>
+    <Section id="references">
       <SectionTitle
-        eyebrow="References"
-        title="공식 문서를 길잡이로 삼습니다"
-        subtitle="원문 스펙과 변경 이력이 명확한 곳만 모았습니다. 구현 근거를 남겨야 할 때 항상 먼저 펼쳐 본 문서들입니다."
+        title="공식 문서"
+        subtitle="코드를 짤 때 기준은 공식 문서입니다. 블로그 요약이 아니라, 아래에서 연 페이지로 맞춥니다."
       />
-
-      <Lead>
-        모은 링크는 모두 원문 스펙·가이드를 직접 관리하는 공식 배포처입니다.
-        업계에 떠도는 “요약 블로그”보다, 변경 이력이 또렷한 문서를 먼저
-        근거로 삼는 편이 결국 가장 빠른 길이라고 믿어 왔습니다.
-      </Lead>
 
       <Grid>
         {DEV_REFERENCE_ENTRIES.map((ref, ri) => (
@@ -158,7 +136,7 @@ const ReferencesSection: React.FC = () => {
       </Grid>
 
       <Footer>
-        이 포트폴리오 자체의 구현 근거:&nbsp; 모션은 Framer Motion 계열(
+        이 사이트 모션은{" "}
         <a
           href="https://motion.dev/docs/react-motion-component"
           target="_blank"
@@ -166,15 +144,15 @@ const ReferencesSection: React.FC = () => {
         >
           Motion for React
         </a>
-        ), 스타일링은 styled-components(
+        , 스타일은{" "}
         <a
           href="https://styled-components.com/docs"
           target="_blank"
           rel="noopener noreferrer"
         >
-          공식 문서
-        </a>
-        )를 따랐습니다.
+          styled-components
+        </a>{" "}
+        문서를 기준으로 짰습니다.
       </Footer>
     </Section>
   );

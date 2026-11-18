@@ -13,10 +13,15 @@ const Btn = styled(motion.button)<{ $variant: "primary" | "ghost" }>`
       ? "none"
       : `1px solid ${p.theme.colors.borderStrong}`};
   background: ${(p) =>
-    p.$variant === "primary" ? p.theme.colors.gradient : "transparent"};
-  color: ${(p) => (p.$variant === "primary" ? "#fff" : p.theme.colors.text)};
-  padding: 0.9rem 1.6rem;
-  border-radius: ${(p) => p.theme.radii.pill};
+    p.$variant === "primary" ? p.theme.colors.primary : "transparent"};
+  color: ${(p) =>
+    p.$variant === "primary"
+      ? p.theme.mode === "dark"
+        ? "#111318"
+        : "#fff"
+      : p.theme.colors.text};
+  padding: 0.8rem 1.25rem;
+  border-radius: ${(p) => p.theme.radii.md};
   font-family: inherit;
   font-size: 1rem;
   font-weight: 600;
@@ -32,11 +37,17 @@ const Btn = styled(motion.button)<{ $variant: "primary" | "ghost" }>`
 
   &:hover {
     ${(p) =>
-      p.$variant === "ghost" &&
-      `
+      p.$variant === "primary"
+        ? `filter: brightness(1.06);`
+        : `
       border-color: ${p.theme.colors.primary};
       color: ${p.theme.colors.primary};
     `}
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${(p) => p.theme.colors.ring};
+    outline-offset: 3px;
   }
 `;
 

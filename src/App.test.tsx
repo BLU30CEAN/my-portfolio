@@ -4,6 +4,6 @@ import App from "./App";
 
 test("renders portfolio hero", async () => {
   render(<App />);
-  const hero = await screen.findByText(/Available for hire/i);
+  const hero = await screen.findByText(/FastAPI, Spring Boot/);
   expect(hero).toBeInTheDocument();
 });

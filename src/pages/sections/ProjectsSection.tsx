@@ -1,112 +1,87 @@
 import React, { useMemo, useState } from "react";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
-import { Briefcase, Gamepad2, ExternalLink, Github, Ban } from "lucide-react";
+import { ExternalLink, Github, Ban } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import Section from "../../components/layout/Section";
 import SectionTitle from "../../components/ui/SectionTitle";
 import { PROJECTS, ProjectTab } from "../../data/projects";
 
 const TabBar = styled.div`
-  display: inline-flex;
-  position: relative;
-  padding: 0.35rem;
-  border-radius: 999px;
-  border: 1px solid ${(p) => p.theme.colors.border};
-  background: ${(p) => p.theme.colors.surface};
-  gap: 0.25rem;
-  margin: 0 auto 2.5rem;
-`;
-
-const TabBarWrap = styled.div`
   display: flex;
-  justify-content: center;
+  gap: 1.5rem;
+  border-bottom: 1px solid ${(p) => p.theme.colors.border};
+  margin: 0 0 1.75rem;
 `;
 
 const TabBtn = styled.button<{ $active: boolean }>`
   position: relative;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
   background: transparent;
   border: none;
+  border-bottom: 2px solid
+    ${(p) => (p.$active ? p.theme.colors.primary : "transparent")};
+  margin-bottom: -1px;
+  padding: 0.65rem 0;
   font-family: inherit;
   font-size: 0.92rem;
-  font-weight: 600;
+  font-weight: ${(p) => (p.$active ? 700 : 500)};
   color: ${(p) =>
-    p.$active ? "#fff" : p.theme.colors.textSecondary};
-  padding: 0.6rem 1.1rem;
-  border-radius: 999px;
+    p.$active ? p.theme.colors.text : p.theme.colors.textMuted};
   cursor: pointer;
   transition: color ${(p) => p.theme.motion.dur}
     ${(p) => p.theme.motion.easeOut};
-`;
 
-const TabIndicator = styled(motion.span)`
-  position: absolute;
-  inset: 4px auto 4px 4px;
-  width: var(--w, 0);
-  border-radius: 999px;
-  background: ${(p) => p.theme.colors.gradient};
-  z-index: 0;
-  box-shadow: ${(p) => p.theme.shadows.button};
+  &:hover {
+    color: ${(p) => p.theme.colors.text};
+  }
 `;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
-const Card = styled(motion.article)`
+const Card = styled(motion.article)<{ $featured?: boolean }>`
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 1.65rem;
+  gap: 0.85rem;
+  padding: ${(p) => (p.$featured ? "1.85rem 1.7rem" : "1.4rem 1.35rem")};
   background: ${(p) => p.theme.colors.surface};
-  border: 1px solid ${(p) => p.theme.colors.border};
   border-radius: ${(p) => p.theme.radii.lg};
+  border: 1px solid
+    ${(p) =>
+      p.$featured ? p.theme.colors.borderStrong : p.theme.colors.border};
   box-shadow: ${(p) => p.theme.shadows.card};
-  overflow: hidden;
+  grid-column: ${(p) => (p.$featured ? "1 / -1" : "auto")};
   transition: border-color ${(p) => p.theme.motion.dur}
       ${(p) => p.theme.motion.easeOut},
-    box-shadow ${(p) => p.theme.motion.dur} ${(p) => p.theme.motion.easeOut},
     transform ${(p) => p.theme.motion.dur} ${(p) => p.theme.motion.easeOut};
 
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      120deg,
-      transparent 50%,
-      ${(p) => p.theme.colors.primarySoft} 100%
-    );
-    opacity: 0;
-    transition: opacity ${(p) => p.theme.motion.dur}
-      ${(p) => p.theme.motion.easeOut};
-    pointer-events: none;
-  }
-
   &:hover {
-    transform: translateY(-4px);
+    transform: translateY(-2px);
     border-color: ${(p) => p.theme.colors.primary};
-    box-shadow: ${(p) => p.theme.shadows.cardHover};
-  }
-  &:hover::before {
-    opacity: 1;
   }
 `;
 
-const Title = styled.h3`
-  font-size: 1.15rem;
+const Kicker = styled.span`
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: ${(p) => p.theme.colors.primary};
+`;
+
+const Title = styled.h3<{ $featured?: boolean }>`
+  font-family: ${(p) => p.theme.typography.fontDisplay};
+  font-size: ${(p) => (p.$featured ? "1.45rem" : "1.12rem")};
   font-weight: 700;
   margin: 0;
   color: ${(p) => p.theme.colors.text};
-  letter-spacing: -0.02em;
-  position: relative;
-  z-index: 1;
+  letter-spacing: -0.03em;
 `;
 
 const Desc = styled.p`
@@ -114,43 +89,39 @@ const Desc = styled.p`
   line-height: 1.7;
   margin: 0;
   color: ${(p) => p.theme.colors.textSecondary};
-  position: relative;
-  z-index: 1;
+  max-width: 72ch;
 `;
 
 const Tags = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
-  position: relative;
-  z-index: 1;
 `;
 
 const Tag = styled.span`
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 0.25rem 0.55rem;
-  border-radius: 6px;
-  background: ${(p) => p.theme.colors.primarySoft};
-  color: ${(p) => p.theme.colors.primary};
+  font-family: ${(p) => p.theme.typography.fontMono};
+  font-size: 0.7rem;
+  padding: 0.22rem 0.5rem;
+  border-radius: ${(p) => p.theme.radii.xs};
+  border: 1px solid ${(p) => p.theme.colors.border};
+  color: ${(p) => p.theme.colors.textSecondary};
 `;
 
 const Actions = styled.div`
   display: flex;
-  gap: 0.6rem;
+  gap: 0.55rem;
   flex-wrap: wrap;
-  position: relative;
-  z-index: 1;
+  margin-top: auto;
 `;
 
 const ActionBtn = styled.a<{ $disabled?: boolean }>`
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.55rem 0.95rem;
-  border-radius: ${(p) => p.theme.radii.sm};
-  font-size: 0.85rem;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
+  border-radius: ${(p) => p.theme.radii.sm};
   border: 1px solid ${(p) => p.theme.colors.borderStrong};
   background: transparent;
   color: ${(p) =>
@@ -158,28 +129,26 @@ const ActionBtn = styled.a<{ $disabled?: boolean }>`
   text-decoration: none;
   cursor: ${(p) => (p.$disabled ? "not-allowed" : "pointer")};
   opacity: ${(p) => (p.$disabled ? 0.55 : 1)};
-  transition: all ${(p) => p.theme.motion.durFast}
-    ${(p) => p.theme.motion.easeOut};
 
   &:hover {
     ${(p) =>
       !p.$disabled &&
       `
-        color: #fff;
-        background: ${p.theme.colors.gradient};
-        border-color: transparent;
+        color: ${p.theme.colors.primary};
+        border-color: ${p.theme.colors.primary};
         text-decoration: none;
       `}
   }
 `;
 
-type TabDef = { id: ProjectTab; label: string; icon: React.ReactNode };
+type TabDef = { id: ProjectTab; label: string };
 const TABS: TabDef[] = [
-  { id: "professional", label: "실무 프로젝트", icon: <Briefcase size={16} /> },
-  { id: "personal", label: "토이 프로젝트", icon: <Gamepad2 size={16} /> },
+  { id: "professional", label: "실무 프로젝트" },
+  { id: "personal", label: "토이 프로젝트" },
 ];
 
 const ProjectsSection: React.FC = () => {
+  const navigate = useNavigate();
   const [active, setActive] = useState<ProjectTab>("professional");
 
   const list = useMemo(
@@ -188,40 +157,25 @@ const ProjectsSection: React.FC = () => {
   );
 
   return (
-    <Section id="projects" dotCount={8} dotSeed={4} fullHeight glow>
+    <Section id="projects">
       <SectionTitle
-        eyebrow="Projects"
-        title="직접 설계하고 장애를 닫은 작업"
-        subtitle="온프레 LLM, AI 파이프라인 MSA, 주문/결제 RCA. 기술 목록보다 어떤 판단을 남겼는지를 적었습니다."
+        title="프로젝트"
+        subtitle="샘플은 프로젝트마다 나눴습니다. 민원 콘솔, 주문 RCA, 아바타 파이프."
       />
 
-      <TabBarWrap>
-        <TabBar role="tablist" aria-label="프로젝트 카테고리">
-          <TabIndicator
-            layout
-            transition={{ type: "spring", stiffness: 380, damping: 30 }}
-            style={{
-              left: active === "professional" ? 4 : "calc(50% + 2px)",
-              right: active === "professional" ? "calc(50% + 2px)" : 4,
-              top: 4,
-              bottom: 4,
-              width: "auto",
-            }}
-          />
-          {TABS.map((t) => (
-            <TabBtn
-              key={t.id}
-              role="tab"
-              aria-selected={active === t.id}
-              $active={active === t.id}
-              onClick={() => setActive(t.id)}
-            >
-              {t.icon}
-              {t.label}
-            </TabBtn>
-          ))}
-        </TabBar>
-      </TabBarWrap>
+      <TabBar role="tablist" aria-label="프로젝트 카테고리">
+        {TABS.map((t) => (
+          <TabBtn
+            key={t.id}
+            role="tab"
+            aria-selected={active === t.id}
+            $active={active === t.id}
+            onClick={() => setActive(t.id)}
+          >
+            {t.label}
+          </TabBtn>
+        ))}
+      </TabBar>
 
       <AnimatePresence mode="wait">
         <motion.div
@@ -232,54 +186,69 @@ const ProjectsSection: React.FC = () => {
           transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
         >
           <Grid>
-            {list.map((p, i) => (
-              <Card
-                key={p.title}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-10%" }}
-                transition={{ duration: 0.45, delay: i * 0.06 }}
-              >
-                <Title>{p.title}</Title>
-                <Desc>{p.description}</Desc>
-                <Tags>
-                  {p.tech.map((t) => (
-                    <Tag key={t}>{t}</Tag>
-                  ))}
-                </Tags>
-                {p.actions && p.actions.length > 0 && (
-                  <Actions>
-                    {p.actions.map((a) => {
-                      const disabled = a.kind === "disabled";
-                      const isGithub = a.href.includes("github.com");
-                      const icon = disabled ? (
-                        <Ban size={14} />
-                      ) : isGithub ? (
-                        <Github size={14} />
-                      ) : (
-                        <ExternalLink size={14} />
-                      );
-                      return (
-                        <ActionBtn
-                          key={a.label}
-                          href={disabled ? undefined : a.href}
-                          target={disabled ? undefined : "_blank"}
-                          rel="noopener noreferrer"
-                          $disabled={disabled}
-                          aria-disabled={disabled}
-                          onClick={(e) => {
-                            if (disabled) e.preventDefault();
-                          }}
-                        >
-                          {icon}
-                          {a.label}
-                        </ActionBtn>
-                      );
-                    })}
-                  </Actions>
-                )}
-              </Card>
-            ))}
+            {list.map((p, i) => {
+              const featured = active === "professional" && i === 0;
+              return (
+                <Card
+                  key={p.title}
+                  $featured={featured}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-10%" }}
+                  transition={{ duration: 0.45, delay: i * 0.05 }}
+                >
+                  {featured && <Kicker>대표 작업</Kicker>}
+                  <Title $featured={featured}>{p.title}</Title>
+                  <Desc>{p.description}</Desc>
+                  <Tags>
+                    {p.tech.map((t) => (
+                      <Tag key={t}>{t}</Tag>
+                    ))}
+                  </Tags>
+                  {p.actions && p.actions.length > 0 && (
+                    <Actions>
+                      {p.actions.map((a) => {
+                        const disabled = a.kind === "disabled";
+                        const internal = a.href.startsWith("#/");
+                        const isGithub = a.href.includes("github.com");
+                        const icon = disabled ? (
+                          <Ban size={14} />
+                        ) : isGithub ? (
+                          <Github size={14} />
+                        ) : (
+                          <ExternalLink size={14} />
+                        );
+                        return (
+                          <ActionBtn
+                            key={a.label}
+                            href={disabled ? undefined : a.href}
+                            target={
+                              disabled || internal ? undefined : "_blank"
+                            }
+                            rel="noopener noreferrer"
+                            $disabled={disabled}
+                            aria-disabled={disabled}
+                            onClick={(e) => {
+                              if (disabled) {
+                                e.preventDefault();
+                                return;
+                              }
+                              if (internal) {
+                                e.preventDefault();
+                                navigate(a.href.slice(1));
+                              }
+                            }}
+                          >
+                            {icon}
+                            {a.label}
+                          </ActionBtn>
+                        );
+                      })}
+                    </Actions>
+                  )}
+                </Card>
+              );
+            })}
           </Grid>
         </motion.div>
       </AnimatePresence>
