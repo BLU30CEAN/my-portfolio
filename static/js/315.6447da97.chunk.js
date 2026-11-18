@@ -492,11 +492,12 @@
 `,c=({count:e,seed:t=1})=>{var r;const o=null!==(r=(0,s.I)())&&void 0!==r&&r,a=(0,i.useMemo)(()=>Array.from({length:e},(e,r)=>({left:(17*r+3*t)%86+6+"%",top:(23*r+7*t)%80+8+"%",duration:3.2+r%4*.35+"s",delay:41*r%12*.14+"s"})),[e,t]);return(0,n.jsx)(l,{"aria-hidden":!0,children:a.map((e,t)=>(0,n.jsx)(d,{$left:e.left,$top:e.top,$delay:e.delay,$duration:e.duration,$reduced:o},t))})},m=o.Ay.section`
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: clamp(3.5rem, 7vw, 5.5rem) 1.5rem;
+  padding: clamp(2.25rem, 5vw, 4rem) 1.5rem;
   overflow: hidden;
   box-sizing: border-box;
+  scroll-margin-top: 88px;
 
   ${e=>e.$fullHeight&&"\n    min-height: calc(100vh - 72px);\n    @supports (height: 100dvh) {\n      min-height: calc(100dvh - 72px);\n    }\n  "}
 
@@ -529,4 +530,4 @@
 `,a=o.Ay.span`
   color: ${e=>e.theme.colors.text};
 `,l=({here:e})=>{const t=(0,i.Zp)();return(0,s.jsxs)(n,{type:"button",onClick:()=>t("/lab"),children:["\uc2e4\ud5d8 ",(0,s.jsx)("span",{"aria-hidden":!0,children:"/"})," ",(0,s.jsx)(a,{children:e})]})}}}]);
-//# sourceMappingURL=315.b90a2999.chunk.js.map
+//# sourceMappingURL=315.6447da97.chunk.js.map
